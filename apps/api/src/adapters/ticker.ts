@@ -3,15 +3,29 @@ import { countCoinGeckoAttempt, isCoinGeckoStaleOnly } from "../cgBudget";
 import { fetchWithRetry } from "../fetchWithRetry";
 import { fetchTicker24h } from "../lib/binance";
 import { fetchEastmoneyQuote } from "../lib/eastmoney";
+import { fetchSinaIndicesBatch, type SinaSymbolKind } from "../lib/sina";
 
 const CRYPTO_SYMBOLS = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "BNBUSDT", "DOGEUSDT"];
-const INDICES = [
-  ["1.000001", "上证指数"],
-  ["100.HSI", "恒生指数"],
-  ["100.SPX", "标普500"],
-  ["100.NDX", "纳斯达克"],
-  ["100.DJIA", "道琼斯"]
-] as const;
+
+// Index source chain: try 东方财富 push2 first (richer fields), fall back to Sina
+// (works from US/JP IPs where push2 blocks). SPY ETF is used as S&P 500 proxy
+// (SPY × ~10 ≈ S&P 500 value; Sina does not expose ^SPX directly).
+interface IndexSpec {
+  code: string; // canonical code we display
+  name: string;
+  eastmoneySecid: string;
+  sinaSymbol: string;
+  sinaKind: SinaSymbolKind;
+  sinaScale?: number; // multiplier applied to Sina price (e.g. 10 for SPY → S&P proxy)
+}
+
+const INDICES: IndexSpec[] = [
+  { code: "000001", name: "上证指数", eastmoneySecid: "1.000001", sinaSymbol: "s_sh000001", sinaKind: "a-short" },
+  { code: "HSI",    name: "恒生指数", eastmoneySecid: "100.HSI",   sinaSymbol: "hkHSI",     sinaKind: "long" },
+  { code: "SPX",    name: "标普500", eastmoneySecid: "100.SPX",   sinaSymbol: "gb_spy",    sinaKind: "long", sinaScale: 10 },
+  { code: "NDX",    name: "纳斯达克", eastmoneySecid: "100.NDX",   sinaSymbol: "gb_ixic",   sinaKind: "long" },
+  { code: "DJIA",   name: "道琼斯",  eastmoneySecid: "100.DJIA",  sinaSymbol: "gb_dji",    sinaKind: "long" }
+];
 
 const fngSchema = z.object({
   data: z.array(z.object({
@@ -79,13 +93,62 @@ export async function getTicker(): Promise<TickerResult> {
 }
 
 async function fetchIndices() {
-  const quotes = await Promise.all(INDICES.map(([secid]) => fetchEastmoneyQuote(secid)));
-  return quotes.map((quote, index) => ({
-    name: quote.name || INDICES[index][1],
-    code: quote.code,
-    price: quote.price ?? 0,
-    changePct: quote.changePct ?? 0
-  }));
+  // Try 东方财富 per-index, settle into a partial map by canonical code.
+  const eastmoneyResults = await Promise.allSettled(
+    INDICES.map(async (spec) => {
+      const quote = await fetchEastmoneyQuote(spec.eastmoneySecid);
+      if (typeof quote.price !== "number" || typeof quote.changePct !== "number") {
+        throw new Error("east incomplete");
+      }
+      return {
+        spec,
+        price: quote.price,
+        changePct: quote.changePct,
+        name: quote.name || spec.name
+      };
+    })
+  );
+
+  // Collect which specs need Sina fallback
+  const missing: IndexSpec[] = [];
+  const resolved = new Map<string, { name: string; price: number; changePct: number }>();
+  eastmoneyResults.forEach((r, i) => {
+    if (r.status === "fulfilled") {
+      const v = r.value;
+      resolved.set(v.spec.code, { name: v.name, price: v.price, changePct: v.changePct });
+    } else {
+      missing.push(INDICES[i]);
+    }
+  });
+
+  // Sina fallback for missing specs (single batch request)
+  if (missing.length > 0) {
+    const sina = await fetchSinaIndicesBatch(
+      missing.map((spec) => ({ symbol: spec.sinaSymbol, kind: spec.sinaKind }))
+    );
+    for (const spec of missing) {
+      const quote = sina[spec.sinaSymbol];
+      if (quote && typeof quote.price === "number" && typeof quote.changePct === "number") {
+        const price = spec.sinaScale ? quote.price * spec.sinaScale : quote.price;
+        resolved.set(spec.code, {
+          name: spec.name, // keep our canonical Chinese name
+          price,
+          changePct: quote.changePct
+        });
+      }
+    }
+  }
+
+  // Output in canonical INDICES order; missing entries throw to push 'eastmoney' to degraded[]
+  const out = INDICES.map((spec) => {
+    const r = resolved.get(spec.code);
+    if (!r) return null;
+    return { name: r.name, code: spec.code, price: r.price, changePct: r.changePct };
+  });
+  if (out.some((x) => x === null)) {
+    throw new Error("indices partial");
+  }
+  return out as { name: string; code: string; price: number; changePct: number }[];
 }
 
 async function fetchMarketTotals() {
