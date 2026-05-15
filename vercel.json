@@ -7,7 +7,8 @@
   "functions": {
     "api/[[...slug]].ts": {
       "memory": 256,
-      "maxDuration": 30
+      "maxDuration": 30,
+      "includeFiles": "apps/api/**"
     }
   }
 }
