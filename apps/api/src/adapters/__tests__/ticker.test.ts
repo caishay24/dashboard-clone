@@ -94,6 +94,40 @@ describe("getTicker", () => {
     expect(result.data.indices).toHaveLength(5);
   });
 
+  it("uses Sina fallback for all indices without marking eastmoney degraded", async () => {
+    fetchEastmoneyQuoteMock.mockRejectedValue(new Error("push2 blocked"));
+    fetchWithRetryMock.mockImplementation(async (input) => {
+      const url = String(input);
+      if (url.includes("hq.sinajs.cn")) {
+        return new Response([
+          'var hq_str_s_sh000001="上证指数,4135.3894,-42.5281,-1.02,7331623,151924003";',
+          'var hq_str_hkHSI="HSI,恒生指数,26391.020,26389.039,26391.020,25847.150,25962.730,-426.309,-1.615,0.00000,0.00000,325385515,19830055956,0.000,0.000,28056.100,22668.350,2026/05/15,16:10";',
+          'var hq_str_gb_inx="标普500指数,7501.2402,0.77,2026-05-15 05:03:23,56.9900,7454.3999,7517.1201,7454.3999,7460.0400,5767.4102";',
+          'var hq_str_gb_ixic="纳斯达克,26635.2219,0.88,2026-05-15 09:44:06,232.8781,26425.4684,26707.1412";',
+          'var hq_str_gb_dji="道琼斯,50063.4609,0.75,2026-05-15 05:03:23,370.2600,49843.5781,50200.5391";'
+        ].join("\n"));
+      }
+      if (url.includes("coingecko.com/api/v3/global")) {
+        return new Response(JSON.stringify(coingeckoGlobalFixture));
+      }
+      if (url.includes("alternative.me")) {
+        return new Response(JSON.stringify({ data: [{ value: "34", value_classification: "Fear" }] }));
+      }
+      return new Response(JSON.stringify({ result: { ProposeGasPrice: "0.33" } }));
+    });
+
+    const result = await getTicker();
+
+    expect(result.degraded).not.toContain("eastmoney");
+    expect(result.data.indices).toEqual([
+      { name: "上证指数", code: "000001", price: 4135.3894, changePct: -1.02 },
+      { name: "恒生指数", code: "HSI", price: 25962.73, changePct: -1.615 },
+      { name: "标普500", code: "SPX", price: 7501.2402, changePct: 0.77 },
+      { name: "纳斯达克", code: "NDX", price: 26635.2219, changePct: 0.88 },
+      { name: "道琼斯", code: "DJIA", price: 50063.4609, changePct: 0.75 }
+    ]);
+  });
+
   it("marks CoinGecko global degraded and nulls market totals when it fails", async () => {
     fetchWithRetryMock.mockImplementation(async (input) => {
       const url = String(input);

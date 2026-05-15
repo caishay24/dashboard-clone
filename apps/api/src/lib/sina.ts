@@ -9,13 +9,14 @@
 // Two response shapes depending on symbol prefix:
 //   - `s_<code>` (short, A股 only):   name, price, changeAbs, changePct, volume, amount
 //   - `<code>`   (long, indices/US/HK): name, price, changePct, date, changeAbs, prevClose, open, high, low, ...
+//   - `hk<code>` (HK index): symbol, name, open, high, ..., current, changeAbs, changePct, ...
 //
 // Verified symbols (2026-05-15 spike from CN IP):
 //   sh000001  上证指数 — works as short `s_sh000001` (returns 6 fields)
 //   hkHSI     恒生指数 — long format (`s_hkHSI` returns empty)
 //   gb_dji    道琼斯  — long format
 //   gb_ixic   纳斯达克 — long format
-//   gb_spy    SPY ETF — long format (used as proxy for S&P 500: SPY × 10 ≈ S&P)
+//   gb_inx    标普500指数 — long format
 import { fetchWithRetry } from "../fetchWithRetry";
 
 const SINA_BASE = "https://hq.sinajs.cn/list=";
@@ -96,7 +97,15 @@ function parseSinaLine(symbol: string, kind: SinaSymbolKind, text: string): Sina
     const changePct = num(fields[3]);
     return { symbol, name: fields[0] ?? "", price, changeAbs, changePct };
   }
-  // long format: name, price, changePct, date, changeAbs, prevClose, open, ...
+  if (symbol.startsWith("hk")) {
+    // HK index format: symbol, name, open, high, ..., current, changeAbs, changePct, ...
+    if (fields.length < 9) return null;
+    const price = num(fields[6]);
+    const changeAbs = num(fields[7]);
+    const changePct = num(fields[8]);
+    return { symbol, name: fields[1] ?? "", price, changePct, changeAbs };
+  }
+  // US index long format: name, price, changePct, date, changeAbs, prevClose, open, ...
   if (fields.length < 5) return null;
   const price = num(fields[1]);
   const changePct = num(fields[2]);

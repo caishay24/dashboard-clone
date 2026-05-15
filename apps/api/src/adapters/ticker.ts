@@ -8,21 +8,19 @@ import { fetchSinaIndicesBatch, type SinaSymbolKind } from "../lib/sina";
 const CRYPTO_SYMBOLS = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "BNBUSDT", "DOGEUSDT"];
 
 // Index source chain: try 东方财富 push2 first (richer fields), fall back to Sina
-// (works from US/JP IPs where push2 blocks). SPY ETF is used as S&P 500 proxy
-// (SPY × ~10 ≈ S&P 500 value; Sina does not expose ^SPX directly).
+// (works from US/JP IPs where push2 blocks).
 interface IndexSpec {
   code: string; // canonical code we display
   name: string;
   eastmoneySecid: string;
   sinaSymbol: string;
   sinaKind: SinaSymbolKind;
-  sinaScale?: number; // multiplier applied to Sina price (e.g. 10 for SPY → S&P proxy)
 }
 
 const INDICES: IndexSpec[] = [
   { code: "000001", name: "上证指数", eastmoneySecid: "1.000001", sinaSymbol: "s_sh000001", sinaKind: "a-short" },
   { code: "HSI",    name: "恒生指数", eastmoneySecid: "100.HSI",   sinaSymbol: "hkHSI",     sinaKind: "long" },
-  { code: "SPX",    name: "标普500", eastmoneySecid: "100.SPX",   sinaSymbol: "gb_spy",    sinaKind: "long", sinaScale: 10 },
+  { code: "SPX",    name: "标普500", eastmoneySecid: "100.SPX",   sinaSymbol: "gb_inx",    sinaKind: "long" },
   { code: "NDX",    name: "纳斯达克", eastmoneySecid: "100.NDX",   sinaSymbol: "gb_ixic",   sinaKind: "long" },
   { code: "DJIA",   name: "道琼斯",  eastmoneySecid: "100.DJIA",  sinaSymbol: "gb_dji",    sinaKind: "long" }
 ];
@@ -129,10 +127,9 @@ async function fetchIndices() {
     for (const spec of missing) {
       const quote = sina[spec.sinaSymbol];
       if (quote && typeof quote.price === "number" && typeof quote.changePct === "number") {
-        const price = spec.sinaScale ? quote.price * spec.sinaScale : quote.price;
         resolved.set(spec.code, {
           name: spec.name, // keep our canonical Chinese name
-          price,
+          price: quote.price,
           changePct: quote.changePct
         });
       }
