@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const responseStateSchema = z.enum(["fresh", "stale", "cold"]);
+export const cacheSourceSchema = z.enum(["miss", "upstash", "redis", "memory"]);
 export const errorCodeSchema = z.enum(["COLD", "UPSTREAM_DOWN", "RATE_LIMITED", "BAD_QUERY"]);
 
 export const responseMetaSchema = z.object({
@@ -8,6 +9,7 @@ export const responseMetaSchema = z.object({
   fetchedAt: z.string().datetime().nullable(),
   expiresAt: z.string().datetime().nullable(),
   source: z.string().nullable().optional(),
+  cache: cacheSourceSchema.optional(),
   degraded: z.array(z.string()).optional()
 });
 
@@ -46,6 +48,7 @@ export const tokenAllowlistItemSchema = z.object({
 });
 
 export type ResponseState = z.infer<typeof responseStateSchema>;
+export type CacheSource = z.infer<typeof cacheSourceSchema>;
 export type ErrorCode = z.infer<typeof errorCodeSchema>;
 export type ResponseMeta = z.infer<typeof responseMetaSchema>;
 export type ResponseError = z.infer<typeof responseErrorSchema>;

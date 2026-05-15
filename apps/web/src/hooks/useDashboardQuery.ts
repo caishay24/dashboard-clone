@@ -7,6 +7,7 @@ export interface DashboardEnvelope<T> {
     fetchedAt: string | null;
     expiresAt: string | null;
     source?: string | null;
+    cache?: "miss" | "upstash" | "redis" | "memory";
     degraded?: string[];
   };
   error: { code: string; message: string } | null;

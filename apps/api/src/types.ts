@@ -1,4 +1,4 @@
-import type { Envelope, ErrorCode, ResponseState } from "@dashboard/shared";
+import type { CacheSource, Envelope, ErrorCode, ResponseState } from "@dashboard/shared";
 
 export type AppEnvelope<T> = Envelope<T>;
 
@@ -9,6 +9,7 @@ export function envelope<T>(
     fetchedAt?: Date | null;
     expiresAt?: Date | null;
     source?: string | null;
+    cache?: CacheSource;
     degraded?: string[];
   },
   error: { code: ErrorCode; message: string } | null = null
@@ -20,6 +21,7 @@ export function envelope<T>(
       fetchedAt: meta.fetchedAt ? meta.fetchedAt.toISOString() : null,
       expiresAt: meta.expiresAt ? meta.expiresAt.toISOString() : null,
       source: meta.source ?? null,
+      ...(meta.cache ? { cache: meta.cache } : {}),
       ...(meta.degraded ? { degraded: meta.degraded } : {})
     },
     error

@@ -1,4 +1,5 @@
 import { envelope, type AppEnvelope } from "./types";
+import type { CacheSource } from "@dashboard/shared";
 
 type CacheState = "fresh" | "stale" | "cold";
 
@@ -32,16 +33,16 @@ export async function getOrFetch<T>(
 ): Promise<AppEnvelope<T>> {
   const cached = await readCache<T>(key);
   const now = Date.now();
-  const ageMs = cached ? now - Date.parse(cached.fetchedAt) : Number.POSITIVE_INFINITY;
+  const ageMs = cached.record ? now - Date.parse(cached.record.fetchedAt) : Number.POSITIVE_INFINITY;
 
-  if (cached && ageMs <= ttlSec * 1000) {
-    return wrap(cached, "fresh", ttlSec);
+  if (cached.record && ageMs <= ttlSec * 1000) {
+    return wrap(cached.record, "fresh", ttlSec, cached.source);
   }
 
   const pending = inflight.get(key);
   if (pending) return pending as Promise<AppEnvelope<T>>;
 
-  const request = fetchAndCache(key, ttlSec, hardMaxSec, fetcher, cached, ageMs, now);
+  const request = fetchAndCache(key, ttlSec, hardMaxSec, fetcher, cached.record, cached.source, ageMs, now);
   inflight.set(key, request as Promise<AppEnvelope<unknown>>);
   try {
     return await request;
@@ -56,6 +57,7 @@ async function fetchAndCache<T>(
   hardMaxSec: number,
   fetcher: () => Promise<T>,
   cached: CacheRecord<T> | null | undefined,
+  cachedSource: CacheSource,
   ageMs: number,
   now: number
 ): Promise<AppEnvelope<T>> {
@@ -63,33 +65,35 @@ async function fetchAndCache<T>(
     const data = await fetcher();
     const record = { data, fetchedAt: new Date(now).toISOString() };
     await writeCache(key, record);
-    return wrap(record, "fresh", ttlSec);
+    return wrap(record, "fresh", ttlSec, "miss");
   } catch {
     if (cached && ageMs <= hardMaxSec * 1000) {
-      return wrap(cached, "stale", ttlSec);
+      return wrap(cached, "stale", ttlSec, cachedSource);
     }
-    return envelope<T>(null, { state: "cold", source: key }, {
+    return envelope<T>(null, { state: "cold", source: key, cache: "miss" }, {
       code: "UPSTREAM_DOWN",
       message: "upstream unavailable"
     });
   }
 }
 
-function wrap<T>(record: CacheRecord<T>, state: CacheState, ttlSec: number) {
+function wrap<T>(record: CacheRecord<T>, state: CacheState, ttlSec: number, cache: CacheSource) {
   const fetchedAt = new Date(record.fetchedAt);
   const expiresAt = new Date(fetchedAt.getTime() + ttlSec * 1000);
-  return envelope(record.data, { state, fetchedAt, expiresAt });
+  return envelope(record.data, { state, fetchedAt, expiresAt, cache });
 }
 
 async function readCache<T>(key: string) {
   const upstashClient = await getUpstash();
-  if (upstashClient) return upstashClient.get<CacheRecord<T>>(key);
+  if (upstashClient) {
+    return { record: await upstashClient.get<CacheRecord<T>>(key), source: "upstash" as const };
+  }
   const client = await getNodeRedis();
   if (client) {
     const raw = await client.get(key);
-    return raw ? JSON.parse(raw) as CacheRecord<T> : null;
+    return { record: raw ? JSON.parse(raw) as CacheRecord<T> : null, source: "redis" as const };
   }
-  return memory.get(key) as CacheRecord<T> | undefined;
+  return { record: memory.get(key) as CacheRecord<T> | undefined, source: "memory" as const };
 }
 
 async function writeCache<T>(key: string, record: CacheRecord<T>) {
