@@ -59,6 +59,7 @@ app.get("/api/ticker", async (c) => {
     fetchedAt: response.meta.fetchedAt ? new Date(response.meta.fetchedAt) : null,
     expiresAt: response.meta.expiresAt ? new Date(response.meta.expiresAt) : null,
     source: "ticker",
+    cache: response.meta.cache,
     degraded: response.data?.degraded ?? []
   }, response.error), response.meta.state === "cold" ? 502 : 200);
 });
@@ -76,6 +77,7 @@ app.get("/api/stocks", async (c) => {
     fetchedAt: response.meta.fetchedAt ? new Date(response.meta.fetchedAt) : null,
     expiresAt: response.meta.expiresAt ? new Date(response.meta.expiresAt) : null,
     source: "stocks",
+    cache: response.meta.cache,
     degraded: response.data?.degraded ?? []
   }, response.error), response.meta.state === "cold" ? 502 : 200);
 });
@@ -92,7 +94,8 @@ app.get("/api/trading-comp", async (c) => {
     state: response.meta.state,
     fetchedAt: response.meta.fetchedAt ? new Date(response.meta.fetchedAt) : null,
     expiresAt: response.meta.expiresAt ? new Date(response.meta.expiresAt) : null,
-    source: "trading-comp"
+    source: "trading-comp",
+    cache: response.meta.cache
   }, response.error), response.meta.state === "cold" ? 502 : 200);
 });
 app.get("/api/market-analysis", async (c) => {
@@ -153,6 +156,7 @@ app.get("/api/onchain-stocks", async (c) => {
     fetchedAt: response.meta.fetchedAt ? new Date(response.meta.fetchedAt) : null,
     expiresAt: response.meta.expiresAt ? new Date(response.meta.expiresAt) : null,
     source: "onchain-stocks",
+    cache: response.meta.cache,
     degraded: response.data?.degraded ?? []
   }, response.error), response.meta.state === "cold" ? 502 : 200);
 });
