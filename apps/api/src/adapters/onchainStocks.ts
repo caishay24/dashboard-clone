@@ -1,6 +1,5 @@
 import type { TokenAllowlistItem } from "@dashboard/shared";
-import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import tokenAllowlistRaw from "../token-allowlist.json";
 import { validateTokenAllowlist } from "../schemas";
 import { fetchCoinPercentages, fetchCoinPrices } from "../lib/defillama";
 
@@ -21,9 +20,7 @@ export interface OnchainStocksResult {
   degraded: string[];
 }
 
-const allowlist = validateTokenAllowlist(JSON.parse(
-  readFileSync(resolve(import.meta.dirname, "../token-allowlist.json"), "utf8")
-));
+const allowlist = validateTokenAllowlist(tokenAllowlistRaw);
 
 export async function getOnchainStocks(params: { issuer?: string; category?: string }): Promise<OnchainStocksResult> {
   const selected = filterAllowlist(params);

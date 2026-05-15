@@ -5,6 +5,7 @@ node_modules/
 # build
 dist/
 build/
+api/_app.mjs
 .next/
 .turbo/
 .vercel/

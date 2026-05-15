@@ -1,6 +1,5 @@
-import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
 import { z } from "zod";
+import githubAllowlistRaw from "../github-allowlist.json";
 import { fetchWithRetry } from "../fetchWithRetry";
 
 const allowlistItemSchema = z.object({
@@ -34,9 +33,7 @@ export interface GithubRepoItem {
 
 type AllowlistItem = z.infer<typeof allowlistItemSchema>;
 
-const allowlist = z.array(allowlistItemSchema).parse(JSON.parse(
-  readFileSync(resolve(import.meta.dirname, "../github-allowlist.json"), "utf8")
-));
+const allowlist = z.array(allowlistItemSchema).parse(githubAllowlistRaw);
 const categoryOrder = Array.from(new Set(allowlist.map((item) => item.category)));
 
 export async function getGithubRepos(params: { category?: string }): Promise<GithubRepoItem[]> {

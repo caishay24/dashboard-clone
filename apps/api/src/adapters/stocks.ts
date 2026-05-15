@@ -1,7 +1,6 @@
 import type { Region } from "@dashboard/shared";
-import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
 import { z } from "zod";
+import stockAllowlistRaw from "../stocks-allowlist.json";
 import { fetchEastmoneyQuote, type EastmoneyQuote } from "../lib/eastmoney";
 
 const CONCURRENCY = 5;
@@ -41,9 +40,7 @@ export interface StocksResult {
   degraded: string[];
 }
 
-const stocksByRegion = stockAllowlistSchema.parse(JSON.parse(
-  readFileSync(resolve(import.meta.dirname, "../stocks-allowlist.json"), "utf8")
-)) as Record<Region, StockAllowlistItem[]>;
+const stocksByRegion = stockAllowlistSchema.parse(stockAllowlistRaw) as Record<Region, StockAllowlistItem[]>;
 
 export async function getStocks(params: { region: Region; sector?: string }): Promise<StocksResult> {
   const selected = stocksByRegion[params.region]
