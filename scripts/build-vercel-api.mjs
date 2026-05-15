@@ -8,6 +8,7 @@ await build({
   platform: "node",
   target: "node22",
   format: "esm",
+  external: ["redis", "@upstash/redis"],
   define: {
     "process.env.VERCEL": "\"1\""
   },

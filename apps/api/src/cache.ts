@@ -1,5 +1,3 @@
-import { Redis } from "@upstash/redis";
-import { createClient } from "redis";
 import { envelope, type AppEnvelope } from "./types";
 
 type CacheState = "fresh" | "stale" | "cold";
@@ -10,11 +8,21 @@ interface CacheRecord<T> {
 }
 
 const redisUrl = process.env.REDIS_URL;
-const upstash = redisUrl?.startsWith("http") ? Redis.fromEnv() : null;
-let nodeRedis: ReturnType<typeof createClient> | null = null;
+let upstash: UpstashCacheClient | null | undefined;
+let nodeRedis: NodeRedisCacheClient | null = null;
 let nodeRedisUnavailable = false;
 const memory = new Map<string, CacheRecord<unknown>>();
 const inflight = new Map<string, Promise<AppEnvelope<unknown>>>();
+
+interface UpstashCacheClient {
+  get<T>(key: string): Promise<T | null>;
+  set(key: string, value: unknown): Promise<unknown>;
+}
+
+interface NodeRedisCacheClient {
+  get(key: string): Promise<string | null>;
+  set(key: string, value: string): Promise<unknown>;
+}
 
 export async function getOrFetch<T>(
   key: string,
@@ -74,7 +82,8 @@ function wrap<T>(record: CacheRecord<T>, state: CacheState, ttlSec: number) {
 }
 
 async function readCache<T>(key: string) {
-  if (upstash) return upstash.get<CacheRecord<T>>(key);
+  const upstashClient = await getUpstash();
+  if (upstashClient) return upstashClient.get<CacheRecord<T>>(key);
   const client = await getNodeRedis();
   if (client) {
     const raw = await client.get(key);
@@ -84,8 +93,9 @@ async function readCache<T>(key: string) {
 }
 
 async function writeCache<T>(key: string, record: CacheRecord<T>) {
-  if (upstash) {
-    await upstash.set(key, record);
+  const upstashClient = await getUpstash();
+  if (upstashClient) {
+    await upstashClient.set(key, record);
     return;
   }
   const client = await getNodeRedis();
@@ -99,6 +109,7 @@ async function writeCache<T>(key: string, record: CacheRecord<T>) {
 async function getNodeRedis() {
   if (!redisUrl || redisUrl.startsWith("http") || nodeRedisUnavailable) return null;
   if (!nodeRedis) {
+    const { createClient } = await import("redis");
     const client = createClient({
       url: redisUrl,
       socket: {
@@ -113,7 +124,7 @@ async function getNodeRedis() {
           setTimeout(() => reject(new Error("redis connect timeout")), 500);
         })
       ]);
-      nodeRedis = client;
+      nodeRedis = client as NodeRedisCacheClient;
     } catch {
       nodeRedisUnavailable = true;
       await client.disconnect().catch(() => undefined);
@@ -121,4 +132,13 @@ async function getNodeRedis() {
     }
   }
   return nodeRedis;
+}
+
+async function getUpstash() {
+  if (!redisUrl?.startsWith("http")) return null;
+  if (upstash === undefined) {
+    const { Redis } = await import("@upstash/redis");
+    upstash = Redis.fromEnv();
+  }
+  return upstash;
 }
