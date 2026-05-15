@@ -224,6 +224,10 @@ export { app };
 // Use dynamic imports so neither dotenv nor @hono/node-server are pulled into
 // the Vercel serverless bundle (smaller cold start, no node:fs at module top).
 if (!process.env.VERCEL) {
+  void startDevServer();
+}
+
+async function startDevServer() {
   await import("dotenv/config");
   const { serve } = await import("@hono/node-server");
   const port = Number(process.env.PORT ?? 8787);
