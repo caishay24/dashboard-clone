@@ -1,0 +1,46 @@
+{
+  "count": 445,
+  "total_tvl": 85461951695.60307,
+  "top5": [
+    {
+      "gecko_id": "ethereum",
+      "tvl": 44956724133.21833,
+      "tokenSymbol": "ETH",
+      "cmcId": "1027",
+      "name": "Ethereum",
+      "chainId": 1
+    },
+    {
+      "gecko_id": "solana",
+      "tvl": 6052817222.482231,
+      "tokenSymbol": "SOL",
+      "cmcId": "5426",
+      "name": "Solana",
+      "chainId": null
+    },
+    {
+      "gecko_id": "binancecoin",
+      "tvl": 5648526339.361641,
+      "tokenSymbol": "BNB",
+      "cmcId": "1839",
+      "name": "BSC",
+      "chainId": 56
+    },
+    {
+      "gecko_id": "bitcoin",
+      "tvl": 5219048283.55403,
+      "tokenSymbol": "BTC",
+      "cmcId": "1",
+      "name": "Bitcoin",
+      "chainId": null
+    },
+    {
+      "gecko_id": "tron",
+      "tvl": 5147811369.676177,
+      "tokenSymbol": "TRON",
+      "cmcId": "1958",
+      "name": "Tron",
+      "chainId": null
+    }
+  ]
+}

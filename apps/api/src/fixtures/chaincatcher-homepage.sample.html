@@ -1,0 +1,622 @@
+<!doctype html>
+<html data-n-head-ssr lang="zh-CN" data-n-head="%7B%22lang%22:%7B%22ssr%22:%22zh-CN%22%7D%7D">
+  <head >
+    <meta data-n-head="ssr" charset="utf-8"><meta data-n-head="ssr" name="referrer" content="no-referrer"><meta data-n-head="ssr" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"><meta data-n-head="ssr" httpEquiv="cache-control" content="no-cache, no-store, must-revalidate"><meta data-n-head="ssr" name="title" content="链捕手ChainCatcher — 专业的区块链技术研究与资讯平台-Chain Catcher"><meta data-n-head="ssr" name="published_time" property="published_time" content=""><meta data-n-head="ssr" name="description" content="链捕手ChainCatcher是一家聚焦区块链、Web3、Crypto、AI+Crypto的研究与资讯平台，提供原创深度、精准快讯与数据研报等，为资深人士与新手小白提供全方位的数据与资讯服务。"><meta data-n-head="ssr" name="keywords" content="比特币,区块链,meme,以太坊,铭文是什么,NFT是什么,DeFi,公链,链游,交易所,AI,BRC20生态,Layer2,Layer1,Web3社交,比特币ETF,pepe,shib,V神,区块链融资,空投,加密基金"><meta data-n-head="ssr" name="twitter:card" content="summary_large_image"><meta data-n-head="ssr" name="twitter:site" content="@ChainCatcher_"><meta data-n-head="ssr" name="twitter:creator" content="@ChainCatcher_"><meta data-n-head="ssr" name="twitter:title" content="链捕手ChainCatcher — 专业的区块链技术研究与资讯平台-Chain Catcher"><meta data-n-head="ssr" name="twitter:description" content="链捕手ChainCatcher是一家聚焦区块链、Web3、Crypto、AI+Crypto的研究与资讯平台，提供原创深度、精准快讯与数据研报等，为资深人士与新手小白提供全方位的数据与资讯服务。"><meta data-n-head="ssr" name="twitter:image" content="https://www.chaincatcher.com/logo.png"><meta data-n-head="ssr" name="twitter:image:alt" content=""><meta data-n-head="ssr" property="og:title" content="链捕手ChainCatcher — 专业的区块链技术研究与资讯平台-Chain Catcher"><meta data-n-head="ssr" property="og:description" content="链捕手ChainCatcher是一家聚焦区块链、Web3、Crypto、AI+Crypto的研究与资讯平台，提供原创深度、精准快讯与数据研报等，为资深人士与新手小白提供全方位的数据与资讯服务。"><meta data-n-head="ssr" property="og:type" content="article"><meta data-n-head="ssr" property="og:site_name" content="ChainCatcher"><meta data-n-head="ssr" property="og:image" content="https://www.chaincatcher.com/logo.png"><meta data-n-head="ssr" property="og:image:width" content="1200"><meta data-n-head="ssr" property="og:image:height" content="600"><meta data-n-head="ssr" property="og:url" content="https://www.chaincatcher.com/"><meta data-n-head="ssr" property="og:locale" content="zh_CN"><meta data-n-head="ssr" property="og:locale:alternate" content="zh_TW"><meta data-n-head="ssr" property="og:locale:alternate" content="en_US"><meta data-n-head="ssr" property="og:locale:alternate" content="ja_JP"><meta data-n-head="ssr" property="og:locale:alternate" content="ko_KR"><title>链捕手ChainCatcher — 专业的区块链技术研究与资讯平台-Chain Catcher</title><link data-n-head="ssr" rel="icon" type="image/x-icon" href="/favicon.ico"><link data-n-head="ssr" rel="alternate" hreflang="zh-CN" href="https://www.chaincatcher.com/"><link data-n-head="ssr" rel="alternate" hreflang="zh-TW" href="https://www.chaincatcher.com/zh-tw/"><link data-n-head="ssr" rel="alternate" hreflang="en-US" href="https://www.chaincatcher.com/en/"><link data-n-head="ssr" rel="alternate" hreflang="ko" href="https://www.chaincatcher.com/ko/"><link data-n-head="ssr" rel="alternate" hreflang="ja" href="https://www.chaincatcher.com/ja/"><link data-n-head="ssr" rel="alternate" hreflang="x-default" href="https://www.chaincatcher.com/"><link data-n-head="ssr" rel="canonical" href="https://www.chaincatcher.com/"><style data-n-head="vuetify" type="text/css" id="vuetify-theme-stylesheet" nonce="undefined">.v-application a { color: #1976d2; }
+.v-application .primary {
+  background-color: #1976d2 !important;
+  border-color: #1976d2 !important;
+}
+.v-application .primary--text {
+  color: #1976d2 !important;
+  caret-color: #1976d2 !important;
+}
+.v-application .primary.lighten-5 {
+  background-color: #c7fdff !important;
+  border-color: #c7fdff !important;
+}
+.v-application .primary--text.text--lighten-5 {
+  color: #c7fdff !important;
+  caret-color: #c7fdff !important;
+}
+.v-application .primary.lighten-4 {
+  background-color: #a8e0ff !important;
+  border-color: #a8e0ff !important;
+}
+.v-application .primary--text.text--lighten-4 {
+  color: #a8e0ff !important;
+  caret-color: #a8e0ff !important;
+}
+.v-application .primary.lighten-3 {
+  background-color: #8ac5ff !important;
+  border-color: #8ac5ff !important;
+}
+.v-application .primary--text.text--lighten-3 {
+  color: #8ac5ff !important;
+  caret-color: #8ac5ff !important;
+}
+.v-application .primary.lighten-2 {
+  background-color: #6aaaff !important;
+  border-color: #6aaaff !important;
+}
+.v-application .primary--text.text--lighten-2 {
+  color: #6aaaff !important;
+  caret-color: #6aaaff !important;
+}
+.v-application .primary.lighten-1 {
+  background-color: #488fef !important;
+  border-color: #488fef !important;
+}
+.v-application .primary--text.text--lighten-1 {
+  color: #488fef !important;
+  caret-color: #488fef !important;
+}
+.v-application .primary.darken-1 {
+  background-color: #005eb6 !important;
+  border-color: #005eb6 !important;
+}
+.v-application .primary--text.text--darken-1 {
+  color: #005eb6 !important;
+  caret-color: #005eb6 !important;
+}
+.v-application .primary.darken-2 {
+  background-color: #00479b !important;
+  border-color: #00479b !important;
+}
+.v-application .primary--text.text--darken-2 {
+  color: #00479b !important;
+  caret-color: #00479b !important;
+}
+.v-application .primary.darken-3 {
+  background-color: #003180 !important;
+  border-color: #003180 !important;
+}
+.v-application .primary--text.text--darken-3 {
+  color: #003180 !important;
+  caret-color: #003180 !important;
+}
+.v-application .primary.darken-4 {
+  background-color: #001e67 !important;
+  border-color: #001e67 !important;
+}
+.v-application .primary--text.text--darken-4 {
+  color: #001e67 !important;
+  caret-color: #001e67 !important;
+}
+.v-application .secondary {
+  background-color: #424242 !important;
+  border-color: #424242 !important;
+}
+.v-application .secondary--text {
+  color: #424242 !important;
+  caret-color: #424242 !important;
+}
+.v-application .secondary.lighten-5 {
+  background-color: #c1c1c1 !important;
+  border-color: #c1c1c1 !important;
+}
+.v-application .secondary--text.text--lighten-5 {
+  color: #c1c1c1 !important;
+  caret-color: #c1c1c1 !important;
+}
+.v-application .secondary.lighten-4 {
+  background-color: #a6a6a6 !important;
+  border-color: #a6a6a6 !important;
+}
+.v-application .secondary--text.text--lighten-4 {
+  color: #a6a6a6 !important;
+  caret-color: #a6a6a6 !important;
+}
+.v-application .secondary.lighten-3 {
+  background-color: #8b8b8b !important;
+  border-color: #8b8b8b !important;
+}
+.v-application .secondary--text.text--lighten-3 {
+  color: #8b8b8b !important;
+  caret-color: #8b8b8b !important;
+}
+.v-application .secondary.lighten-2 {
+  background-color: #727272 !important;
+  border-color: #727272 !important;
+}
+.v-application .secondary--text.text--lighten-2 {
+  color: #727272 !important;
+  caret-color: #727272 !important;
+}
+.v-application .secondary.lighten-1 {
+  background-color: #595959 !important;
+  border-color: #595959 !important;
+}
+.v-application .secondary--text.text--lighten-1 {
+  color: #595959 !important;
+  caret-color: #595959 !important;
+}
+.v-application .secondary.darken-1 {
+  background-color: #2c2c2c !important;
+  border-color: #2c2c2c !important;
+}
+.v-application .secondary--text.text--darken-1 {
+  color: #2c2c2c !important;
+  caret-color: #2c2c2c !important;
+}
+.v-application .secondary.darken-2 {
+  background-color: #171717 !important;
+  border-color: #171717 !important;
+}
+.v-application .secondary--text.text--darken-2 {
+  color: #171717 !important;
+  caret-color: #171717 !important;
+}
+.v-application .secondary.darken-3 {
+  background-color: #000000 !important;
+  border-color: #000000 !important;
+}
+.v-application .secondary--text.text--darken-3 {
+  color: #000000 !important;
+  caret-color: #000000 !important;
+}
+.v-application .secondary.darken-4 {
+  background-color: #000000 !important;
+  border-color: #000000 !important;
+}
+.v-application .secondary--text.text--darken-4 {
+  color: #000000 !important;
+  caret-color: #000000 !important;
+}
+.v-application .accent {
+  background-color: #82b1ff !important;
+  border-color: #82b1ff !important;
+}
+.v-application .accent--text {
+  color: #82b1ff !important;
+  caret-color: #82b1ff !important;
+}
+.v-application .accent.lighten-5 {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+.v-application .accent--text.text--lighten-5 {
+  color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
+.v-application .accent.lighten-4 {
+  background-color: #f8ffff !important;
+  border-color: #f8ffff !important;
+}
+.v-application .accent--text.text--lighten-4 {
+  color: #f8ffff !important;
+  caret-color: #f8ffff !important;
+}
+.v-application .accent.lighten-3 {
+  background-color: #daffff !important;
+  border-color: #daffff !important;
+}
+.v-application .accent--text.text--lighten-3 {
+  color: #daffff !important;
+  caret-color: #daffff !important;
+}
+.v-application .accent.lighten-2 {
+  background-color: #bce8ff !important;
+  border-color: #bce8ff !important;
+}
+.v-application .accent--text.text--lighten-2 {
+  color: #bce8ff !important;
+  caret-color: #bce8ff !important;
+}
+.v-application .accent.lighten-1 {
+  background-color: #9fccff !important;
+  border-color: #9fccff !important;
+}
+.v-application .accent--text.text--lighten-1 {
+  color: #9fccff !important;
+  caret-color: #9fccff !important;
+}
+.v-application .accent.darken-1 {
+  background-color: #6596e2 !important;
+  border-color: #6596e2 !important;
+}
+.v-application .accent--text.text--darken-1 {
+  color: #6596e2 !important;
+  caret-color: #6596e2 !important;
+}
+.v-application .accent.darken-2 {
+  background-color: #467dc6 !important;
+  border-color: #467dc6 !important;
+}
+.v-application .accent--text.text--darken-2 {
+  color: #467dc6 !important;
+  caret-color: #467dc6 !important;
+}
+.v-application .accent.darken-3 {
+  background-color: #2364aa !important;
+  border-color: #2364aa !important;
+}
+.v-application .accent--text.text--darken-3 {
+  color: #2364aa !important;
+  caret-color: #2364aa !important;
+}
+.v-application .accent.darken-4 {
+  background-color: #004c90 !important;
+  border-color: #004c90 !important;
+}
+.v-application .accent--text.text--darken-4 {
+  color: #004c90 !important;
+  caret-color: #004c90 !important;
+}
+.v-application .error {
+  background-color: #ff5252 !important;
+  border-color: #ff5252 !important;
+}
+.v-application .error--text {
+  color: #ff5252 !important;
+  caret-color: #ff5252 !important;
+}
+.v-application .error.lighten-5 {
+  background-color: #ffe4d5 !important;
+  border-color: #ffe4d5 !important;
+}
+.v-application .error--text.text--lighten-5 {
+  color: #ffe4d5 !important;
+  caret-color: #ffe4d5 !important;
+}
+.v-application .error.lighten-4 {
+  background-color: #ffc6b9 !important;
+  border-color: #ffc6b9 !important;
+}
+.v-application .error--text.text--lighten-4 {
+  color: #ffc6b9 !important;
+  caret-color: #ffc6b9 !important;
+}
+.v-application .error.lighten-3 {
+  background-color: #ffa99e !important;
+  border-color: #ffa99e !important;
+}
+.v-application .error--text.text--lighten-3 {
+  color: #ffa99e !important;
+  caret-color: #ffa99e !important;
+}
+.v-application .error.lighten-2 {
+  background-color: #ff8c84 !important;
+  border-color: #ff8c84 !important;
+}
+.v-application .error--text.text--lighten-2 {
+  color: #ff8c84 !important;
+  caret-color: #ff8c84 !important;
+}
+.v-application .error.lighten-1 {
+  background-color: #ff6f6a !important;
+  border-color: #ff6f6a !important;
+}
+.v-application .error--text.text--lighten-1 {
+  color: #ff6f6a !important;
+  caret-color: #ff6f6a !important;
+}
+.v-application .error.darken-1 {
+  background-color: #df323b !important;
+  border-color: #df323b !important;
+}
+.v-application .error--text.text--darken-1 {
+  color: #df323b !important;
+  caret-color: #df323b !important;
+}
+.v-application .error.darken-2 {
+  background-color: #bf0025 !important;
+  border-color: #bf0025 !important;
+}
+.v-application .error--text.text--darken-2 {
+  color: #bf0025 !important;
+  caret-color: #bf0025 !important;
+}
+.v-application .error.darken-3 {
+  background-color: #9f0010 !important;
+  border-color: #9f0010 !important;
+}
+.v-application .error--text.text--darken-3 {
+  color: #9f0010 !important;
+  caret-color: #9f0010 !important;
+}
+.v-application .error.darken-4 {
+  background-color: #800000 !important;
+  border-color: #800000 !important;
+}
+.v-application .error--text.text--darken-4 {
+  color: #800000 !important;
+  caret-color: #800000 !important;
+}
+.v-application .info {
+  background-color: #2196f3 !important;
+  border-color: #2196f3 !important;
+}
+.v-application .info--text {
+  color: #2196f3 !important;
+  caret-color: #2196f3 !important;
+}
+.v-application .info.lighten-5 {
+  background-color: #d4ffff !important;
+  border-color: #d4ffff !important;
+}
+.v-application .info--text.text--lighten-5 {
+  color: #d4ffff !important;
+  caret-color: #d4ffff !important;
+}
+.v-application .info.lighten-4 {
+  background-color: #b5ffff !important;
+  border-color: #b5ffff !important;
+}
+.v-application .info--text.text--lighten-4 {
+  color: #b5ffff !important;
+  caret-color: #b5ffff !important;
+}
+.v-application .info.lighten-3 {
+  background-color: #95e8ff !important;
+  border-color: #95e8ff !important;
+}
+.v-application .info--text.text--lighten-3 {
+  color: #95e8ff !important;
+  caret-color: #95e8ff !important;
+}
+.v-application .info.lighten-2 {
+  background-color: #75ccff !important;
+  border-color: #75ccff !important;
+}
+.v-application .info--text.text--lighten-2 {
+  color: #75ccff !important;
+  caret-color: #75ccff !important;
+}
+.v-application .info.lighten-1 {
+  background-color: #51b0ff !important;
+  border-color: #51b0ff !important;
+}
+.v-application .info--text.text--lighten-1 {
+  color: #51b0ff !important;
+  caret-color: #51b0ff !important;
+}
+.v-application .info.darken-1 {
+  background-color: #007cd6 !important;
+  border-color: #007cd6 !important;
+}
+.v-application .info--text.text--darken-1 {
+  color: #007cd6 !important;
+  caret-color: #007cd6 !important;
+}
+.v-application .info.darken-2 {
+  background-color: #0064ba !important;
+  border-color: #0064ba !important;
+}
+.v-application .info--text.text--darken-2 {
+  color: #0064ba !important;
+  caret-color: #0064ba !important;
+}
+.v-application .info.darken-3 {
+  background-color: #004d9f !important;
+  border-color: #004d9f !important;
+}
+.v-application .info--text.text--darken-3 {
+  color: #004d9f !important;
+  caret-color: #004d9f !important;
+}
+.v-application .info.darken-4 {
+  background-color: #003784 !important;
+  border-color: #003784 !important;
+}
+.v-application .info--text.text--darken-4 {
+  color: #003784 !important;
+  caret-color: #003784 !important;
+}
+.v-application .success {
+  background-color: #4caf50 !important;
+  border-color: #4caf50 !important;
+}
+.v-application .success--text {
+  color: #4caf50 !important;
+  caret-color: #4caf50 !important;
+}
+.v-application .success.lighten-5 {
+  background-color: #dcffd6 !important;
+  border-color: #dcffd6 !important;
+}
+.v-application .success--text.text--lighten-5 {
+  color: #dcffd6 !important;
+  caret-color: #dcffd6 !important;
+}
+.v-application .success.lighten-4 {
+  background-color: #beffba !important;
+  border-color: #beffba !important;
+}
+.v-application .success--text.text--lighten-4 {
+  color: #beffba !important;
+  caret-color: #beffba !important;
+}
+.v-application .success.lighten-3 {
+  background-color: #a2ff9e !important;
+  border-color: #a2ff9e !important;
+}
+.v-application .success--text.text--lighten-3 {
+  color: #a2ff9e !important;
+  caret-color: #a2ff9e !important;
+}
+.v-application .success.lighten-2 {
+  background-color: #85e783 !important;
+  border-color: #85e783 !important;
+}
+.v-application .success--text.text--lighten-2 {
+  color: #85e783 !important;
+  caret-color: #85e783 !important;
+}
+.v-application .success.lighten-1 {
+  background-color: #69cb69 !important;
+  border-color: #69cb69 !important;
+}
+.v-application .success--text.text--lighten-1 {
+  color: #69cb69 !important;
+  caret-color: #69cb69 !important;
+}
+.v-application .success.darken-1 {
+  background-color: #2d9437 !important;
+  border-color: #2d9437 !important;
+}
+.v-application .success--text.text--darken-1 {
+  color: #2d9437 !important;
+  caret-color: #2d9437 !important;
+}
+.v-application .success.darken-2 {
+  background-color: #00791e !important;
+  border-color: #00791e !important;
+}
+.v-application .success--text.text--darken-2 {
+  color: #00791e !important;
+  caret-color: #00791e !important;
+}
+.v-application .success.darken-3 {
+  background-color: #006000 !important;
+  border-color: #006000 !important;
+}
+.v-application .success--text.text--darken-3 {
+  color: #006000 !important;
+  caret-color: #006000 !important;
+}
+.v-application .success.darken-4 {
+  background-color: #004700 !important;
+  border-color: #004700 !important;
+}
+.v-application .success--text.text--darken-4 {
+  color: #004700 !important;
+  caret-color: #004700 !important;
+}
+.v-application .warning {
+  background-color: #fb8c00 !important;
+  border-color: #fb8c00 !important;
+}
+.v-application .warning--text {
+  color: #fb8c00 !important;
+  caret-color: #fb8c00 !important;
+}
+.v-application .warning.lighten-5 {
+  background-color: #ffff9e !important;
+  border-color: #ffff9e !important;
+}
+.v-application .warning--text.text--lighten-5 {
+  color: #ffff9e !important;
+  caret-color: #ffff9e !important;
+}
+.v-application .warning.lighten-4 {
+  background-color: #fffb82 !important;
+  border-color: #fffb82 !important;
+}
+.v-application .warning--text.text--lighten-4 {
+  color: #fffb82 !important;
+  caret-color: #fffb82 !important;
+}
+.v-application .warning.lighten-3 {
+  background-color: #ffdf67 !important;
+  border-color: #ffdf67 !important;
+}
+.v-application .warning--text.text--lighten-3 {
+  color: #ffdf67 !important;
+  caret-color: #ffdf67 !important;
+}
+.v-application .warning.lighten-2 {
+  background-color: #ffc24b !important;
+  border-color: #ffc24b !important;
+}
+.v-application .warning--text.text--lighten-2 {
+  color: #ffc24b !important;
+  caret-color: #ffc24b !important;
+}
+.v-application .warning.lighten-1 {
+  background-color: #ffa72d !important;
+  border-color: #ffa72d !important;
+}
+.v-application .warning--text.text--lighten-1 {
+  color: #ffa72d !important;
+  caret-color: #ffa72d !important;
+}
+.v-application .warning.darken-1 {
+  background-color: #db7200 !important;
+  border-color: #db7200 !important;
+}
+.v-application .warning--text.text--darken-1 {
+  color: #db7200 !important;
+  caret-color: #db7200 !important;
+}
+.v-application .warning.darken-2 {
+  background-color: #bb5900 !important;
+  border-color: #bb5900 !important;
+}
+.v-application .warning--text.text--darken-2 {
+  color: #bb5900 !important;
+  caret-color: #bb5900 !important;
+}
+.v-application .warning.darken-3 {
+  background-color: #9d4000 !important;
+  border-color: #9d4000 !important;
+}
+.v-application .warning--text.text--darken-3 {
+  color: #9d4000 !important;
+  caret-color: #9d4000 !important;
+}
+.v-application .warning.darken-4 {
+  background-color: #802700 !important;
+  border-color: #802700 !important;
+}
+.v-application .warning--text.text--darken-4 {
+  color: #802700 !important;
+  caret-color: #802700 !important;
+}</style><script data-n-head="nuxt-jsonld" data-hid="nuxt-jsonld--74fe19b" type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"NewsMediaOrganization","@id":"https://www.chaincatcher.com//#organization","name":"ChainCatcher","url":"https://www.chaincatcher.com/","logo":{"@type":"ImageObject","url":"https://www.chaincatcher.com/logo.png","width":300,"height":300},"sameAs":["https://x.com/ChainCatcher_","https://mirror.xyz/0x8C4d5E90196325FB22Fff37C97D7984a37e51D11","https://btok360.com/chaincatcher"],"description":"链捕手ChainCatcher是一家聚焦区块链、Web3、Crypto、AI+Crypto的研究与资讯平台，提供原创深度、精准快讯与数据研报等，为资深人士与新手小白提供全方位的数据与资讯服务。","inLanguage":"zh-CN"},{"@type":"WebSite","@id":"https://www.chaincatcher.com//#website","url":"https://www.chaincatcher.com/","name":"ChainCatcher","publisher":{"@id":"https://www.chaincatcher.com//#organization"},"potentialAction":{"@type":"SearchAction","target":"https://www.chaincatcher.com//search?q={search_term_string}","query-input":"required name=search_term_string"},"inLanguage":"zh-CN"},{"@type":"BreadcrumbList","@id":"https://www.chaincatcher.com//#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://www.chaincatcher.com/"}],"inLanguage":"zh-CN"}]}</script><link rel="preload" href="/_nuxt/82c67d1.js" as="script"><link rel="preload" href="/_nuxt/84b519b.js" as="script"><link rel="preload" href="/_nuxt/css/42610f2.css" as="style"><link rel="preload" href="/_nuxt/744ee58.js" as="script"><link rel="preload" href="/_nuxt/css/4fdb40a.css" as="style"><link rel="preload" href="/_nuxt/57efb97.js" as="script"><link rel="stylesheet" href="/_nuxt/css/42610f2.css"><link rel="stylesheet" href="/_nuxt/css/4fdb40a.css">
+  </head>
+  <body >
+    <div data-server-rendered="true" id="__nuxt"><div id="__layout"><div data-app="true" id="app" class="v-application app_wraper v-application--is-ltr theme--light"><div class="v-application--wrap"><header data-fetch-key="layout-header:0" class="header v-sheet theme--light v-toolbar v-toolbar--flat v-app-bar v-app-bar--clipped v-app-bar--fixed" style="height:107px;width:100%;margin-top:0px;transform:translateY(0px);left:0px;right:0px;background-color:#fff;border-color:#fff;" data-v-a8920d6a><div class="v-toolbar__content" style="height:107px;"><div class="container pa-0" data-v-a8920d6a><div class="top_area" data-v-a8920d6a><div class="header_container" data-v-a8920d6a><div class="row no-gutters align-center justify-space-between" data-v-a8920d6a><div class="d-flex align-center col-sm-2 col-md-4 col" data-v-a8920d6a><a href="/" class="d-flex align-center" data-v-a8920d6a><img src="/_nuxt/img/logo.6e7d2c8.png" alt="logo加载失败" class="img_logo" data-v-a8920d6a></a></div> <div class="search_area d-none d-md-flex justify-center align-center col-sm-4 col-md-4 col" data-v-a8920d6a><div class="text_field d-flex justify-center" data-v-a8920d6a><div class="v-input global_search v-input--hide-details v-input--is-readonly v-input--dense theme--light v-text-field v-text-field--full-width v-text-field--single-line v-text-field--placeholder" data-v-a8920d6a><div class="v-input__prepend-outer"><span class="search_icon" data-v-a8920d6a><span class="icon_drop" data-v-a8920d6a></span></span></div><div class="v-input__control"><div class="v-input__slot"><div class="v-text-field__slot"><input id="input-47001890" placeholder="搜索..." readonly="readonly" type="text" value=""></div></div></div></div></div></div> <div class="logo_area d-flex justify-end align-center col-sm-4 col-md-4 col" data-v-a8920d6a><div class="client-only-placeholder" data-v-a8920d6a><div class="d-none d-md-flex" style="width:170px;height:36px;" data-v-a8920d6a></div></div> <div class="d-flex align-center justify-center d-md-none mobile_search_wrap global_search" style="width:24px;height:24px;background:none;" data-v-a8920d6a><img src="/_nuxt/img/search.76a5201.png" alt="" style="width:24px;height:24px;" data-v-a8920d6a></div> <a href="https://github.com/ChainCatcherOfficial" target="_blank" class="api-icon" style="width:24px;height:24px;cursor:pointer;" data-v-a8920d6a><img src="/_nuxt/img/api.67a631e.png" alt="" style="width:24px;height:24px;" data-v-a8920d6a></a> <div class="d-none d-md-block icon" data-v-a8920d6a><div class="qrcode_area pb-2" data-v-a8920d6a><span class="cur_qrcode" data-v-a8920d6a></span> <span class="download" data-v-a8920d6a>扫码下载</span></div></div> <div class="client-only-placeholder" data-v-a8920d6a><div class="scan-box d-flex align-center" style="margin:0 16px;" data-v-a8920d6a><span class="text no_log" data-v-a8920d6a><img src="/_nuxt/img/profile.2f55667.png" alt="" data-v-a8920d6a></span></div></div> <div class="client-only-placeholder" data-v-a8920d6a><button type="button" class="lang_text v-btn v-btn--text theme--light v-size--default" data-v-a8920d6a><span class="v-btn__content"><img src="/_nuxt/img/lang.aad807a.png" alt="" style="width:24px;height:24px;" data-v-a8920d6a></span></button></div></div></div></div></div> <div class="head-bottom" style="display:flex;min-height:38px;overflow:hidden;" data-v-a8920d6a><div class="nav-box" data-v-2b29b076 data-v-a8920d6a><div class="nav-box-pc" data-v-2b29b076><a href="/" aria-current="page" target="" class="nav-item nuxt-link-exact-active nuxt-link-active" data-v-2b29b076>
+          首页
+        </a><a href="/news" target="" class="nav-item" data-v-2b29b076>
+          快讯
+        </a><div class="client-only-placeholder" data-v-2b29b076 data-v-2b29b076><a class="nav-item ml-0 d-flex flex-row align-center" data-v-2b29b076><!---->
+              深度
+              <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACXSURBVHgB7ZDBDYAgDEXBxD1wFDfRLdSTJ3UL3cRRdA8TsVUOhrTQAfoTgynte4AxGo3GUsVh2Q5cb+/rpW/PFKCbV1dYu+P/1DVVvF9wVvjeQQSYDBx7LdNDCko4OSxnSvKHY2+YIQ9LZgTA9V3deQD8n4uCj8xTsgJOgnUpPCugJGHISeAiQSwJJRFcLIgkRgrXaDRfHrniWt1rKwvaAAAAAElFTkSuQmCC" alt="" class="icon-down" data-v-2b29b076></a></div><a href="/calendar" target="" class="nav-item" data-v-2b29b076>
+          日历
+        </a><div class="client-only-placeholder" data-v-2b29b076 data-v-2b29b076><a class="nav-item ml-0 d-flex flex-row align-center" data-v-2b29b076><!---->
+              数据
+              <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACXSURBVHgB7ZDBDYAgDEXBxD1wFDfRLdSTJ3UL3cRRdA8TsVUOhrTQAfoTgynte4AxGo3GUsVh2Q5cb+/rpW/PFKCbV1dYu+P/1DVVvF9wVvjeQQSYDBx7LdNDCko4OSxnSvKHY2+YIQ9LZgTA9V3deQD8n4uCj8xTsgJOgnUpPCugJGHISeAiQSwJJRFcLIgkRgrXaDRfHrniWt1rKwvaAAAAAElFTkSuQmCC" alt="" class="icon-down" data-v-2b29b076></a></div><div class="client-only-placeholder" data-v-2b29b076 data-v-2b29b076><a class="nav-item ml-0 d-flex flex-row align-center" data-v-2b29b076><!---->
+              发现
+              <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACXSURBVHgB7ZDBDYAgDEXBxD1wFDfRLdSTJ3UL3cRRdA8TsVUOhrTQAfoTgynte4AxGo3GUsVh2Q5cb+/rpW/PFKCbV1dYu+P/1DVVvF9wVvjeQQSYDBx7LdNDCko4OSxnSvKHY2+YIQ9LZgTA9V3deQD8n4uCj8xTsgJOgnUpPCugJGHISeAiQSwJJRFcLIgkRgrXaDRfHrniWt1rKwvaAAAAAElFTkSuQmCC" alt="" class="icon-down" data-v-2b29b076></a></div></div> <!----> <!----></div> <div class="marquee-wrapper" data-v-14b908fc data-v-a8920d6a><div class="arrow left" data-v-14b908fc><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA5CAYAAABj2ui7AAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAGTSURBVHgB7ddBTsJQEAbgmYLRsOoROAIcgRt4A+wNZKMCmxqDohu9QeUkHEGP0CPgQkOUdHxDUiSk7DrvCfm/FX0b+Du8efOIAAAAAAAAAI4QUyCXaRa3zjgrRAbTYZKTkYgCuHnI2q1Tnru3ex4xz/WZjHivoIbRUO6L2+WaEOVfS+m+pMmCaua1glXhVEPk1iKc8lbBfeEikeRumLySES8BQ4VT5gGrwjHTosnSS6+SdzJmugdHT1knZDjVJCMajoXn7mNcrvkOp0wquAknf+GcvFlI12c4VXvA8eOsXxXuRFzlDCeWfWoPyFR87HYud5DTksIw6aKp+4uuXBVlq4o6rbi5szf1XEWTPaj7TJuJNpVyTTupdtTRJOuQR2bHRBnSfczLNQ3Jkd+Q5gd96g76H14fF+3NotBCCundjw/8oFfaObWD0lYl3WuNucFv2nHJmLdhu7KS61/AF5Pr/oyMeL0Phgjp/cK7J2T+eQwXXlWxJ9fPB3/h3ZU+Z/HqmzM3nw5CjHAAAAAAAAAA8J/9Aq/BtExsnhfLAAAAAElFTkSuQmCC" alt data-v-14b908fc></div> <div class="marquee" data-v-14b908fc><div class="marquee-content" style="transform:translateX(0px);" data-v-14b908fc><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b6/1666341517173.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>BTC</span> <span class="token-price" data-v-14b908fc>$81,047.60</span> <span class="token-change change-up" data-v-14b908fc>+2.34%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b6/1703249591096.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>ETH</span> <span class="token-price" data-v-14b908fc>$2,288.92</span> <span class="token-change change-up" data-v-14b908fc>+1.65%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.chaincatcher.com/upload/image/20260429/1777449955829-909087.webp" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>BNB</span> <span class="token-price" data-v-14b908fc>$679.08</span> <span class="token-change change-up" data-v-14b908fc>+1.72%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b15/1666341931142.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>XRP</span> <span class="token-price" data-v-14b908fc>$1.47</span> <span class="token-change change-up" data-v-14b908fc>+3.39%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b15/1666364340995.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>SOL</span> <span class="token-price" data-v-14b908fc>$92.53</span> <span class="token-change change-up" data-v-14b908fc>+1.83%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b6/1668593152266.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>TRX</span> <span class="token-price" data-v-14b908fc>$0.3542</span> <span class="token-change change-up" data-v-14b908fc>+1.26%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b15/1666342910836.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>DOGE</span> <span class="token-price" data-v-14b908fc>$0.1141</span> <span class="token-change change-up" data-v-14b908fc>+2.99%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b15/1666345671320.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>ADA</span> <span class="token-price" data-v-14b908fc>$0.2697</span> <span class="token-change change-up" data-v-14b908fc>+2.30%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b6/1688464258839.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>BCH</span> <span class="token-price" data-v-14b908fc>$434.65</span> <span class="token-change change-up" data-v-14b908fc>+0.78%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b16/1666513899328.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>LINK</span> <span class="token-price" data-v-14b908fc>$10.57</span> <span class="token-change change-up" data-v-14b908fc>+4.19%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b12/1687927316246.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>HYPE</span> <span class="token-price" data-v-14b908fc>$42.58</span> <span class="token-change change-up" data-v-14b908fc>+9.39%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b12/1747711205885.png" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>AAVE</span> <span class="token-price" data-v-14b908fc>$98.75</span> <span class="token-change change-up" data-v-14b908fc>+3.28%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b6/1744523743365.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>SUI</span> <span class="token-price" data-v-14b908fc>$1.21</span> <span class="token-change change-up" data-v-14b908fc>+0.99%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b15/1666344010515.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>XLM</span> <span class="token-price" data-v-14b908fc>$0.1636</span> <span class="token-change change-up" data-v-14b908fc>+2.90%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b6/1759897757189.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>ZEC</span> <span class="token-price" data-v-14b908fc>$546.88</span> <span class="token-change change-up" data-v-14b908fc>+2.15%</span></div> <div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b6/1666341517173.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>BTC</span> <span class="token-price" data-v-14b908fc>$81,047.60</span> <span class="token-change change-up" data-v-14b908fc>+2.34%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b6/1703249591096.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>ETH</span> <span class="token-price" data-v-14b908fc>$2,288.92</span> <span class="token-change change-up" data-v-14b908fc>+1.65%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.chaincatcher.com/upload/image/20260429/1777449955829-909087.webp" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>BNB</span> <span class="token-price" data-v-14b908fc>$679.08</span> <span class="token-change change-up" data-v-14b908fc>+1.72%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b15/1666341931142.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>XRP</span> <span class="token-price" data-v-14b908fc>$1.47</span> <span class="token-change change-up" data-v-14b908fc>+3.39%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b15/1666364340995.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>SOL</span> <span class="token-price" data-v-14b908fc>$92.53</span> <span class="token-change change-up" data-v-14b908fc>+1.83%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b6/1668593152266.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>TRX</span> <span class="token-price" data-v-14b908fc>$0.3542</span> <span class="token-change change-up" data-v-14b908fc>+1.26%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b15/1666342910836.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>DOGE</span> <span class="token-price" data-v-14b908fc>$0.1141</span> <span class="token-change change-up" data-v-14b908fc>+2.99%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b15/1666345671320.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>ADA</span> <span class="token-price" data-v-14b908fc>$0.2697</span> <span class="token-change change-up" data-v-14b908fc>+2.30%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b6/1688464258839.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>BCH</span> <span class="token-price" data-v-14b908fc>$434.65</span> <span class="token-change change-up" data-v-14b908fc>+0.78%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b16/1666513899328.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>LINK</span> <span class="token-price" data-v-14b908fc>$10.57</span> <span class="token-change change-up" data-v-14b908fc>+4.19%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b12/1687927316246.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>HYPE</span> <span class="token-price" data-v-14b908fc>$42.58</span> <span class="token-change change-up" data-v-14b908fc>+9.39%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b12/1747711205885.png" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>AAVE</span> <span class="token-price" data-v-14b908fc>$98.75</span> <span class="token-change change-up" data-v-14b908fc>+3.28%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b6/1744523743365.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>SUI</span> <span class="token-price" data-v-14b908fc>$1.21</span> <span class="token-change change-up" data-v-14b908fc>+0.99%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b15/1666344010515.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>XLM</span> <span class="token-price" data-v-14b908fc>$0.1636</span> <span class="token-change change-up" data-v-14b908fc>+2.90%</span></div><div class="token-item" data-v-14b908fc><img src="https://public.rootdata.com/images/b6/1759897757189.jpg" alt class="token-img" data-v-14b908fc> <span class="token-name" data-v-14b908fc>ZEC</span> <span class="token-price" data-v-14b908fc>$546.88</span> <span class="token-change change-up" data-v-14b908fc>+2.15%</span></div></div></div> <div class="arrow right" data-v-14b908fc><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA5CAYAAABj2ui7AAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAGTSURBVHgB7ddBTsJQEAbgmYLRsOoROAIcgRt4A+wNZKMCmxqDohu9QeUkHEGP0CPgQkOUdHxDUiSk7DrvCfm/FX0b+Du8efOIAAAAAAAAAI4QUyCXaRa3zjgrRAbTYZKTkYgCuHnI2q1Tnru3ex4xz/WZjHivoIbRUO6L2+WaEOVfS+m+pMmCaua1glXhVEPk1iKc8lbBfeEikeRumLySES8BQ4VT5gGrwjHTosnSS6+SdzJmugdHT1knZDjVJCMajoXn7mNcrvkOp0wquAknf+GcvFlI12c4VXvA8eOsXxXuRFzlDCeWfWoPyFR87HYud5DTksIw6aKp+4uuXBVlq4o6rbi5szf1XEWTPaj7TJuJNpVyTTupdtTRJOuQR2bHRBnSfczLNQ3Jkd+Q5gd96g76H14fF+3NotBCCundjw/8oFfaObWD0lYl3WuNucFv2nHJmLdhu7KS61/AF5Pr/oyMeL0Phgjp/cK7J2T+eQwXXlWxJ9fPB3/h3ZU+Z/HqmzM3nw5CjHAAAAAAAAAA8J/9Aq/BtExsnhfLAAAAAElFTkSuQmCC" alt data-v-14b908fc></div></div></div> <div class="mobie_search" style="display:none;" data-v-a8920d6a><div class="menu-btn" data-v-a8920d6a><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACYSURBVHgB7dgxDcMwEEDRsxEUQjkEUDGUQcogFArIHAIhDFx36+a66hBL7y2eLJ9Onn4EAAAAAMC3UgxaluVWa91SSpeYSJt5bzOvpZTnyL0cg9pD62zLeWszX9uxxaDhBc24nA9HDPrlB93bscd8jpzzIwAAADg9PahDD+rQgzr0IAAAAE5HD+rQgzr0oA49CAAAAADgb176rkU3BWAxjgAAAABJRU5ErkJggg==" alt="mobie-menu" class="mobie-menu" data-v-a8920d6a></div> <div class="mobie-global-search" data-v-a8920d6a><!----></div></div> <div class="mobie_drawer" data-v-a8920d6a><!----> <div class="drawer" data-v-a8920d6a><div class="mobile_menu" data-v-a8920d6a><div class="nav_item" data-v-a8920d6a><a href="/" target="" data-v-a8920d6a>
+                首页
+              </a></div><div class="nav_item" data-v-a8920d6a><a href="/article" target="" data-v-a8920d6a>
+                文章
+              </a></div><div class="nav_item" data-v-a8920d6a><a href="/news" target="" data-v-a8920d6a>
+                快讯
+              </a></div><div class="nav_item" data-v-a8920d6a><a href="/special" target="" data-v-a8920d6a>
+                专题
+              </a></div><div class="nav_item" data-v-a8920d6a><a href="/specialt" target="" data-v-a8920d6a>
+                专栏
+              </a></div><div class="nav_item" data-v-a8920d6a><a href="/knowledgeBase" target="" data-v-a8920d6a>
+                知识库
+              </a></div><div class="nav_item" data-v-a8920d6a><a href="/calendar" target="" data-v-a8920d6a>
+                日历
+              </a></div><div class="nav_item" data-v-a8920d6a><a href="/market" target="" data-v-a8920d6a>
+                市场
+              </a></div><div class="nav_item" data-v-a8920d6a><a href="/chart" target="" data-v-a8920d6a>
+                图表
+              </a></div><div class="nav_item" data-v-a8920d6a><a href="/activity" target="" data-v-a8920d6a>
+                活动
+              </a></div><div class="nav_item" data-v-a8920d6a><a href="/toolNav" target="" class="d-none d-md-flex" data-v-a8920d6a>
+                工具导航
+              </a></div></div></div></div> <!----></div></div></header> <div class="v-overlay global_loading theme--dark" style="z-index:100000001;" data-v-5f2bb523><div class="v-overlay__scrim" style="opacity:0;background-color:#000000;border-color:#000000;"></div></div> <!----> <main class="v-main scroll_bar pb-md-10 cust-main" style="padding-top:107px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div class="container" data-v-baab0914 data-v-baab0914><div class="special_subject_list d-none d-md-block" data-v-baab0914><h1 class="visually-hidden" data-v-baab0914>ChainCatcher</h1> <div role="list" class="v-list py-0 mb-8 mt-5 v-sheet theme--light v-list--two-line" data-v-baab0914><div class="row no-gutters justify-space-between" data-v-baab0914><a href="/article/2264269" target="_blank" class="col-sm-6 col-md-3 col-12" data-v-baab0914><div tabindex="-1" role="listitem" class="hot_topics_list align-start v-list-item theme--light" data-v-baab0914><div class="v-avatar v-list-item__avatar mt-0 rounded-lg" style="height:64px;min-width:64px;width:91px;aspect-ratio:91/64;" data-v-baab0914><img src="https://public.chaincatcher.com/upload/image/20260512/1778594671257-149943.webp" alt="Hyperliquid 杀入预测市场能赢吗？" loading="lazy" format="webp" data-v-baab0914></div> <div class="v-list-item__content align-self-start pt-1" data-v-baab0914><div class="v-list-item__title title" data-v-baab0914>
+                文章
+              </div> <span class="v-tooltip v-tooltip--bottom" data-v-baab0914><!----><p aria-haspopup="true" aria-expanded="false" class="des mb-0 mt-1 text_multiLine_ellipsis" data-v-baab0914>
+                    Hyperliquid 杀入预测市场能赢吗？
+                  </p></span></div></div></a><a href="/article/2264205" target="_blank" class="col-sm-6 col-md-3 col-12" data-v-baab0914><div tabindex="-1" role="listitem" class="hot_topics_list align-start v-list-item theme--light" data-v-baab0914><div class="v-avatar v-list-item__avatar mt-0 rounded-lg" style="height:64px;min-width:64px;width:91px;aspect-ratio:91/64;" data-v-baab0914><img src="https://public.chaincatcher.com/upload/image/20260512/1778582199651-706848.webp" alt="前 Consensys CMO：AI 时代的公司形态进化" loading="lazy" format="webp" data-v-baab0914></div> <div class="v-list-item__content align-self-start pt-1" data-v-baab0914><div class="v-list-item__title title" data-v-baab0914>
+                文章
+              </div> <span class="v-tooltip v-tooltip--bottom" data-v-baab0914><!----><p aria-haspopup="true" aria-expanded="false" class="des mb-0 mt-1 text_multiLine_ellipsis" data-v-baab0914>
+                    前 Consensys CMO：AI 时代的公司形态进化
+                  </p></span></div></div></a><a href="/article/2264539" target="_blank" class="col-sm-6 col-md-3 col-12" data-v-baab0914><div tabindex="-1" role="listitem" class="hot_topics_list align-start v-list-item theme--light" data-v-baab0914><div class="v-avatar v-list-item__avatar mt-0 rounded-lg" style="height:64px;min-width:64px;width:91px;aspect-ratio:91/64;" data-v-baab0914><img src="https://public.chaincatcher.com/upload/image/20260513/1778680626613-693340.webp" alt="当美国谈加密结构方案，亚太在谈什么？" loading="lazy" format="webp" data-v-baab0914></div> <div class="v-list-item__content align-self-start pt-1" data-v-baab0914><div class="v-list-item__title title" data-v-baab0914>
+                文章
+              </div> <span class="v-tooltip v-tooltip--bottom" data-v-baab0914><!----><p aria-haspopup="true" aria-expanded="false" class="des mb-0 mt-1 text_multiLine_ellipsis" data-v-baab0914>
+                    当美国谈加密结构方案，亚太在谈什么？
+                  </p></span></div></div></a><a href="/article/2264485" target="_blank" class="col-sm-6 col-md-3 col-12" data-v-baab0914><div tabindex="-1" role="listitem" class="hot_topics_list align-start v-list-item theme--light" data-v-baab0914><div class="v-avatar v-list-item__avatar mt-0 rounded-lg" style="height:64px;min-width:64px;width:91px;aspect-ratio:91/64;" data-v-baab0914><img src="https://public.chaincatcher.com/upload/image/20260513/1778667306814-236551.webp" alt="Binance Alpha 深度接入 RootData 数据，折射 Binance 欲提升项目透明度的决心" loading="lazy" format="webp" data-v-baab0914></div> <div class="v-list-item__content align-self-start pt-1" data-v-baab0914><div class="v-list-item__title title" data-v-baab0914>
+                文章
+              </div> <span class="v-tooltip v-tooltip--bottom" data-v-baab0914><!----><p aria-haspopup="true" aria-expanded="false" class="des mb-0 mt-1 text_multiLine_ellipsis" data-v-baab0914>
+                    Binance Alpha 深度接入 RootData 数据，折射 Binance 欲提升项目透明度的决心
+                  </p></span></div></div></a></div></div></div> <div class="row no-gutters" data-v-baab0914 data-v-baab0914><div class="left_area pr-2 col-lg-9 col-12" data-v-baab0914 data-v-baab0914><div class="carousel_list d-flex justify-space-between" data-v-baab0914><div class="billboard d-none d-md-block" data-v-baab0914><div class="head d-flex justify-space-between align-center" data-v-baab0914><span class="text" data-v-baab0914>今日搜索量 Top 榜单
+              <!----></span></div> <div class="content" data-v-baab0914><div role="list" class="v-list v-sheet theme--light" data-v-baab0914><a tabindex="0" href="/search?search=Gensyn" target="_blank" rel="nofollow" role="listitem" class="v-list-item v-list-item--link theme--light mb-2" data-v-baab0914><div class="v-list-item__icon serial mr-0 mt-6" data-v-baab0914>
+                  1
+                </div> <div data-v-baab0914><div class="avatar topThree d-flex justify-center align-end champion" data-v-baab0914><div class="v-avatar" style="height:40px;min-width:40px;width:40px;" data-v-baab0914><img src="https://public.rootdata.com/images/b70/1765352678246_128x128.webp" alt="Gensyn" width="40" height="40" format="webp" loading="lazy" data-v-baab0914></div></div></div> <div class="v-list-item__content align-self-start ml-3" data-v-baab0914><div class="v-list-item__title list_title mt-4" data-v-baab0914>Gensyn</div> <div class="v-list-item__subtitle" data-v-baab0914><span class="sub_title text_ellipsis" data-v-baab0914>基础设施</span></div></div> <div class="v-list-item__icon clickNum d-flex align-center mt-5" data-v-baab0914><span data-v-baab0914>2782</span> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAUCAYAAACAl21KAAAAAXNSR0IArs4c6QAAAhlJREFUOE+lkz9oU1EUxr/vxVqQSvN0ECvWImiXLnVxcJKuioO4OYgvrSnq4FDwD0neS61U6aDVQc0rbrqpiFsROzh0UAd1EBcRwb/wXohIG5t3P0k0IW1t6qN3u+fc73fPPfd8xCqrdGlwd7SgswTuJXP+9ErH2YoTeoOnIV0VZDFhHbIzhUexQUUvNWKkK3UhEzxsZ/z7sUCl0eHeKPr1SsD6utCyrOFktnAzFih0nSkBx5tFBC7a7lSmHvsxlu6rVKIBO1e4Vo0t65HkWsX8x28SNi8GccZ2/f3VWOClTlKYFDBv5wodJNUAVQGka4LxoW7MRx+WPoFEtG5DW5cpL/SYCLPSnyKsBHcmM/772ibMp/thKhO26w+U8s6+isGzf/WC5B2CX4zMucYnkFk7548yGB/qRDl6DWF7oh27VGG3ifSkxVi8AdDXlP9kb030MMinzsNo7G9igpb1WMbMrDaoi/pHHGPopl4I2lNLkHMARiDdiAfiNAPPKUHY2PTmsqT2eCB8Z+g6oYBkHOGyHwWKDD3npYT+NYKeM/RSrqTcWkCweIE/L5/qKs/PvW3uUxwowSDRYfXWBrLoOSeMsKIhVzQqIRFHN2Wn7jYsEuadrAy8/62GoIGFM3bWn1xm2sBzDhK4LmFHKyDBd6CVtnO3nzbGZqlAt4bawq/REYgHKO0VsaV2o/gZwCzJh53ZbQ+qBm/W/gYaodM5X5up7QAAAABJRU5ErkJggg==" alt="" class="ml-1" data-v-baab0914></div></a><a tabindex="0" href="/search?search=Starpower" target="_blank" rel="nofollow" role="listitem" class="v-list-item v-list-item--link theme--light mb-2" data-v-baab0914><div class="v-list-item__icon serial mr-0 mt-6" data-v-baab0914>
+                  2
+                </div> <div data-v-baab0914><div class="avatar topThree d-flex justify-center align-end runnerUp" data-v-baab0914><div class="v-avatar" style="height:40px;min-width:40px;width:40px;" data-v-baab0914><img src="https://public.rootdata.com/images/b6/1701344417958_128x128.webp" alt="Starpower" width="40" height="40" format="webp" loading="lazy" data-v-baab0914></div></div></div> <div class="v-list-item__content align-self-start ml-3" data-v-baab0914><div class="v-list-item__title list_title mt-4" data-v-baab0914>Starpower</div> <div class="v-list-item__subtitle" data-v-baab0914><span class="sub_title text_ellipsis" data-v-baab0914>DePIN</span></div></div> <div class="v-list-item__icon clickNum d-flex align-center mt-5" data-v-baab0914><span data-v-baab0914>2736</span> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAUCAYAAACAl21KAAAAAXNSR0IArs4c6QAAAhlJREFUOE+lkz9oU1EUxr/vxVqQSvN0ECvWImiXLnVxcJKuioO4OYgvrSnq4FDwD0neS61U6aDVQc0rbrqpiFsROzh0UAd1EBcRwb/wXohIG5t3P0k0IW1t6qN3u+fc73fPPfd8xCqrdGlwd7SgswTuJXP+9ErH2YoTeoOnIV0VZDFhHbIzhUexQUUvNWKkK3UhEzxsZ/z7sUCl0eHeKPr1SsD6utCyrOFktnAzFih0nSkBx5tFBC7a7lSmHvsxlu6rVKIBO1e4Vo0t65HkWsX8x28SNi8GccZ2/f3VWOClTlKYFDBv5wodJNUAVQGka4LxoW7MRx+WP

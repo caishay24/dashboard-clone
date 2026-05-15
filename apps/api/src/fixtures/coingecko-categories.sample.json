@@ -1,0 +1,195 @@
+{
+  "count": 705,
+  "top10_by_mcap": [
+    {
+      "id": "smart-contract-platform",
+      "name": "Smart Contract Platform",
+      "market_cap": 2262769124340.754,
+      "market_cap_change_24h": -1.306073243628911,
+      "content": "Smart contract platforms are usually blockchains that host smart contracts or decentralized applications. Users can interact with different smart contracts on these platforms to perform various actions such as lending and borrowing funds, staking their assets or minting NFTs. Smart contracts are programs that are stored on the blockchain and are automatically executed when certain conditions are met.",
+      "top_3_coins_id": [
+        "bitcoin",
+        "ethereum",
+        "binancecoin"
+      ],
+      "top_3_coins": [
+        "https://coin-images.coingecko.com/coins/images/1/small/bitcoin.png",
+        "https://coin-images.coingecko.com/coins/images/279/small/ethereum.png",
+        "https://coin-images.coingecko.com/coins/images/825/small/bnb-icon2_2x.png"
+      ],
+      "volume_24h": 67533048999.1161,
+      "updated_at": "2026-05-14T11:50:37.299Z"
+    },
+    {
+      "id": "layer-1",
+      "name": "Layer 1 (L1)",
+      "market_cap": 2235025542528.5,
+      "market_cap_change_24h": -1.3949031455251493,
+      "content": "Layer 1 serves as the primary and autonomous chain on which transactions are directly executed and confirmed, as well as providing the essential infrastructure for the blockchain network.",
+      "top_3_coins_id": [
+        "bitcoin",
+        "ethereum",
+        "binancecoin"
+      ],
+      "top_3_coins": [
+        "https://coin-images.coingecko.com/coins/images/1/small/bitcoin.png",
+        "https://coin-images.coingecko.com/coins/images/279/small/ethereum.png",
+        "https://coin-images.coingecko.com/coins/images/825/small/bnb-icon2_2x.png"
+      ],
+      "volume_24h": 60476617561.041336,
+      "updated_at": "2026-05-14T11:51:57.574Z"
+    },
+    {
+      "id": "proof-of-work-pow",
+      "name": "Proof of Work (PoW)",
+      "market_cap": 1640420731181.9475,
+      "market_cap_change_24h": -1.5146235543941575,
+      "content": "Proof of Work (PoW) is a blockchain consensus mechanism to validate transactions and create new blocks through computational efforts by miners.",
+      "top_3_coins_id": [
+        "bitcoin",
+        "dogecoin",
+        "zcash"
+      ],
+      "top_3_coins": [
+        "https://coin-images.coingecko.com/coins/images/1/small/bitcoin.png",
+        "https://coin-images.coingecko.com/coins/images/5/small/dogecoin.png",
+        "https://coin-images.coingecko.com/coins/images/486/small/circle-zcash-color.png"
+      ],
+      "volume_24h": 40331671678.65588,
+      "updated_at": "2026-05-14T11:50:58.208Z"
+    },
+    {
+      "id": "world-liberty-financial-portfolio",
+      "name": "World Liberty Financial Portfolio",
+      "market_cap": 595700554105.8346,
+      "market_cap_change_24h": -0.5412538422152058,
+      "content": "The World Liberty Financial portfolio includes purchases made by the World Liberty Financial project. World Liberty Financial is a DeFi project associated with U.S. presidential candidate Donald Trump and his family members.",
+      "top_3_coins_id": [
+        "ethereum",
+        "tether",
+        "usd-coin"
+      ],
+      "top_3_coins": [
+        "https://coin-images.coingecko.com/coins/images/279/small/ethereum.png",
+        "https://coin-images.coingecko.com/coins/images/325/small/Tether.png",
+        "https://coin-images.coingecko.com/coins/images/6319/small/USDC.png"
+      ],
+      "volume_24h": 92143643175.42953,
+      "updated_at": "2026-05-14T11:52:41.626Z"
+    },
+    {
+      "id": "proof-of-stake-pos",
+      "name": "Proof of Stake (PoS)",
+      "market_cap": 496857867826.78613,
+      "market_cap_change_24h": -1.0353875362337088,
+      "content": "Proof of Stake (PoS) is a blockchain consensus mechanism where validators are selected to create new blocks based on the amount of cryptocurrency they hold and are willing to stake as collateral.",
+      "top_3_coins_id": [
+        "ethereum",
+        "binancecoin",
+        "solana"
+      ],
+      "top_3_coins": [
+        "https://coin-images.coingecko.com/coins/images/279/small/ethereum.png",
+        "https://coin-images.coingecko.com/coins/images/825/small/bnb-icon2_2x.png",
+        "https://coin-images.coingecko.com/coins/images/4128/small/solana.png"
+      ],
+      "volume_24h": 23194907791.259857,
+      "updated_at": "2026-05-14T11:52:33.016Z"
+    },
+    {
+      "id": "made-in-usa",
+      "name": "Made in USA",
+      "market_cap": 321721435938.8709,
+      "market_cap_change_24h": -1.7425042375487376,
+      "content": "Refers to cryptocurrencies that have significant connections to the United States, either through their founding team or company headquarters.",
+      "top_3_coins_id": [
+        "ripple",
+        "usd-coin",
+        "solana"
+      ],
+      "top_3_coins": [
+        "https://coin-images.coingecko.com/coins/images/44/small/xrp-symbol-white-128.png",
+        "https://coin-images.coingecko.com/coins/images/6319/small/USDC.png",
+        "https://coin-images.coingecko.com/coins/images/4128/small/solana.png"
+      ],
+      "volume_24h": 25190387118.015877,
+      "updated_at": "2026-05-14T11:52:28.592Z"
+    },
+    {
+      "id": "stablecoins",
+      "name": "Stablecoins",
+      "market_cap": 317840697420.39685,
+      "market_cap_change_24h": -0.0017139690497853068,
+      "content": "A stablecoin is a type of cryptocurrency that is designed to maintain a stable value by being pegged to an external reference, such as a fiat currency.",
+      "top_3_coins_id": [
+        "tether",
+        "usd-coin",
+        "usds"
+      ],
+      "top_3_coins": [
+        "https://coin-images.coingecko.com/coins/images/325/small/Tether.png",
+        "https://coin-images.coingecko.com/coins/images/6319/small/USDC.png",
+        "https://coin-images.coingecko.com/coins/images/39926/small/usds.webp"
+      ],
+      "volume_24h": 78382380279.49765,
+      "updated_at": "2026-05-14T11:50:43.962Z"
+    },
+    {
+      "id": "usd-stablecoin",
+      "name": "USD Stablecoin",
+      "market_cap": 310928869391.0515,
+      "market_cap_change_24h": 0.02161515938141678,
+      "content": "A USD stablecoin is a type of cryptocurrency that is designed to maintain a stable value by being pegged to the United States dollar.",
+      "top_3_coins_id": [
+        "tether",
+        "usd-coin",
+        "usds"
+      ],
+      "top_3_coins": [
+        "https://coin-images.coingecko.com/coins/images/325/small/Tether.png",
+        "https://coin-images.coingecko.com/coins/images/6319/small/USDC.png",
+        "https://coin-images.coingecko.com/coins/images/39926/small/usds.webp"
+      ],
+      "volume_24h": 77980083807.4292,
+      "updated_at": "2026-05-14T11:50:59.371Z"
+    },
+    {
+      "id": "fiat-backed-stablecoin",
+      "name": "Fiat-backed Stablecoin",
+      "market_cap": 301958776467.08826,
+      "market_cap_change_24h": -0.07019123206004803,
+      "content": "A fiat-backed stablecoin is designed to maintain a stable value by being pegged to a reserve of fiat currency, such as the US dollar, euro, or other national currencies. ",
+      "top_3_coins_id": [
+        "tether",
+        "usd-coin",
+        "usds"
+      ],
+      "top_3_coins": [
+        "https://coin-images.coingecko.com/coins/images/325/small/Tether.png",
+        "https://coin-images.coingecko.com/coins/images/6319/small/USDC.png",
+        "https://coin-images.coingecko.com/coins/images/39926/small/usds.webp"
+      ],
+      "volume_24h": 76722366299.10138,
+      "updated_at": "2026-05-14T11:52:41.726Z"
+    },
+    {
+      "id": "exchange-based-tokens",
+      "name": "Exchange-based Tokens",
+      "market_cap": 144214341653.2392,
+      "market_cap_change_24h": 0.06776929683822862,
+      "content": "These tokens are associated with both centralized and decentralized exchanges which share the same purposes such as enjoy discounted trading fees and gain access to exclusive token sales on the exchange. While decentralized exchanges tokens also function as governance as a governance tokens, centralized exchange token does not.",
+      "top_3_coins_id": [
+        "binancecoin",
+        "whitebit",
+        "leo-token"
+      ],
+      "top_3_coins": [
+        "https://coin-images.coingecko.com/coins/images/825/small/bnb-icon2_2x.png",
+        "https://coin-images.coingecko.com/coins/images/27045/small/wbt_token.png",
+        "https://coin-images.coingecko.com/coins/images/8418/small/leo-token.png"
+      ],
+      "volume_24h": 2651154459.0151,
+      "updated_at": "2026-05-14T11:50:35.111Z"
+    }
+  ]
+}

@@ -1,0 +1,854 @@
+{
+  "protocols": [
+    {
+      "total24h": 5890,
+      "total48hto24h": 0,
+      "total7d": 44711,
+      "total14dto7d": 0,
+      "total60dto30d": 4252,
+      "total30d": 212723,
+      "total1y": 1254082,
+      "totalAllTime": 17506608,
+      "average1y": 3435.841095890411,
+      "monthlyAverage1y": 104587.00295890412,
+      "change_30dover30d": 4902.89,
+      "breakdown24h": {
+        "ethereum": {
+          "WBTC": 5890
+        }
+      },
+      "breakdown30d": {
+        "ethereum": {
+          "WBTC": 212723
+        }
+      },
+      "total7DaysAgo": 0,
+      "total30DaysAgo": 0,
+      "defillamaId": "2",
+      "name": "WBTC",
+      "displayName": "WBTC",
+      "module": "wbtc",
+      "category": "Bridge",
+      "logo": "https://icons.llamao.fi/icons/protocols/wbtc.png",
+      "chains": [
+        "Ethereum"
+      ],
+      "protocolType": "protocol",
+      "methodologyURL": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/wbtc",
+      "methodology": {
+        "Fees": "Minting and buring fees paid by users.",
+        "Revenue": "All fees are revenue.",
+        "ProtocolRevenue": "All revenue collected by protocol."
+      },
+      "slug": "wbtc",
+      "id": "2"
+    },
+    {
+      "total24h": 148610,
+      "total48hto24h": 80306,
+      "total7d": 545233,
+      "total14dto7d": 449012,
+      "total60dto30d": 2765261,
+      "total30d": 2849092,
+      "total1y": 51494411,
+      "totalAllTime": 374872537,
+      "average1y": 141080.5780821918,
+      "monthlyAverage1y": 4294492.796821918,
+      "change_1d": 85.05,
+      "change_7d": 163.81,
+      "change_1m": 21.64,
+      "change_7dover7d": 21.43,
+      "change_30dover30d": 3.03,
+      "breakdown24h": {
+        "arbitrum": {
+          "Curve DEX": 180
+        },
+        "optimism": {
+          "Curve DEX": 37
+        },
+        "polygon": {
+          "Curve DEX": 158
+        },
+        "base": {
+          "Curve DEX": 151
+        },
+        "xdai": {
+          "Curve DEX": 175
+        },
+        "fraxtal": {
+          "Curve DEX": 14
+        },
+        "sonic": {
+          "Curve DEX": 1
+        },
+        "hyperliquid": {
+          "Curve DEX": 37
+        },
+        "ethereum": {
+          "Curve DEX": 152305
+        },
+        "unichain": {
+          "Curve DEX": 17
+        },
+        "ink": {
+          "Curve DEX": 3
+        },
+        "monad": {
+          "Curve DEX": 62
+        },
+        "celo": {
+          "Curve DEX": 0
+        },
+        "mantle": {
+          "Curve DEX": 0
+        },
+        "stable": {
+          "Curve DEX": 0
+        },
+        "avax": {
+          "Curve DEX": 9
+        },
+        "plasma": {
+          "Curve DEX": 176
+        }
+      },
+      "breakdown30d": {
+        "polygon": {
+          "Curve DEX": 2470
+        },
+        "optimism": {
+          "Curve DEX": 655
+        },
+        "base": {
+          "Curve DEX": 4523
+        },
+        "fraxtal": {
+          "Curve DEX": 485
+        },
+        "hyperliquid": {
+          "Curve DEX": 468
+        },
+        "arbitrum": {
+          "Curve DEX": 5680
+        },
+        "ethereum": {
+          "Curve DEX": 2795385
+        },
+        "xdai": {
+          "Curve DEX": 2667
+        },
+        "sonic": {
+          "Curve DEX": 23
+        },
+        "mantle": {
+          "Curve DEX": 0
+        },
+        "ink": {
+          "Curve DEX": 132
+        },
+        "unichain": {
+          "Curve DEX": 3611
+        },
+        "celo": {
+          "Curve DEX": 186
+        },
+        "monad": {
+          "Curve DEX": 12731
+        },
+        "avax": {
+          "Curve DEX": 1478
+        },
+        "stable": {
+          "Curve DEX": 0
+        },
+        "plasma": {
+          "Curve DEX": 18590
+        }
+      },
+      "total7DaysAgo": 56333,
+      "total30DaysAgo": 122171,
+      "defillamaId": "3",
+      "name": "Curve DEX",
+      "displayName": "Curve DEX",
+      "module": "curve",
+      "category": "Dexs",
+      "logo": "https://icons.llamao.fi/icons/protocols/curve.png",
+      "chains": [
+        "Ethereum",
+        "Polygon",
+        "OP Mainnet",
+        "Gnosis",
+        "Fantom",
+        "Arbitrum",
+        "Avalanche",
+        "Fraxtal",
+        "Hyperliquid L1",
+        "Sonic",
+        "Base",
+        "Plasma",
+        "Celo",
+        "Ink",
+        "Mantle",
+        "Unichain",
+        "Monad",
+        "Stable"
+      ],
+      "protocolType": "protocol",
+      "methodologyURL": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/curve.ts",
+      "methodology": {
+        "UserFees": "Trading and liquidity fees paid by users",
+        "Fees": "Trading and liquidity fees from Curve pools (typically 0.01%-0.04%)",
+        "Revenue": "Fees distributed to veCRV holders and protocol treasury",
+        "ProtocolRevenue": "Fees allocated to the protocol treasury",
+        "HoldersRevenue": "Fees distributed to veCRV governance token holders",
+        "SupplySideRevenue": "Fees distributed to liquidity providers"
+      },
+      "parentProtocol": "parent#curve-finance",
+      "slug": "curve-dex",
+      "linkedProtocols": [
+        "Curve Finance",
+        "Curve DEX",
+        "crvUSD",
+        "Curve LlamaLend"
+      ],
+      "hasLabelBreakdown": true,
+      "id": "3"
+    },
+    {
+      "total24h": 7690,
+      "total48hto24h": 5894,
+      "total7d": 54062,
+      "total14dto7d": 41744,
+      "total60dto30d": 214776,
+      "total30d": 204232,
+      "total1y": 1494534,
+      "totalAllTime": 460053631,
+      "average1y": 4094.613698630137,
+      "monthlyAverage1y": 124640.04098630138,
+      "change_1d": 30.47,
+      "change_7d": 108.18,
+      "change_1m": 28.94,
+      "change_7dover7d": 29.51,
+      "change_30dover30d": -4.91,
+      "breakdown24h": {
+        "avax": {
+          "Aave V2": 3266
+        },
+        "ethereum": {
+          "Aave V2": 7808
+        },
+        "polygon": {
+          "Aave V2": 1634
+        }
+      },
+      "breakdown30d": {
+        "ethereum": {
+          "Aave V2": 125378
+        },
+        "avax": {
+          "Aave V2": 29841
+        },
+        "polygon": {
+          "Aave V2": 49013
+        }
+      },
+      "total7DaysAgo": 3694,
+      "total30DaysAgo": 5964,
+      "defillamaId": "111",
+      "name": "Aave V2",
+      "displayName": "Aave V2",
+      "module": "aave-v2",
+      "category": "Lending",
+      "logo": "https://icons.llamao.fi/icons/protocols/aave-v2.png",
+      "chains": [
+        "Ethereum",
+        "Polygon",
+        "Avalanche"
+      ],
+      "protocolType": "protocol",
+      "methodologyURL": "https://github.com/DefiLlama/dimension-adapters/blob/master/aave.ts",
+      "methodology": {
+        "UserFees": "Interest paid by borrowers",
+        "Fees": "Include borrow interest, flashloan fee, liquidation fee and penalty paid by borrowers.",
+        "Revenue": "Amount of fees go to Aave treasury.",
+        "ProtocolRevenue": "Amount of fees go to Aave treasury.",
+        "SupplySideRevenue": "Amount of fees distributed to suppliers."
+      },
+      "parentProtocol": "parent#aave",
+      "slug": "aave-v2",
+      "linkedProtocols": [
+        "Aave",
+        "Aave V2",
+        "Aave V3",
+        "Aave V4"
+      ],
+      "breakdownMethodology": {
+        "Fees": {
+          "Borrow Interest": "All interest paid by borrowers from all markets (excluding GHO).",
+          "Borrow Interest GHO": "All interest paid by borrowers from GHO only.",
+          "Liquidation Fees": "Fees from liquidation penalty and bonuses.",
+          "Flashloan Fees": "Flashloan fees paid by flashloan borrowers and executors."
+        },
+        "Revenue": {
+          "Borrow Interest": "A portion of interest paid by borrowers from all markets (excluding GHO).",
+          "Borrow Interest GHO": "All 100% interest paid by GHO borrowers.",
+          "Liquidation Fees": "A portion of fees from liquidation penalty and bonuses.",
+          "Flashloan Fees": "A portion of fees paid by flashloan borrowers and executors."
+        },
+        "SupplySideRevenue": {
+          "Borrow Interest": "Amount of interest distributed to lenders from all markets (excluding GHO).",
+          "Borrow Interest GHO": "No supply side revenue for lenders on GHO market.",
+          "Liquidation Fees": "Fees from liquidation penalty and bonuses are distributed to lenders.",
+          "Flashloan Fees": "Flashloan fees paid by flashloan borrowers and executors are distributed to lenders."
+        },
+        "ProtocolRevenue": {
+          "Borrow Interest": "Amount of interest distributed to lenders from all markets (excluding GHO) are collected by Aave treasury.",
+          "Borrow Interest GHO": "All interest paid on GHO market are collected by Aave treasury.",
+          "Liquidation Fees": "A portion of fees from liquidation penalty and bonuses are colected by Aave treasury.",
+          "Flashloan Fees": "A portion of fees paid by flashloan borrowers and executors are collected by Aave treasury."
+        }
+      },
+      "hasLabelBreakdown": true,
+      "id": "111"
+    },
+    {
+      "total24h": 16705,
+      "total48hto24h": 14143,
+      "total7d": 168750,
+      "total14dto7d": 150498,
+      "total60dto30d": 522251,
+      "total30d": 694598,
+      "total1y": 12911672,
+      "totalAllTime": 145849282,
+      "average1y": 35374.44383561644,
+      "monthlyAverage1y": 1076798.0703561644,
+      "change_1d": 18.11,
+      "change_7d": -35.53,
+      "change_1m": 25.28,
+      "change_7dover7d": 12.13,
+      "change_30dover30d": 33,
+      "breakdown24h": {
+        "polygon": {
+          "Yearn Finance": 11
+        },
+        "base": {
+          "Yearn Finance": 312
+        },
+        "optimism": {
+          "Yearn Finance": 0
+        },
+        "katana": {
+          "Yearn Finance": 2528
+        },
+        "ethereum": {
+          "Yearn Finance": 13694
+        },
+        "arbitrum": {
+          "Yearn Finance": 2
+        }
+      },
+      "breakdown30d": {
+        "polygon": {
+          "Yearn Finance": 998
+        },
+        "base": {
+          "Yearn Finance": 9132
+        },
+        "optimism": {
+          "Yearn Finance": 214
+        },
+        "ethereum": {
+          "Yearn Finance": 568957
+        },
+        "arbitrum": {
+          "Yearn Finance": 668
+        },
+        "katana": {
+          "Yearn Finance": 114628
+        }
+      },
+      "total7DaysAgo": 25911,
+      "total30DaysAgo": 13334,
+      "defillamaId": "113",
+      "name": "Yearn Finance",
+      "displayName": "Yearn Finance",
+      "module": "yearn-finance",
+      "category": "Yield Aggregator",
+      "logo": "https://icons.llamao.fi/icons/protocols/yearn-finance.jpg",
+      "chains": [
+        "Ethereum",
+        "Base",
+        "Polygon",
+        "OP Mainnet",
+        "Arbitrum",
+        "Katana"
+      ],
+      "protocolType": "protocol",
+      "methodologyURL": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/yearn-finance.ts",
+      "methodology": {
+        "Fees": "Total yields from deposited assets across all vaults",
+        "SupplySideRevenue": "Total yields are distributed to depositors",
+        "Revenue": "Performance and management fees to Yearn treasury",
+        "ProtocolRevenue": "10% of the performance and management fees go to Yearn treasury",
+        "HoldersRevenue": "90% of the protocol revenue goes to stYFI stakers since 2026-02-05"
+      },
+      "parentProtocol": "parent#yearn",
+      "slug": "yearn-finance",
+      "linkedProtocols": [
+        "Yearn",
+        "Yearn Finance",
+        "Yearn Ether",
+        "Yearn Curating"
+      ],
+      "breakdownMethodology": {
+        "Fees": {
+          "Assets Yields": "Total yields from deposited assets across all vaults"
+        },
+        "SupplySideRevenue": {
+          "Assets Yields": "Total yields are distributed to depositors"
+        },
+        "Revenue": {
+          "Assets Yields": "Performance fees to Yearn treasury",
+          "Management Fees": "Management fees to Yearn treasury"
+        },
+        "ProtocolRevenue": {
+          "Assets Yields": "10% of the Performance fees go to Yearn treasury",
+          "Management Fees": "10% of the Management fees go to Yearn treasury"
+        },
+        "HoldersRevenue": {
+          "Assets Yields": "90% of the Performance fees go to stYFI stakers",
+          "Management Fees": "90% of the Management fees go to stYFI stakers"
+        }
+      },
+      "hasLabelBreakdown": true,
+      "id": "113"
+    },
+    {
+      "total24h": 1687,
+      "total48hto24h": 1692,
+      "total7d": 11162,
+      "total14dto7d": 11165,
+      "total60dto30d": 44711,
+      "total30d": 46933,
+      "total1y": 6159824,
+      "totalAllTime": 522048512,
+      "average1y": 16876.2301369863,
+      "monthlyAverage1y": 513712.44536986307,
+      "change_1d": -0.3,
+      "change_7d": -7,
+      "change_1m": 10.19,
+      "change_7dover7d": -0.03,
+      "change_30dover30d": 4.97,
+      "breakdown24h": {
+        "ethereum": {
+          "Compound V2": 1687
+        }
+      },
+      "breakdown30d": {
+        "ethereum": {
+          "Compound V2": 46933
+        }
+      },
+      "total7DaysAgo": 1814,
+      "total30DaysAgo": 1531,
+      "defillamaId": "114",
+      "name": "Compound V2",
+      "displayName": "Compound V2",
+      "module": "compound",
+      "category": "Lending",
+      "logo": "https://icons.llamao.fi/icons/protocols/compound.png",
+      "chains": [
+        "Ethereum"
+      ],
+      "protocolType": "protocol",
+      "methodologyURL": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/compound.ts",
+      "methodology": {
+        "UserFees": "Total borrow interest paid by borrowers.",
+        "Fees": "Total borrow interest paid by borrowers.",
+        "Revenue": "Share of borrow interest to Compound treasury.",
+        "ProtocolRevenue": "Share of borrow interest to Compound treasury.",
+        "SupplySideRevenue": "Total borrow interest paid to lenders.",
+        "HoldersRevenue": "No revenue share for COMP token holders."
+      },
+      "parentProtocol": "parent#compound-finance",
+      "slug": "compound-v2",
+      "linkedProtocols": [
+        "Compound Finance",
+        "Compound V2",
+        "Compound V3"
+      ],
+      "breakdownMethodology": {
+        "Fees": {
+          "Borrow Interest": "Total borrow interest paid by borrowers across all lending markets."
+        },
+        "UserFees": {
+          "Borrow Interest": "Total borrow interest paid by borrowers across all lending markets."
+        },
+        "Revenue": {
+          "Borrow Interest": "Protocol reserve factor portion of borrow interest retained by Compound treasury."
+        },
+        "ProtocolRevenue": {
+          "Borrow Interest": "Protocol reserve factor portion of borrow interest retained by Compound treasury."
+        },
+        "SupplySideRevenue": {
+          "Borrow Interest": "Lender portion of borrow interest distributed to cToken holders who supply liquidity."
+        }
+      },
+      "hasLabelBreakdown": true,
+      "id": "114"
+    },
+    {
+      "total24h": 0,
+      "total48hto24h": 0,
+      "total7d": 0,
+      "total14dto7d": 0,
+      "total60dto30d": 0,
+      "total30d": 0,
+      "total1y": 467558,
+      "totalAllTime": 81338627,
+      "average1y": 1280.9808219178083,
+      "monthlyAverage1y": 38993.056219178085,
+      "breakdown24h": {
+        "ethereum": {
+          "Synthetix v1+v2": 0
+        },
+        "optimism": {
+          "Synthetix v1+v2": 0
+        }
+      },
+      "breakdown30d": {
+        "optimism": {
+          "Synthetix v1+v2": 0
+        },
+        "ethereum": {
+          "Synthetix v1+v2": 0
+        }
+      },
+      "total7DaysAgo": 0,
+      "total30DaysAgo": 0,
+      "defillamaId": "115",
+      "name": "Synthetix v1+v2",
+      "displayName": "Synthetix v1+v2",
+      "module": "synthetix",
+      "category": "Synthetics",
+      "logo": "https://icons.llamao.fi/icons/protocols/synthetix.png",
+      "chains": [
+        "OP Mainnet",
+        "Ethereum"
+      ],
+      "protocolType": "protocol",
+      "methodologyURL": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/synthetix.ts",
+      "methodology": {
+        "UserFees": "Users pay between 10-100 bps (0.1%-1%), usually 30 bps, whenever they exchange a synthetic asset (Synth)",
+        "Fees": "Fees generated on each synthetic asset exchange, between 0.1% and 1% (usually 0.3%)",
+        "Revenue": "Fees paid by users and awarded to SNX stakers",
+        "ProtocolRevenue": "Percentage of fees going to treasury",
+        "SupplySideRevenue": "LPs revenue",
+        "HoldersRevenue": "Fees are granted proportionally to SNX stakers by automatically burning outstanding debt (note: rewards not included here can also be claimed by SNX stakers)"
+      },
+      "parentProtocol": "parent#synthetix",
+      "slug": "synthetix-v1+v2",
+      "linkedProtocols": [
+        "Synthetix",
+        "Synthetix v1+v2",
+        "Synthetix V3"
+      ],
+      "id": "115"
+    },
+    {
+      "total24h": 375,
+      "total48hto24h": 293,
+      "total7d": 2293,
+      "total14dto7d": 1363,
+      "total60dto30d": 6809,
+      "total30d": 12021,
+      "total1y": 183671,
+      "totalAllTime": 167422672,
+      "average1y": 503.2082191780822,
+      "monthlyAverage1y": 15317.658191780822,
+      "change_1d": 27.99,
+      "change_7d": 52.44,
+      "change_1m": 7.45,
+      "change_7dover7d": 68.23,
+      "change_30dover30d": 76.55,
+      "breakdown24h": {
+        "ethereum": {
+          "Balancer V1": 345
+        }
+      },
+      "breakdown30d": {
+        "ethereum": {
+          "Balancer V1": 12021
+        }
+      },
+      "total7DaysAgo": 246,
+      "total30DaysAgo": 349,
+      "defillamaId": "116",
+      "name": "Balancer V1",
+      "displayName": "Balancer V1",
+      "module": "balancer-v1",
+      "category": "Dexs",
+      "logo": "https://icons.llamao.fi/icons/protocols/balancer-v1.png",
+      "chains": [
+        "Ethereum"
+      ],
+      "protocolType": "protocol",
+      "methodologyURL": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/balancer-v1.ts",
+      "methodology": {
+        "UserFees": "Trading fees paid by users, ranging from 0.0001% to 10%",
+        "Fees": "All trading fees collected (includes swap and  yield fee)",
+        "Revenue": "Protocol revenue from all fees collected",
+        "ProtocolRevenue": "Balancer V2 protocol fees are set to 50%",
+        "HoldersRevenue": "Money going to governance token holders",
+        "SupplySideRevenue": "A small percentage of the trade paid by traders to pool LPs"
+      },
+      "parentProtocol": "parent#balancer",
+      "slug": "balancer-v1",
+      "linkedProtocols": [
+        "Balancer",
+        "Balancer V1",
+        "Balancer V2",
+        "Balancer V3"
+      ],
+      "id": "116"
+    },
+    {
+      "total24h": 1095795,
+      "total48hto24h": 1095876,
+      "total7d": 7713953,
+      "total14dto7d": 7614135,
+      "total60dto30d": 34289575,
+      "total30d": 32832966,
+      "total1y": 406452029,
+      "totalAllTime": 1124284573,
+      "average1y": 1113567.202739726,
+      "monthlyAverage1y": 33896985.651397265,
+      "change_1d": -0.01,
+      "change_7d": -0.68,
+      "change_1m": -0.98,
+      "change_7dover7d": 1.31,
+      "change_30dover30d": -4.25,
+      "breakdown24h": {
+        "ethereum": {
+          "Sky Lending": 1095795
+        }
+      },
+      "breakdown30d": {
+        "ethereum": {
+          "Sky Lending": 32832966
+        }
+      },
+      "total7DaysAgo": 1103320,
+      "total30DaysAgo": 1106676,
+      "defillamaId": "118",
+      "name": "Sky Lending",
+      "displayName": "Sky Lending",
+      "module": "makerdao",
+      "category": "CDP",
+      "logo": "https://icons.llamao.fi/icons/protocols/sky-lending.jpg",
+      "chains": [
+        "Ethereum"
+      ],
+      "protocolType": "protocol",
+      "methodologyURL": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/makerdao.ts",
+      "methodology": {
+        "UserFees": "Interest paid to borrow",
+        "Fees": "Stability fees charged on DAI/USDS loans, liquidation income from collateral auctions, and PSM (Peg Stability Module) fees from USDC/DAI conversions",
+        "Revenue": "Fees collected minus savings rate paid to DSR depositors",
+        "ProtocolRevenue": "Net protocol revenue after subtracting SKY token buybacks",
+        "HoldersRevenue": "SKY token buybacks + staking rewards for sky stakers",
+        "SupplySideRevenue": "DAI/USDS paid to DSR depositors"
+      },
+      "parentProtocol": "parent#maker",
+      "slug": "sky-lending",
+      "linkedProtocols": [
+        "Sky",
+        "Sky Lending"
+      ],
+      "breakdownMethodology": {
+        "Fees": {
+          "Loans Stability Fees": "Stability fees charged on DAI/USDS loans",
+          "Peg Stability Module Fees": "Fees from PSM (Peg Stability Module)",
+          "Liquidation Fees": "Fees from liquidations income"
+        },
+        "Revenue": {
+          "Loans Stability Fees": "Stability fees charged on DAI/USDS loans minus savings rate paid to DSR depositors",
+          "Peg Stability Module Fees": "Fees from PSM (Peg Stability Module)",
+          "Liquidation Fees": "Fees from liquidations income"
+        },
+        "SupplySideRevenue": {
+          "Saving Module Cost (DSM)": "Savings rate paid to DSR depositors"
+        },
+        "HoldersRevenue": {
+          "Token Buy Back": "SKY tokens buy back from revenue",
+          "USDS Staking Rewards": "USDS rewards paid to SKY stakers"
+        }
+      },
+      "hasLabelBreakdown": true,
+      "id": "118"
+    },
+    {
+      "total24h": null,
+      "total48hto24h": null,
+      "total7d": 9407,
+      "total14dto7d": 9611,
+      "total60dto30d": 50546,
+      "total30d": 45490,
+      "total1y": 25358430,
+      "totalAllTime": 779988199,
+      "average1y": 71231.54494382022,
+      "monthlyAverage1y": 2168288.2280898876,
+      "change_7dover7d": -2.12,
+      "change_30dover30d": -10,
+      "breakdown24h": null,
+      "breakdown30d": {
+        "optimism": {
+          "SushiSwap": 0
+        },
+        "sonic": {
+          "SushiSwap": 0
+        },
+        "blast": {
+          "SushiSwap": 0
+        },
+        "metis": {
+          "SushiSwap": 0
+        },
+        "linea": {
+          "SushiSwap": 0
+        },
+        "katana": {
+          "SushiSwap": 0
+        },
+        "fuse": {
+          "SushiSwap": 0
+        },
+        "core": {
+          "SushiSwap": 0
+        },
+        "avax": {
+          "SushiSwap": 33
+        },
+        "xdai": {
+          "SushiSwap": 681
+        },
+        "bsc": {
+          "SushiSwap": 230
+        },
+        "ethereum": {
+          "SushiSwap": 25776
+        },
+        "base": {
+          "SushiSwap": 1555
+        },
+        "polygon": {
+          "SushiSwap": 2967
+        },
+        "arbitrum": {
+          "SushiSwap": 14247
+        }
+      },
+      "total30DaysAgo": 1948,
+      "defillamaId": "119",
+      "name": "SushiSwap",
+      "displayName": "SushiSwap",
+      "module": "sushiswap-classic",
+      "category": "Dexs",
+      "logo": "https://icons.llamao.fi/icons/protocols/sushiswap.png",
+      "chains": [
+        "Ethereum",
+        "Fantom",
+        "BSC",
+        "Polygon",
+        "Gnosis",
+        "Arbitrum",
+        "Avalanche",
+        "Moonriver",
+        "Celo",
+        "Fuse",
+        "Harmony",
+        "Boba",
+        "CORE",
+        "Blast",
+        "Katana",
+        "Metis",
+        "Sonic",
+        "Linea",
+        "OP Mainnet",
+        "Base"
+      ],
+      "protocolType": "protocol",
+      "methodologyURL": "https://github.com/DefiLlama/dimension-adapters/blob/master/factory/uniV2.ts",
+      "methodology": {
+        "UserFees": "Users pay a 0.3% fee on each trade",
+        "Fees": "SushiSwap charges a flat 0.3% fee",
+        "Revenue": "A 0.05% of each trade goes to treasury",
+        "ProtocolRevenue": "Treasury receives a share of the fees",
+        "HoldersRevenue": "Share of swap fee goes to xSUSHI stakers.",
+        "SupplySideRevenue": "Liquidity providers get 5/6 of all trades in their pools"
+      },
+      "parentProtocol": "parent#sushi",
+      "slug": "sushiswap",
+      "linkedProtocols": [
+        "Sushi",
+        "SushiSwap",
+        "Sushi Trident",
+        "SushiSwap V3",
+        "SushiSwap Agg",
+        "Sushi Perps"
+      ],
+      "hasLabelBreakdown": true,
+      "id": "119"
+    },
+    {
+      "total24h": 1636,
+      "total48hto24h": 32352,
+      "total7d": 75204,
+      "total14dto7d": 77094,
+      "total60dto30d": 161557,
+      "total30d": 366090,
+      "total1y": 4161878,
+      "totalAllTime": 5532238,
+      "average1y": 11402.405479452054,
+      "monthlyAverage1y": 347089.22279452055,
+      "change_1d": -94.94,
+      "change_7d": -94.33,
+      "change_1m": 53.04,
+      "change_7dover7d": -2.45,
+      "change_30dover30d": 126.6,
+      "breakdown24h": {
+        "ethereum": {
+          "Nexus Mutual": 1636
+        }
+      },
+      "breakdown30d": {
+        "ethereum": {
+          "Nexus Mutual": 366090
+        }
+      },
+      "total7DaysAgo": 28869,
+      "total30DaysAgo": 1069,
+      "defillamaId": "122",
+      "name": "Nexus Mutual",
+      "displayName": "Nexus Mutual",
+      "module": "nexus-mutual",
+      "category": "Insurance",
+      "logo": "https://icons.llamao.fi/icons/protocols/nexus-mutual.png",
+      "chains": [
+        "Ethereum"
+      ],
+      "protocolType": "protocol",
+      "methodologyURL": "https://github.com/DefiLlama/dimension-adapters/blob/master/fees/nexus-mutual.ts",
+      "methodology": {
+        "Fees": "All premiums paid by members to buy cover insurance minus paid claims. could be negative on some days",
+        "Revenue": "50% of premiums retained in the capital pool",
+        "HoldersRevenue": "50% of premiums retained in the capital pool, benefiting all NXM Holders",
+        "SupplySideRevenue": "50% of premiums distributed as NXM rewards to specific pools stakers",
+        "ProtocolRevenue": "Protocol takes nothing from paid premiums"
+      },
+      "slug": "nexus-mutual",
+      "id": "122"
+    }
+  ],
+  "top_keys_total24h": 53583371
+}

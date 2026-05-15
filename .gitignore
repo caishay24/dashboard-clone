@@ -1,0 +1,32 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# build
+dist/
+build/
+.next/
+.turbo/
+.vercel/
+
+# env / secrets - NEVER COMMIT
+.env
+.env.local
+.env.*.local
+apps/*/.env
+apps/*/.env.local
+
+# logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# misc
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# spike fixtures (real data sample for replay tests; large)
+spike-results/*.html
+/tmp/*.json

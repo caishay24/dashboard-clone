@@ -1,0 +1,20 @@
+# Large local artifacts - don't ship to Vercel
+spike-results/
+.claude/
+node_modules/
+dist/
+build/
+*.log
+.env
+.env.local
+apps/*/.env
+apps/*/.env.local
+
+# Plan / docs not needed at runtime
+PLAN_DASHBOARD_v*.md
+SPIKE_FAILED*.md
+spike-results/
+
+# IDE
+.vscode/
+.idea/
