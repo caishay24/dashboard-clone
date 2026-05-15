@@ -1,5 +1,3 @@
-import "dotenv/config";
-import { serve } from "@hono/node-server";
 import { Hono, type Context } from "hono";
 import { ZodError, type ZodTypeAny } from "zod";
 import { getOrFetch } from "./cache";
@@ -222,8 +220,12 @@ function clientIp(request: Request) {
 export { app };
 
 // Only start the standalone Node server when run directly (local dev / VPS).
-// On Vercel, /api/[[...slug]].ts imports `app` and invokes it via @hono/vercel.
+// On Vercel, /api/[[...slug]].ts imports `app` and invokes it via hono/vercel.
+// Use dynamic imports so neither dotenv nor @hono/node-server are pulled into
+// the Vercel serverless bundle (smaller cold start, no node:fs at module top).
 if (!process.env.VERCEL) {
+  await import("dotenv/config");
+  const { serve } = await import("@hono/node-server");
   const port = Number(process.env.PORT ?? 8787);
   serve({ fetch: app.fetch, port });
   console.log(`api listening on http://localhost:${port}`);
