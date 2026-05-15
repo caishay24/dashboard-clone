@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@dashboard/api": "workspace:*",
+    "@hono/node-server": "^1.19.6",
     "hono": "^4.10.7"
   },
   "devDependencies": {
