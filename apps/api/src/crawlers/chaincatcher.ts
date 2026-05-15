@@ -1,5 +1,3 @@
-import * as cheerio from "cheerio";
-
 const CHAINCATCHER_ORIGIN = "https://www.chaincatcher.com";
 
 export interface ChaincatcherArticle {
@@ -8,25 +6,32 @@ export interface ChaincatcherArticle {
 }
 
 export function extractArticles(html: string): ChaincatcherArticle[] {
-  const $ = cheerio.load(html);
   const seen = new Set<string>();
   const articles: ChaincatcherArticle[] = [];
 
-  $("a[href^='/article/']").each((_, element) => {
-    const href = $(element).attr("href");
-    if (!href) return;
+  for (const match of html.matchAll(/<a\b[^>]*href=["'](?<href>\/article\/[^"']+)["'][^>]*>(?<body>[\s\S]*?)<\/a>/giu)) {
+    const href = match.groups?.href;
+    const body = match.groups?.body;
+    if (!href || !body) continue;
 
-    const title = normalizeTitle($(element).text());
-    if (!title) return;
+    const title = normalizeTitle(stripTags(body));
+    if (!title) continue;
 
     const url = new URL(href, CHAINCATCHER_ORIGIN).toString();
-    if (seen.has(url)) return;
+    if (seen.has(url)) continue;
 
     seen.add(url);
     articles.push({ title, url });
-  });
+  }
 
   return articles;
+}
+
+function stripTags(value: string) {
+  return value
+    .replace(/<script\b[\s\S]*?<\/script>/giu, "")
+    .replace(/<style\b[\s\S]*?<\/style>/giu, "")
+    .replace(/<[^>]+>/gu, " ");
 }
 
 function normalizeTitle(value: string) {
