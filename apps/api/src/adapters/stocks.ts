@@ -17,7 +17,7 @@ const CONCURRENCY = 5;
  *   0.<6digit>    深圳 A 股        sz<code>                 "a-stock"
  *   116.<5digit>  港股             hk<code>                 "long"  (hkXX branch in parser)
  */
-function secidToSinaSymbol(secid: string): { symbol: string; kind: SinaSymbolKind } | null {
+export function secidToSinaSymbol(secid: string): { symbol: string; kind: SinaSymbolKind } | null {
   const dotIndex = secid.indexOf(".");
   if (dotIndex < 0) return null;
   const prefix = secid.slice(0, dotIndex);
@@ -149,7 +149,7 @@ function toStockItem(item: StockAllowlistItem, quote: EastmoneyQuote): StockItem
   };
 }
 
-async function mapConcurrent<T, U>(
+export async function mapConcurrent<T, U>(
   items: T[],
   concurrency: number,
   mapper: (item: T) => Promise<U>
@@ -169,4 +169,51 @@ async function mapConcurrent<T, U>(
     Array.from({ length: Math.min(concurrency, items.length) }, () => worker())
   );
   return results;
+}
+
+/**
+ * Reusable per-stock quote resolution with push2 → Sina fallback.
+ * Returns a StockItem on success, null on both-sources failure.
+ * The caller supplies the metadata fields (code/secid/name_cn/sector) and we
+ * fetch the live price + change.
+ */
+export async function fetchStockQuoteWithFallback(meta: {
+  code: string;
+  secid: string;
+  name_cn: string;
+  sector: string;
+}): Promise<StockItem | null> {
+  // Phase 1: 东方财富 push2
+  try {
+    const quote = await fetchEastmoneyQuote(meta.secid);
+    if (typeof quote.price === "number" && typeof quote.changePct === "number") {
+      return toStockItem(meta, quote);
+    }
+  } catch {
+    /* fallthrough to Sina */
+  }
+
+  // Phase 2: Sina fallback
+  const sina = secidToSinaSymbol(meta.secid);
+  if (!sina) return null;
+  const sinaMap = await fetchSinaIndicesBatch([{ symbol: sina.symbol, kind: sina.kind }]);
+  const quote = sinaMap[sina.symbol];
+  if (!quote || typeof quote.price !== "number" || typeof quote.changePct !== "number") {
+    return null;
+  }
+  return {
+    code: meta.code,
+    secid: meta.secid,
+    name_cn: meta.name_cn,
+    sector: meta.sector,
+    price: quote.price,
+    change_pct: quote.changePct,
+    change_abs: quote.changeAbs ?? null,
+    high: null,
+    low: null,
+    prev_close: null,
+    volume: null,
+    amount: null,
+    amplitude_pct: null
+  };
 }

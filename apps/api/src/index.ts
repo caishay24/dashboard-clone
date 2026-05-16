@@ -9,6 +9,7 @@ import { getOnchainStocks } from "./adapters/onchainStocks";
 import { getSectorMovers } from "./adapters/sectorMovers";
 import { getStablecoinYields } from "./adapters/stablecoinYields";
 import { getStocks } from "./adapters/stocks";
+import { getStocksSearch } from "./adapters/stocksSearch";
 import { getTicker } from "./adapters/ticker";
 import { getTradingComp } from "./adapters/tradingComp";
 import { envelope } from "./types";
@@ -21,6 +22,7 @@ import {
   sectorMoversQuerySchema,
   stablecoinYieldsQuerySchema,
   stocksQuerySchema,
+  stocksSearchQuerySchema,
   tickerQuerySchema,
   tradingCompQuerySchema
 } from "./schemas";
@@ -77,6 +79,26 @@ app.get("/api/stocks", async (c) => {
     fetchedAt: response.meta.fetchedAt ? new Date(response.meta.fetchedAt) : null,
     expiresAt: response.meta.expiresAt ? new Date(response.meta.expiresAt) : null,
     source: "stocks",
+    cache: response.meta.cache,
+    degraded: response.data?.degraded ?? []
+  }, response.error), response.meta.state === "cold" ? 502 : 200);
+});
+app.get("/api/stocks/search", async (c) => {
+  const query = parseQuery(c, stocksSearchQuerySchema, "stocks-search");
+  if (!query.ok) return query.response;
+  // Normalise the query string for the cache key (case-insensitive, trim).
+  const normalized = query.data.q.trim().toLowerCase();
+  const response = await getOrFetch(
+    `stocks-search:${query.data.region}:${query.data.limit}:${normalized}`,
+    300,    // 5 min TTL — search results don't change often within a window
+    21_600, // 6 h hard max
+    () => getStocksSearch({ q: query.data.q, region: query.data.region, limit: query.data.limit })
+  );
+  return c.json(envelope(response.data?.data ?? [], {
+    state: response.meta.state,
+    fetchedAt: response.meta.fetchedAt ? new Date(response.meta.fetchedAt) : null,
+    expiresAt: response.meta.expiresAt ? new Date(response.meta.expiresAt) : null,
+    source: "stocks-search",
     cache: response.meta.cache,
     degraded: response.data?.degraded ?? []
   }, response.error), response.meta.state === "cold" ? 502 : 200);

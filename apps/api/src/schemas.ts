@@ -9,6 +9,11 @@ export const stocksQuerySchema = z.object({
   region: regionSchema.default("us"),
   sector: z.string().min(1).max(80).optional()
 });
+export const stocksSearchQuerySchema = z.object({
+  q: z.string().min(1).max(40),
+  region: z.enum(["us", "cn", "hk", "all"]).default("all"),
+  limit: limit(5, 30, 20)
+});
 export const tradingCompQuerySchema = z.object({
   exchange: exchangeSchema.default("okx")
 });

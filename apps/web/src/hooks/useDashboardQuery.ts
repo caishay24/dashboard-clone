@@ -13,7 +13,7 @@ export interface DashboardEnvelope<T> {
   error: { code: string; message: string } | null;
 }
 
-export function useDashboardQuery<T>(key: string, path: string, options?: { refetchInterval?: number }) {
+export function useDashboardQuery<T>(key: string, path: string, options?: { refetchInterval?: number; enabled?: boolean }) {
   const query = useQuery({
     queryKey: [key, path],
     queryFn: async (): Promise<DashboardEnvelope<T>> => {
@@ -23,7 +23,8 @@ export function useDashboardQuery<T>(key: string, path: string, options?: { refe
       }
       return response.json() as Promise<DashboardEnvelope<T>>;
     },
-    refetchInterval: options?.refetchInterval
+    refetchInterval: options?.refetchInterval,
+    enabled: options?.enabled ?? true
   });
 
   return {
