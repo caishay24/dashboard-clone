@@ -89,7 +89,7 @@ app.get("/api/stocks/search", async (c) => {
   // Normalise the query string for the cache key (case-insensitive, trim).
   const normalized = query.data.q.trim().toLowerCase();
   const response = await getOrFetch(
-    `stocks-search:${query.data.region}:${query.data.limit}:${normalized}`,
+    `stocks-search:v2:${query.data.region}:${query.data.limit}:${normalized}`,
     300,    // 5 min TTL — search results don't change often within a window
     21_600, // 6 h hard max
     () => getStocksSearch({ q: query.data.q, region: query.data.region, limit: query.data.limit })
