@@ -40,7 +40,21 @@ export async function getGithubRepos(params: { category?: string }): Promise<Git
   const selected = params.category
     ? allowlist.filter((item) => item.category === params.category)
     : allowlist;
-  const enriched = await mapConcurrent(selected, 5, fetchRepo);
+
+  // Partial-failure tolerance: individual repo fetch failure (rate limit, 404,
+  // transient network) must not kill the whole route. Returns only successful
+  // items; callers see fewer entries instead of UPSTREAM_DOWN.
+  const settled = await mapConcurrentSettled(selected, 5, fetchRepo);
+  const enriched: GithubRepoItem[] = [];
+  for (const r of settled) {
+    if (r.status === "fulfilled") enriched.push(r.value);
+  }
+
+  // If literally everything failed, signal upstream-down so the cache layer
+  // does not poison stale state with an empty success.
+  if (enriched.length === 0 && selected.length > 0) {
+    throw new Error("GitHub: all repos failed (likely missing GITHUB_PAT or rate limit)");
+  }
 
   return enriched.sort((a, b) => {
     const categoryDelta = categoryOrder.indexOf(a.category) - categoryOrder.indexOf(b.category);
@@ -83,6 +97,27 @@ async function mapConcurrent<T, R>(
       const index = next;
       next += 1;
       results[index] = await mapper(items[index]);
+    }
+  }));
+  return results;
+}
+
+async function mapConcurrentSettled<T, R>(
+  items: T[],
+  limit: number,
+  mapper: (item: T) => Promise<R>
+): Promise<PromiseSettledResult<R>[]> {
+  const results = new Array<PromiseSettledResult<R>>(items.length);
+  let next = 0;
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, async () => {
+    while (next < items.length) {
+      const index = next;
+      next += 1;
+      try {
+        results[index] = { status: "fulfilled", value: await mapper(items[index]) };
+      } catch (reason) {
+        results[index] = { status: "rejected", reason };
+      }
     }
   }));
   return results;

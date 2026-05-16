@@ -31,3 +31,4 @@ pnpm-debug.log*
 # spike fixtures (real data sample for replay tests; large)
 spike-results/*.html
 /tmp/*.json
+.vercel
