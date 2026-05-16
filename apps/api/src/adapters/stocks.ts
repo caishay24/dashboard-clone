@@ -186,7 +186,11 @@ export async function fetchStockQuoteWithFallback(meta: {
   // Phase 1: 东方财富 push2
   try {
     const quote = await fetchEastmoneyQuote(meta.secid);
-    if (typeof quote.price === "number" && typeof quote.changePct === "number") {
+    if (
+      typeof quote.price === "number" &&
+      typeof quote.changePct === "number" &&
+      quote.price !== 0
+    ) {
       return toStockItem(meta, quote);
     }
   } catch {
@@ -201,6 +205,10 @@ export async function fetchStockQuoteWithFallback(meta: {
   if (!quote || typeof quote.price !== "number" || typeof quote.changePct !== "number") {
     return null;
   }
+  // Reject zero-priced "stocks" — these are usually bonds / inactive notes
+  // (e.g. AAPL22 = Apple Inc Notes 2022) that eastmoney suggest classifies
+  // as stocks but neither upstream actually quotes. Treat as degraded.
+  if (quote.price === 0) return null;
   return {
     code: meta.code,
     secid: meta.secid,
