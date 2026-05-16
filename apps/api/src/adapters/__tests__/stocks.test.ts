@@ -1,12 +1,17 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { fetchEastmoneyQuote } from "../../lib/eastmoney";
+import { fetchSinaIndicesBatch } from "../../lib/sina";
 import { getStocks } from "../stocks";
 
 vi.mock("../../lib/eastmoney", () => ({
   fetchEastmoneyQuote: vi.fn()
 }));
+vi.mock("../../lib/sina", () => ({
+  fetchSinaIndicesBatch: vi.fn(async () => ({}))
+}));
 
 const fetchEastmoneyQuoteMock = vi.mocked(fetchEastmoneyQuote);
+const fetchSinaIndicesBatchMock = vi.mocked(fetchSinaIndicesBatch);
 
 describe("getStocks", () => {
   beforeEach(() => {
@@ -50,7 +55,7 @@ describe("getStocks", () => {
     });
   });
 
-  it("omits failed stocks and records degraded codes", async () => {
+  it("omits failed stocks and records degraded codes (both push2 + Sina fail)", async () => {
     fetchEastmoneyQuoteMock.mockImplementation(async (secid) => {
       if (secid === "105.MSFT") throw new Error("rate limited");
       return {
@@ -68,11 +73,48 @@ describe("getStocks", () => {
         changePct: 2.04
       };
     });
+    // Sina fallback also returns no data for MSFT → final degraded
+    fetchSinaIndicesBatchMock.mockResolvedValue({});
 
     const result = await getStocks({ region: "us", sector: "科技巨头" });
 
     expect(result.degraded).toEqual(["MSFT"]);
     expect(result.data).toHaveLength(6);
     expect(result.data.some((item) => item.code === "MSFT")).toBe(false);
+  });
+
+  it("falls back to Sina when push2 fails for a single stock", async () => {
+    fetchEastmoneyQuoteMock.mockImplementation(async (secid) => {
+      if (secid === "105.MSFT") throw new Error("rate limited");
+      return {
+        code: String(secid).replace("105.", ""),
+        name: "name",
+        price: 100,
+        high: 101,
+        low: 99,
+        previousClose: 98,
+        open: 99,
+        volume: 1000,
+        amount: 2000,
+        amplitudePct: 1.5,
+        changeAbs: 2,
+        changePct: 2.04
+      };
+    });
+    // Sina rescues MSFT via gb_msft
+    fetchSinaIndicesBatchMock.mockResolvedValue({
+      gb_msft: { symbol: "gb_msft", name: "微软", price: 421.92, changePct: 3.73, changeAbs: 15.20 }
+    });
+
+    const result = await getStocks({ region: "us", sector: "科技巨头" });
+
+    expect(result.degraded).toEqual([]);
+    expect(result.data).toHaveLength(7);
+    const msft = result.data.find((item) => item.code === "MSFT");
+    expect(msft?.price).toBe(421.92);
+    expect(msft?.change_pct).toBeCloseTo(3.73);
+    // Sina-only fields (volume/amount/high/low/amplitude) should be null
+    expect(msft?.volume).toBeNull();
+    expect(msft?.high).toBeNull();
   });
 });

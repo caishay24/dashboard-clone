@@ -22,7 +22,7 @@ import { fetchWithRetry } from "../fetchWithRetry";
 const SINA_BASE = "https://hq.sinajs.cn/list=";
 const SINA_REFERER = "https://finance.sina.com.cn/";
 
-export type SinaSymbolKind = "a-short" | "long";
+export type SinaSymbolKind = "a-short" | "long" | "a-stock";
 
 export interface SinaIndexQuote {
   symbol: string;
@@ -90,22 +90,34 @@ function parseSinaLine(symbol: string, kind: SinaSymbolKind, text: string): Sina
   if (!inner) return null;
   const fields = inner.split(",");
   if (kind === "a-short") {
-    // name, price, changeAbs, changePct, volume, amount
+    // s_<code> short A股 index format: name, price, changeAbs, changePct, volume, amount
     if (fields.length < 4) return null;
     const price = num(fields[1]);
     const changeAbs = num(fields[2]);
     const changePct = num(fields[3]);
     return { symbol, name: fields[0] ?? "", price, changeAbs, changePct };
   }
+  if (kind === "a-stock") {
+    // sh<code>/sz<code> A股 individual stock format:
+    //   name, open, prevClose, currentPrice, high, low, bid1, ask1, volume, amount, ...orderbook..., date, time
+    // Compute changeAbs and changePct from prevClose because Sina does not return them inline here.
+    if (fields.length < 4) return null;
+    const prevClose = num(fields[2]);
+    const price = num(fields[3]);
+    if (price === null || prevClose === null || prevClose === 0) return null;
+    const changeAbs = price - prevClose;
+    const changePct = (changeAbs / prevClose) * 100;
+    return { symbol, name: fields[0] ?? "", price, changeAbs, changePct };
+  }
   if (symbol.startsWith("hk")) {
-    // HK index format: symbol, name, open, high, ..., current, changeAbs, changePct, ...
+    // HK long format (indices + stocks): symbol, name, open, prevClose, high, low, current, changeAbs, changePct, ...
     if (fields.length < 9) return null;
     const price = num(fields[6]);
     const changeAbs = num(fields[7]);
     const changePct = num(fields[8]);
     return { symbol, name: fields[1] ?? "", price, changePct, changeAbs };
   }
-  // US index long format: name, price, changePct, date, changeAbs, prevClose, open, ...
+  // US long format (indices + stocks gb_<sym>): name, price, changePct, date, changeAbs, prevClose, open, ...
   if (fields.length < 5) return null;
   const price = num(fields[1]);
   const changePct = num(fields[2]);
