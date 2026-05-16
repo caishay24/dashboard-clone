@@ -58,6 +58,10 @@ export interface StockItem {
   volume: number | null;
   amount: number | null;
   amplitude_pct: number | null;
+  pe: number | null;             // 市盈率 (TTM)
+  pb: number | null;             // 市净率
+  market_cap: number | null;     // 总市值（元）
+  volume_ratio: number | null;   // 量比
 }
 
 export interface StocksResult {
@@ -114,7 +118,11 @@ export async function getStocks(params: { region: Region; sector?: string }): Pr
           prev_close: null,
           volume: null,
           amount: null,
-          amplitude_pct: null
+          amplitude_pct: null,
+          pe: null,
+          pb: null,
+          market_cap: null,
+          volume_ratio: null
         };
       }
     }
@@ -145,7 +153,11 @@ function toStockItem(item: StockAllowlistItem, quote: EastmoneyQuote): StockItem
     prev_close: quote.previousClose,
     volume: quote.volume,
     amount: quote.amount,
-    amplitude_pct: quote.amplitudePct
+    amplitude_pct: quote.amplitudePct,
+    pe: quote.pe,
+    pb: quote.pb,
+    market_cap: quote.marketCap,
+    volume_ratio: quote.volumeRatio
   };
 }
 
@@ -222,6 +234,10 @@ export async function fetchStockQuoteWithFallback(meta: {
     prev_close: null,
     volume: null,
     amount: null,
-    amplitude_pct: null
+    amplitude_pct: null,
+    pe: null,
+    pb: null,
+    market_cap: null,
+    volume_ratio: null
   };
 }

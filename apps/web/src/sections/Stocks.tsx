@@ -7,6 +7,7 @@ const regions = [["us", "美股"], ["cn", "A股"], ["hk", "港股"]] as const;
 
 interface StockItem {
   code: string;
+  secid: string;
   name_cn: string;
   sector: string;
   price: number | null;
@@ -18,6 +19,19 @@ interface StockItem {
   volume: number | null;
   amount: number | null;
   amplitude_pct: number | null;
+  pe: number | null;
+  pb: number | null;
+  market_cap: number | null;
+  volume_ratio: number | null;
+}
+
+function formatMoney(yuan: number | null | undefined): string {
+  if (yuan == null) return "—";
+  const abs = Math.abs(yuan);
+  if (abs >= 1e12) return `${(yuan / 1e12).toFixed(2)} 万亿`;
+  if (abs >= 1e8) return `${(yuan / 1e8).toFixed(2)} 亿`;
+  if (abs >= 1e4) return `${(yuan / 1e4).toFixed(2)} 万`;
+  return yuan.toFixed(0);
 }
 
 function useDebounced<T>(value: T, delayMs: number): T {
@@ -130,7 +144,7 @@ export default function Stocks() {
             <table className="w-full border-collapse text-left text-sm">
               <thead className="sticky top-0 bg-app-panel font-mono text-xs uppercase text-app-muted">
                 <tr>
-                  {["代码/名称", "市场/sector", "现价", "涨跌%", "涨跌", "最高", "最低", "昨收", "volume", "amount", "amp"].map((header) => (
+                  {["代码/名称", "板块", "现价", "涨跌%", "涨跌", "最高", "最低", "昨收", "成交量", "成交额", "振幅", "市盈率", "市净率", "总市值"].map((header) => (
                     <th key={header} className="border-b border-app-line px-3 py-2">{header}</th>
                   ))}
                 </tr>
@@ -139,9 +153,20 @@ export default function Stocks() {
                 {rows.map((item) => {
                   const pct = formatPct(item.change_pct);
                   const abs = formatPct(item.change_abs);
+                  const open = () => {
+                    if (item.secid) window.location.hash = `stocks/${item.secid}`;
+                  };
                   return (
-                    <tr key={`${item.code}-${item.sector}`} className="border-b border-app-line/70 hover:bg-white/5">
-                      <td className="px-3 py-2"><div className="font-mono text-app-fg">{item.code}</div><div className="text-xs text-app-muted">{item.name_cn}</div></td>
+                    <tr
+                      key={`${item.code}-${item.sector}`}
+                      onClick={open}
+                      className="cursor-pointer border-b border-app-line/70 hover:bg-white/5"
+                      title="点击查看个股详情"
+                    >
+                      <td className="px-3 py-2">
+                        <div className="font-mono text-app-fg underline decoration-app-line decoration-dotted underline-offset-2">{item.code}</div>
+                        <div className="text-xs text-app-muted">{item.name_cn}</div>
+                      </td>
                       <td className="px-3 py-2 text-xs text-app-muted">{item.sector}</td>
                       <td className="px-3 py-2 font-mono">{formatNumber(item.price)}</td>
                       <td className={`px-3 py-2 font-mono ${pct.className}`}>{pct.text}</td>
@@ -150,8 +175,11 @@ export default function Stocks() {
                       <td className="px-3 py-2 font-mono">{formatNumber(item.low)}</td>
                       <td className="px-3 py-2 font-mono">{formatNumber(item.prev_close)}</td>
                       <td className="px-3 py-2 font-mono">{formatNumber(item.volume, 0)}</td>
-                      <td className="px-3 py-2 font-mono">{formatNumber(item.amount, 0)}</td>
+                      <td className="px-3 py-2 font-mono">{formatMoney(item.amount)}</td>
                       <td className="px-3 py-2 font-mono">{formatPct(item.amplitude_pct).text}</td>
+                      <td className="px-3 py-2 font-mono">{item.pe != null ? item.pe.toFixed(2) : "—"}</td>
+                      <td className="px-3 py-2 font-mono">{item.pb != null ? item.pb.toFixed(2) : "—"}</td>
+                      <td className="px-3 py-2 font-mono">{formatMoney(item.market_cap)}</td>
                     </tr>
                   );
                 })}

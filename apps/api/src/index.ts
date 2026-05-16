@@ -10,6 +10,7 @@ import { getSectorMovers } from "./adapters/sectorMovers";
 import { getStablecoinYields } from "./adapters/stablecoinYields";
 import { getStocks } from "./adapters/stocks";
 import { getStocksSearch } from "./adapters/stocksSearch";
+import { getStocksDetail } from "./adapters/stocksDetail";
 import { getTicker } from "./adapters/ticker";
 import { getTradingComp } from "./adapters/tradingComp";
 import { envelope } from "./types";
@@ -21,6 +22,7 @@ import {
   onchainStocksQuerySchema,
   sectorMoversQuerySchema,
   stablecoinYieldsQuerySchema,
+  stocksDetailQuerySchema,
   stocksQuerySchema,
   stocksSearchQuerySchema,
   tickerQuerySchema,
@@ -81,6 +83,23 @@ app.get("/api/stocks", async (c) => {
     source: "stocks",
     cache: response.meta.cache,
     degraded: response.data?.degraded ?? []
+  }, response.error), response.meta.state === "cold" ? 502 : 200);
+});
+app.get("/api/stocks/detail", async (c) => {
+  const query = parseQuery(c, stocksDetailQuerySchema, "stocks-detail");
+  if (!query.ok) return query.response;
+  const response = await getOrFetch(
+    `stocks-detail:${query.data.secid}`,
+    60,      // 1 min TTL (quote refreshes fast, finance reports rarely change)
+    21_600,  // 6 h hard max
+    () => getStocksDetail({ secid: query.data.secid })
+  );
+  return c.json(envelope(response.data ?? null, {
+    state: response.meta.state,
+    fetchedAt: response.meta.fetchedAt ? new Date(response.meta.fetchedAt) : null,
+    expiresAt: response.meta.expiresAt ? new Date(response.meta.expiresAt) : null,
+    source: "stocks-detail",
+    cache: response.meta.cache
   }, response.error), response.meta.state === "cold" ? 502 : 200);
 });
 app.get("/api/stocks/search", async (c) => {

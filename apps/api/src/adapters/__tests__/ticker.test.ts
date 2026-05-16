@@ -55,7 +55,12 @@ describe("getTicker", () => {
       amount: 2000,
       amplitudePct: 1.2,
       changeAbs: 50,
-      changePct: 1
+      changePct: 1,
+      pe: null,
+      pb: null,
+      marketCap: null,
+      circulatingCap: null,
+      volumeRatio: null
     });
     countCoinGeckoAttemptMock.mockResolvedValue(1);
     fetchWithRetryMock.mockImplementation(async (input) => {

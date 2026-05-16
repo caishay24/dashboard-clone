@@ -6,10 +6,17 @@ const EASTMONEY_APIS = ["https://push2.eastmoney.com", "https://push2his.eastmon
 // Use it for price-magnitude fields. Percentage fields (f168/f171) are always 2-decimal regardless.
 const F59_SCALED_FIELDS = ["f43", "f44", "f45", "f46", "f60", "f170"] as const;
 const PERCENT_2DP_FIELDS = ["f168", "f171"] as const;
+// PE (f9) and PB (f23) are returned ×100 in push2 (e.g. f9=8179 → PE=81.79).
+const RATIO_2DP_FIELDS = ["f9", "f23"] as const;
 
 const eastmoneyStockGetSchema = z.object({
   rc: z.number(),
   data: z.object({
+    f9: z.number().nullable().optional(),    // PE 市盈率 (×100)
+    f10: z.number().nullable().optional(),   // 量比 (×100)
+    f20: z.number().nullable().optional(),   // 总市值 (yuan, raw)
+    f21: z.number().nullable().optional(),   // 流通市值 (yuan, raw)
+    f23: z.number().nullable().optional(),   // 市净率 (×100)
     f43: z.number().nullable().optional(),
     f44: z.number().nullable().optional(),
     f45: z.number().nullable().optional(),
@@ -39,6 +46,11 @@ export interface EastmoneyQuote {
   amplitudePct: number | null;
   changeAbs: number | null;
   changePct: number | null;
+  pe: number | null;            // 市盈率 (TTM)
+  pb: number | null;            // 市净率
+  marketCap: number | null;     // 总市值 (yuan)
+  circulatingCap: number | null;// 流通市值 (yuan)
+  volumeRatio: number | null;   // 量比 (×100 → ratio)
 }
 
 export async function fetchEastmoneyQuote(secid: string): Promise<EastmoneyQuote> {
@@ -58,7 +70,12 @@ export async function fetchEastmoneyQuote(secid: string): Promise<EastmoneyQuote
     amount: data.f48 ?? null,
     amplitudePct: data.f168 ?? null,
     changeAbs: data.f170 ?? null,
-    changePct: data.f171 ?? null
+    changePct: data.f171 ?? null,
+    pe: data.f9 ?? null,
+    pb: data.f23 ?? null,
+    marketCap: data.f20 ?? null,
+    circulatingCap: data.f21 ?? null,
+    volumeRatio: typeof data.f10 === "number" ? data.f10 / 100 : null
   };
 }
 
@@ -67,7 +84,7 @@ async function fetchEastmoneyJson(secid: string) {
   for (const base of EASTMONEY_APIS) {
     const url = new URL("/api/qt/stock/get", base);
     url.searchParams.set("secid", secid);
-    url.searchParams.set("fields", "f43,f44,f45,f46,f47,f48,f57,f58,f59,f60,f168,f170,f171");
+    url.searchParams.set("fields", "f9,f10,f20,f21,f23,f43,f44,f45,f46,f47,f48,f57,f58,f59,f60,f168,f170,f171");
     try {
       const response = await fetchWithRetry(url, {
         headers: {
@@ -96,5 +113,16 @@ function normalizeScaledFields<T extends Record<string, unknown>>(data: T) {
     const value = normalized[field];
     normalized[field] = typeof value === "number" ? value / 100 : value;
   }
-  return normalized as T & Record<(typeof F59_SCALED_FIELDS)[number] | (typeof PERCENT_2DP_FIELDS)[number], number | null | undefined>;
+  // PE/PB are always ×100 regardless of price decimals (verified for A股/美股/港股).
+  // Negative PE = loss → treat as null (avoid misleading "-23.45 P/E"); huge PE (> 10000) likely artifact.
+  for (const field of RATIO_2DP_FIELDS) {
+    const value = normalized[field];
+    if (typeof value !== "number") continue;
+    const real = value / 100;
+    normalized[field] = (real <= 0 || real > 10000) ? null : real;
+  }
+  return normalized as T & Record<
+    (typeof F59_SCALED_FIELDS)[number] | (typeof PERCENT_2DP_FIELDS)[number] | (typeof RATIO_2DP_FIELDS)[number],
+    number | null | undefined
+  >;
 }

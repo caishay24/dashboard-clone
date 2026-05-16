@@ -28,7 +28,12 @@ describe("getStocks", () => {
       amount: 987654321,
       amplitudePct: 2.34,
       changeAbs: 3.5,
-      changePct: 1.26
+      changePct: 1.26,
+      pe: null,
+      pb: null,
+      marketCap: null,
+      circulatingCap: null,
+      volumeRatio: null
     });
   });
 
@@ -51,7 +56,11 @@ describe("getStocks", () => {
       prev_close: 277,
       volume: 123456,
       amount: 987654321,
-      amplitude_pct: 2.34
+      amplitude_pct: 2.34,
+      pe: null,
+      pb: null,
+      market_cap: null,
+      volume_ratio: null
     });
   });
 
@@ -70,7 +79,12 @@ describe("getStocks", () => {
         amount: 2000,
         amplitudePct: 1.5,
         changeAbs: 2,
-        changePct: 2.04
+        changePct: 2.04,
+        pe: null,
+        pb: null,
+        marketCap: null,
+        circulatingCap: null,
+        volumeRatio: null
       };
     });
     // Sina fallback also returns no data for MSFT → final degraded
@@ -98,7 +112,12 @@ describe("getStocks", () => {
         amount: 2000,
         amplitudePct: 1.5,
         changeAbs: 2,
-        changePct: 2.04
+        changePct: 2.04,
+        pe: null,
+        pb: null,
+        marketCap: null,
+        circulatingCap: null,
+        volumeRatio: null
       };
     });
     // Sina rescues MSFT via gb_msft

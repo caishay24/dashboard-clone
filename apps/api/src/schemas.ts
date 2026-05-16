@@ -14,6 +14,10 @@ export const stocksSearchQuerySchema = z.object({
   region: z.enum(["us", "cn", "hk", "all"]).default("all"),
   limit: limit(5, 30, 20)
 });
+// secid format: <market_num>.<ticker_or_code>  e.g. "1.600519", "105.AAPL", "116.00700"
+export const stocksDetailQuerySchema = z.object({
+  secid: z.string().regex(/^[0-9]{1,3}\.[A-Za-z0-9.]{1,20}$/, "invalid secid")
+});
 export const tradingCompQuerySchema = z.object({
   exchange: exchangeSchema.default("okx")
 });
