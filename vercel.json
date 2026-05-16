@@ -3,6 +3,7 @@
   "buildCommand": "pnpm build:vercel-api && cd apps/web && node ../../node_modules/vite/bin/vite.js build",
   "outputDirectory": "apps/web/dist",
   "framework": null,
+  "regions": ["hnd1"],
   "installCommand": "pnpm install --no-frozen-lockfile",
   "functions": {
     "api/[[...slug]].js": {
