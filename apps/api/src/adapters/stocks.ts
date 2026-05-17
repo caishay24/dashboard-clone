@@ -77,73 +77,117 @@ export async function getStocks(params: { region: Region; sector?: string }): Pr
     .filter((item) => !params.sector || item.sector === params.sector);
   const degraded: string[] = [];
 
-  // Phase 1: try 东方财富 push2 per stock. Returns null on failure or empty data.
-  const phase1: (StockItem | null)[] = await mapConcurrent(selected, CONCURRENCY, async (item) => {
-    try {
-      const quote = await fetchEastmoneyQuote(item.secid);
-      if (typeof quote.price !== "number" || typeof quote.changePct !== "number") return null;
-      return toStockItem(item, quote);
-    } catch {
-      return null;
-    }
-  });
+  // Pre-compute the symbol sets for batched enrichment — independent of phase1 result.
+  // Running enrichment in PARALLEL with phase1 push2 saves ~5-8s of Vercel function time.
+  const aSecucodes = selected
+    .map((x) => secidToSecuCode(x.secid))
+    .filter((s): s is string => s !== null);
+  const usSinaSyms = selected
+    .filter((x) => x.secid.startsWith("105."))
+    .map((x) => ({ symbol: `gb_${x.secid.slice(4).toLowerCase()}`, kind: "long" as const }));
 
-  // Phase 2: collect items that failed 东方财富 and try Sina fallback in a single batch
-  const missing: Array<{ index: number; item: StockAllowlistItem; sina: { symbol: string; kind: SinaSymbolKind } }> = [];
-  phase1.forEach((value, index) => {
+  // Phase 1 (push2 per stock) and 2 batched enrichment calls all fire concurrently.
+  const [phase1, aValMap, usSinaEnrichMap] = await Promise.all([
+    mapConcurrent(selected, CONCURRENCY, async (item) => {
+      try {
+        const quote = await fetchEastmoneyQuote(item.secid);
+        if (typeof quote.price !== "number" || typeof quote.changePct !== "number") return null;
+        return toStockItem(item, quote);
+      } catch {
+        return null;
+      }
+    }),
+    aSecucodes.length > 0
+      ? fetchAStockValuationBatch(aSecucodes).catch(() => ({} as Record<string, { peTTM: number | null; pbMRQ: number | null; marketCap: number | null }>))
+      : Promise.resolve({} as Record<string, { peTTM: number | null; pbMRQ: number | null; marketCap: number | null }>),
+    usSinaSyms.length > 0
+      ? fetchSinaIndicesBatch(usSinaSyms).catch(() => ({} as Record<string, import("../lib/sina").SinaIndexQuote>))
+      : Promise.resolve({} as Record<string, import("../lib/sina").SinaIndexQuote>)
+  ]);
+
+  // Phase 2: items that failed push2 → reuse usSinaEnrichMap (already has US 美股 quotes)
+  // or single Sina batch for non-US that failed.
+  const missingNonUs: Array<{ index: number; item: StockAllowlistItem; sina: { symbol: string; kind: SinaSymbolKind } }> = [];
+  const phase1Mut = phase1 as (StockItem | null)[];
+  phase1Mut.forEach((value, index) => {
     if (value !== null) return;
     const item = selected[index];
     const sina = secidToSinaSymbol(item.secid);
-    if (sina) missing.push({ index, item, sina });
+    if (!sina) return;
+    // 美股 already covered by usSinaEnrichMap (same gb_<lower> symbol/kind)
+    if (item.secid.startsWith("105.")) {
+      const quote = usSinaEnrichMap[sina.symbol];
+      if (quote && typeof quote.price === "number" && typeof quote.changePct === "number" && quote.price !== 0) {
+        phase1Mut[index] = sinaQuoteToStockItem(item, quote);
+      }
+    } else {
+      missingNonUs.push({ index, item, sina });
+    }
   });
 
-  if (missing.length > 0) {
+  if (missingNonUs.length > 0) {
     const sinaMap = await fetchSinaIndicesBatch(
-      missing.map((m) => ({ symbol: m.sina.symbol, kind: m.sina.kind }))
+      missingNonUs.map((m) => ({ symbol: m.sina.symbol, kind: m.sina.kind }))
     );
-    for (const { index, item, sina } of missing) {
+    for (const { index, item, sina } of missingNonUs) {
       const quote = sinaMap[sina.symbol];
-      if (quote && typeof quote.price === "number" && typeof quote.changePct === "number") {
-        // Sina does not expose volume/amount/high/low/amplitude in our parsed shape;
-        // fill only the fields that matter to the UI (price, change_pct, change_abs).
-        phase1[index] = {
-          code: item.code,
-          secid: item.secid,
-          name_cn: item.name_cn,
-          sector: item.sector,
-          price: quote.price,
-          change_pct: quote.changePct,
-          change_abs: quote.changeAbs ?? null,
-          high: null,
-          low: null,
-          prev_close: null,
-          volume: null,
-          amount: null,
-          amplitude_pct: null,
-          pe: null,
-          pb: null,
-          market_cap: null,
-          volume_ratio: null
-        };
+      if (quote && typeof quote.price === "number" && typeof quote.changePct === "number" && quote.price !== 0) {
+        phase1Mut[index] = sinaQuoteToStockItem(item, quote);
       }
     }
   }
 
-  // Phase 3: enrich PE / PB / market_cap for items missing them
-  //   A股 (1./0.): single datacenter call with SECUCODE IN (..) batch filter
-  //   美股 (105.): single Sina batch (gb_<lower> pos 12 = mcap, pos 14 = PE)
-  //   港股 (116.): no source — fields stay null
-  // Two batched calls run in parallel; each tolerates failure (catch → empty).
-  await enrichRatios(phase1.filter((x): x is StockItem => x !== null));
+  // Phase 3: merge ratio enrichment results into successful items.
+  for (const item of phase1Mut) {
+    if (!item) continue;
+    if (item.secid.startsWith("1.") || item.secid.startsWith("0.")) {
+      const sc = secidToSecuCode(item.secid);
+      const v = sc ? aValMap[sc] : null;
+      if (v) {
+        if (item.pe == null) item.pe = v.peTTM;
+        if (item.pb == null) item.pb = v.pbMRQ;
+        if (item.market_cap == null) item.market_cap = v.marketCap;
+      }
+    } else if (item.secid.startsWith("105.")) {
+      const key = `gb_${item.secid.slice(4).toLowerCase()}`;
+      const s = usSinaEnrichMap[key];
+      if (s) {
+        if (item.pe == null && s.pe != null) item.pe = s.pe;
+        if (item.market_cap == null && s.marketCap != null) item.market_cap = s.marketCap;
+      }
+    }
+  }
 
   // Final pass: any still-null entries → degraded
-  phase1.forEach((value, index) => {
+  phase1Mut.forEach((value, index) => {
     if (value === null) degraded.push(selected[index].code);
   });
 
   return {
-    data: phase1.filter((item): item is StockItem => item !== null),
+    data: phase1Mut.filter((item): item is StockItem => item !== null),
     degraded
+  };
+}
+
+function sinaQuoteToStockItem(item: StockAllowlistItem, quote: import("../lib/sina").SinaIndexQuote): StockItem {
+  return {
+    code: item.code,
+    secid: item.secid,
+    name_cn: item.name_cn,
+    sector: item.sector,
+    price: quote.price ?? null,
+    change_pct: quote.changePct ?? null,
+    change_abs: quote.changeAbs ?? null,
+    high: null,
+    low: null,
+    prev_close: null,
+    volume: null,
+    amount: null,
+    amplitude_pct: null,
+    pe: quote.pe ?? null,
+    pb: null,
+    market_cap: quote.marketCap ?? null,
+    volume_ratio: null
   };
 }
 

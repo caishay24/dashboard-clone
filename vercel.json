@@ -8,17 +8,17 @@
   "functions": {
     "api/[[...slug]].js": {
       "memory": 256,
-      "maxDuration": 30,
+      "maxDuration": 60,
       "includeFiles": "api/_app.mjs"
     },
     "api/stocks/search.js": {
       "memory": 256,
-      "maxDuration": 30,
+      "maxDuration": 60,
       "includeFiles": "api/_app.mjs"
     },
     "api/stocks/detail.js": {
       "memory": 256,
-      "maxDuration": 30,
+      "maxDuration": 60,
       "includeFiles": "api/_app.mjs"
     }
   }
