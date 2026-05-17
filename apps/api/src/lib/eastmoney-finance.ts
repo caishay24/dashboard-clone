@@ -71,6 +71,76 @@ export async function fetchAStockMainReport(secucode: string, limit = 5): Promis
   );
 }
 
+// ---- Realtime valuation (PE TTM / PB MRQ / 总市值) for A 股 ----
+// Endpoint: RPT_VALUEANALYSIS_DET (datacenter). Single call supports a SECUCODE list filter.
+// Verified 2026-05-16: works for A股 SH/SZ; returns empty for HK/US (`code:9201`).
+
+const valuationRowSchema = z.object({
+  SECURITY_CODE: z.string(),
+  SECUCODE: z.string().nullable().optional(),
+  CLOSE_PRICE: z.number().nullable().optional(),
+  TOTAL_MARKET_CAP: z.number().nullable().optional(),
+  PE_TTM: z.number().nullable().optional(),
+  PE_LAR: z.number().nullable().optional(),
+  PB_MRQ: z.number().nullable().optional(),
+  PS_TTM: z.number().nullable().optional(),
+  TOTAL_SHARES: z.number().nullable().optional()
+}).passthrough();
+
+export interface AStockValuation {
+  secucode: string;
+  marketCap: number | null;  // yuan
+  peTTM: number | null;
+  pbMRQ: number | null;
+  psTTM: number | null;
+  totalShares: number | null;
+}
+
+const valuationResponseSchema = z.object({
+  success: z.boolean(),
+  result: z.object({
+    data: z.array(valuationRowSchema).nullable()
+  }).nullable().optional()
+}).passthrough();
+
+/**
+ * Batch fetch A股 valuation by SECUCODE (e.g. ["600519.SH", "000858.SZ"]).
+ * Returns map keyed by SECUCODE. Missing entries (HK/US/unknown) omitted silently.
+ * Single network call regardless of input size (datacenter supports `in (..)` filter).
+ */
+export async function fetchAStockValuationBatch(secucodes: string[]): Promise<Record<string, AStockValuation>> {
+  const aShares = secucodes.filter((s) => s.endsWith(".SH") || s.endsWith(".SZ"));
+  if (aShares.length === 0) return {};
+
+  const inClause = aShares.map((s) => `"${s}"`).join(",");
+  const url = new URL(DATACENTER_URL);
+  url.searchParams.set("reportName", "RPT_VALUEANALYSIS_DET");
+  url.searchParams.set("columns", "SECURITY_CODE,SECUCODE,CLOSE_PRICE,TOTAL_MARKET_CAP,PE_TTM,PE_LAR,PB_MRQ,PS_TTM,TOTAL_SHARES");
+  url.searchParams.set("filter", `(SECUCODE in (${inClause}))`);
+  url.searchParams.set("pageNumber", "1");
+  url.searchParams.set("pageSize", String(Math.min(aShares.length, 100)));
+
+  const response = await fetchWithRetry(url, {
+    headers: { "User-Agent": "Mozilla/5.0", Referer: "https://emweb.securities.eastmoney.com/" }
+  });
+  if (!response.ok) throw new Error(`Eastmoney valuation HTTP ${response.status}`);
+  const parsed = valuationResponseSchema.parse(await response.json());
+
+  const out: Record<string, AStockValuation> = {};
+  for (const row of parsed.result?.data ?? []) {
+    const key = row.SECUCODE ?? `${row.SECURITY_CODE}.SH`;
+    out[key] = {
+      secucode: key,
+      marketCap: row.TOTAL_MARKET_CAP ?? null,
+      peTTM: row.PE_TTM != null && row.PE_TTM > 0 && row.PE_TTM < 10000 ? row.PE_TTM : null,
+      pbMRQ: row.PB_MRQ != null && row.PB_MRQ > 0 ? row.PB_MRQ : null,
+      psTTM: row.PS_TTM ?? null,
+      totalShares: row.TOTAL_SHARES ?? null
+    };
+  }
+  return out;
+}
+
 export async function fetchAStockCashflow(secucode: string, limit = 5): Promise<AStockCashflow[]> {
   return fetchReport(
     "RPT_F10_FINANCE_GCASHFLOW",

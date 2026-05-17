@@ -17,7 +17,7 @@ import {
   type AStockCashflow
 } from "../lib/eastmoney-finance";
 import { fetchSinaIndicesBatch } from "../lib/sina";
-import { secidToSinaSymbol, type StockItem } from "./stocks";
+import { enrichRatios, secidToSinaSymbol, type StockItem } from "./stocks";
 
 export interface StockDetail {
   secid: string;
@@ -54,6 +54,11 @@ export async function getStocksDetail(params: { secid: string }): Promise<StockD
   ]);
 
   if (!secucode) notes.push("finance_unavailable_for_market");
+
+  // Enrich PE/PB/market_cap on the single quote (single batched call per source).
+  if (quote) {
+    await enrichRatios([quote]);
+  }
 
   return { secid, quote, reports, cashflow, notes };
 }

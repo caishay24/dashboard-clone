@@ -30,6 +30,9 @@ export interface SinaIndexQuote {
   price: number | null;
   changePct: number | null;
   changeAbs: number | null;
+  // US-only enrichment (pos 12 = total market cap, pos 14 = PE TTM in `gb_<sym>` format)
+  marketCap?: number | null;
+  pe?: number | null;
 }
 
 const decoder = new TextDecoder("gbk");
@@ -118,11 +121,20 @@ function parseSinaLine(symbol: string, kind: SinaSymbolKind, text: string): Sina
     return { symbol, name: fields[1] ?? "", price, changePct, changeAbs };
   }
   // US long format (indices + stocks gb_<sym>): name, price, changePct, date, changeAbs, prevClose, open, ...
+  // For individual US stocks (gb_<lower-ticker>), pos 12 = total market cap (USD) and pos 14 = PE TTM.
+  // Index symbols (gb_inx, gb_dji, gb_ixic, gb_spy) reuse the same positional layout but with
+  // mcap/PE either as 0 or NaN — guarded by num()/range checks below.
   if (fields.length < 5) return null;
   const price = num(fields[1]);
   const changePct = num(fields[2]);
   const changeAbs = num(fields[4]);
-  return { symbol, name: fields[0] ?? "", price, changePct, changeAbs };
+  const marketCapRaw = fields.length > 12 ? num(fields[12]) : null;
+  const peRaw = fields.length > 14 ? num(fields[14]) : null;
+  // Sane filters: drop sentinel zeros (0 mcap or 0 PE means "not applicable")
+  // and outliers (PE > 10000 likely garbage / negative PE = loss-making, also null).
+  const marketCap = marketCapRaw && marketCapRaw > 0 ? marketCapRaw : null;
+  const pe = peRaw && peRaw > 0 && peRaw < 10000 ? peRaw : null;
+  return { symbol, name: fields[0] ?? "", price, changePct, changeAbs, marketCap, pe };
 }
 
 function num(s: string | undefined): number | null {

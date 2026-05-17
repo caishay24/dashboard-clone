@@ -5,6 +5,7 @@
 import { searchEastmoney, type StockRegion } from "../lib/eastmoney-search";
 import stockAllowlistRaw from "../stocks-allowlist.json";
 import {
+  enrichRatios,
   fetchStockQuoteWithFallback,
   mapConcurrent,
   type StockItem,
@@ -50,6 +51,11 @@ export async function getStocksSearch(params: {
     if (item === null) degraded.push(suggestions[i].code);
     else data.push(item);
   });
+
+  // Enrich PE/PB/market_cap (single batched datacenter call for A股 + single
+  // Sina batch for 美股 — runs in parallel; failures don't fail the route).
+  await enrichRatios(data);
+
   return { data, degraded };
 }
 

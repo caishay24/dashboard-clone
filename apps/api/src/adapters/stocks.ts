@@ -2,6 +2,7 @@ import type { Region } from "@dashboard/shared";
 import { z } from "zod";
 import stockAllowlistRaw from "../stocks-allowlist.json";
 import { fetchEastmoneyQuote, type EastmoneyQuote } from "../lib/eastmoney";
+import { fetchAStockValuationBatch, secidToSecuCode } from "../lib/eastmoney-finance";
 import { fetchSinaIndicesBatch, type SinaSymbolKind } from "../lib/sina";
 
 const CONCURRENCY = 5;
@@ -128,6 +129,13 @@ export async function getStocks(params: { region: Region; sector?: string }): Pr
     }
   }
 
+  // Phase 3: enrich PE / PB / market_cap for items missing them
+  //   A股 (1./0.): single datacenter call with SECUCODE IN (..) batch filter
+  //   美股 (105.): single Sina batch (gb_<lower> pos 12 = mcap, pos 14 = PE)
+  //   港股 (116.): no source — fields stay null
+  // Two batched calls run in parallel; each tolerates failure (catch → empty).
+  await enrichRatios(phase1.filter((x): x is StockItem => x !== null));
+
   // Final pass: any still-null entries → degraded
   phase1.forEach((value, index) => {
     if (value === null) degraded.push(selected[index].code);
@@ -137,6 +145,50 @@ export async function getStocks(params: { region: Region; sector?: string }): Pr
     data: phase1.filter((item): item is StockItem => item !== null),
     degraded
   };
+}
+
+/**
+ * Mutates each item in place, filling pe/pb/market_cap when null and a
+ * secondary source has the data.
+ *   A股 → datacenter RPT_VALUEANALYSIS_DET batch (PE_TTM, PB_MRQ, TOTAL_MARKET_CAP)
+ *   美股 → Sina gb_<lower> long format (pos 12 = market_cap, pos 14 = PE)
+ * Failures are swallowed; missing ratios just stay null.
+ */
+export async function enrichRatios(items: StockItem[]): Promise<void> {
+  if (items.length === 0) return;
+  const aShareItems = items.filter((x) => x.secid.startsWith("1.") || x.secid.startsWith("0."));
+  const usItems = items.filter((x) => x.secid.startsWith("105."));
+
+  const aSecucodes = aShareItems
+    .map((x) => secidToSecuCode(x.secid))
+    .filter((s): s is string => s !== null);
+  const usSinaSyms = usItems.map((x) => ({
+    symbol: `gb_${x.secid.slice(4).toLowerCase()}`,
+    kind: "long" as const
+  }));
+
+  const aValMap = aSecucodes.length > 0
+    ? await fetchAStockValuationBatch(aSecucodes).catch(() => ({} as Record<string, { peTTM: number | null; pbMRQ: number | null; marketCap: number | null }>))
+    : ({} as Record<string, { peTTM: number | null; pbMRQ: number | null; marketCap: number | null }>);
+  const usSinaMap = usSinaSyms.length > 0
+    ? await fetchSinaIndicesBatch(usSinaSyms).catch(() => ({} as Record<string, import("../lib/sina").SinaIndexQuote>))
+    : ({} as Record<string, import("../lib/sina").SinaIndexQuote>);
+
+  for (const item of aShareItems) {
+    const sc = secidToSecuCode(item.secid);
+    const v = sc ? aValMap[sc] : null;
+    if (!v) continue;
+    if (item.pe == null) item.pe = v.peTTM;
+    if (item.pb == null) item.pb = v.pbMRQ;
+    if (item.market_cap == null) item.market_cap = v.marketCap;
+  }
+  for (const item of usItems) {
+    const key = `gb_${item.secid.slice(4).toLowerCase()}`;
+    const s = usSinaMap[key];
+    if (!s) continue;
+    if (item.pe == null && s.pe != null) item.pe = s.pe;
+    if (item.market_cap == null && s.marketCap != null) item.market_cap = s.marketCap;
+  }
 }
 
 function toStockItem(item: StockAllowlistItem, quote: EastmoneyQuote): StockItem {
