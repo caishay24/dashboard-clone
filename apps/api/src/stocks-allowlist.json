@@ -99,6 +99,27 @@
       "cik": "0000723125"
     },
     {
+      "code": "AMAT",
+      "secid": "105.AMAT",
+      "name_cn": "应用材料",
+      "sector": "半导体 · 算力",
+      "cik": "0000006951"
+    },
+    {
+      "code": "LRCX",
+      "secid": "105.LRCX",
+      "name_cn": "拉姆研究",
+      "sector": "半导体 · 算力",
+      "cik": "0000707549"
+    },
+    {
+      "code": "MRVL",
+      "secid": "105.MRVL",
+      "name_cn": "美满电子",
+      "sector": "半导体 · 算力",
+      "cik": "0001835632"
+    },
+    {
       "code": "PLTR",
       "secid": "105.PLTR",
       "name_cn": "Palantir",
@@ -139,6 +160,34 @@
       "name_cn": "UiPath",
       "sector": "AI 纯血股 · 软件",
       "cik": "0001734722"
+    },
+    {
+      "code": "ANET",
+      "secid": "105.ANET",
+      "name_cn": "Arista 网络",
+      "sector": "AI 纯血股 · 软件",
+      "cik": "0001596532"
+    },
+    {
+      "code": "DOCN",
+      "secid": "105.DOCN",
+      "name_cn": "DigitalOcean",
+      "sector": "AI 纯血股 · 软件",
+      "cik": "0001582961"
+    },
+    {
+      "code": "ESTC",
+      "secid": "105.ESTC",
+      "name_cn": "Elastic",
+      "sector": "AI 纯血股 · 软件",
+      "cik": "0001707753"
+    },
+    {
+      "code": "BBAI",
+      "secid": "105.BBAI",
+      "name_cn": "BigBear.ai",
+      "sector": "AI 纯血股 · 软件",
+      "cik": "0001836981"
     },
     {
       "code": "ORCL",
@@ -195,6 +244,461 @@
       "name_cn": "Zscaler",
       "sector": "云 / 数据 / 网络",
       "cik": "0001713683"
+    },
+    {
+      "code": "HUBS",
+      "secid": "105.HUBS",
+      "name_cn": "HubSpot",
+      "sector": "云 / 数据 / 网络",
+      "cik": "0001404655"
+    },
+    {
+      "code": "WDAY",
+      "secid": "105.WDAY",
+      "name_cn": "Workday",
+      "sector": "云 / 数据 / 网络",
+      "cik": "0001327811"
+    },
+    {
+      "code": "JPM",
+      "secid": "105.JPM",
+      "name_cn": "摩根大通",
+      "sector": "金融 · 银行",
+      "cik": "0000019617"
+    },
+    {
+      "code": "BAC",
+      "secid": "105.BAC",
+      "name_cn": "美国银行",
+      "sector": "金融 · 银行",
+      "cik": "0000070858"
+    },
+    {
+      "code": "WFC",
+      "secid": "105.WFC",
+      "name_cn": "富国银行",
+      "sector": "金融 · 银行",
+      "cik": "0000072971"
+    },
+    {
+      "code": "GS",
+      "secid": "105.GS",
+      "name_cn": "高盛",
+      "sector": "金融 · 银行",
+      "cik": "0000886982"
+    },
+    {
+      "code": "MS",
+      "secid": "105.MS",
+      "name_cn": "摩根士丹利",
+      "sector": "金融 · 银行",
+      "cik": "0000895421"
+    },
+    {
+      "code": "C",
+      "secid": "105.C",
+      "name_cn": "花旗集团",
+      "sector": "金融 · 银行",
+      "cik": "0000831001"
+    },
+    {
+      "code": "V",
+      "secid": "105.V",
+      "name_cn": "Visa",
+      "sector": "金融 · 银行",
+      "cik": "0001403161"
+    },
+    {
+      "code": "MA",
+      "secid": "105.MA",
+      "name_cn": "Mastercard",
+      "sector": "金融 · 银行",
+      "cik": "0001141391"
+    },
+    {
+      "code": "BLK",
+      "secid": "105.BLK",
+      "name_cn": "贝莱德",
+      "sector": "金融 · 银行",
+      "cik": "0002012383"
+    },
+    {
+      "code": "BX",
+      "secid": "105.BX",
+      "name_cn": "黑石",
+      "sector": "金融 · 银行",
+      "cik": "0001393818"
+    },
+    {
+      "code": "UNH",
+      "secid": "105.UNH",
+      "name_cn": "联合健康",
+      "sector": "医药 · 生物",
+      "cik": "0000731766"
+    },
+    {
+      "code": "JNJ",
+      "secid": "105.JNJ",
+      "name_cn": "强生",
+      "sector": "医药 · 生物",
+      "cik": "0000200406"
+    },
+    {
+      "code": "LLY",
+      "secid": "105.LLY",
+      "name_cn": "礼来",
+      "sector": "医药 · 生物",
+      "cik": "0000059478"
+    },
+    {
+      "code": "PFE",
+      "secid": "105.PFE",
+      "name_cn": "辉瑞",
+      "sector": "医药 · 生物",
+      "cik": "0000078003"
+    },
+    {
+      "code": "ABBV",
+      "secid": "105.ABBV",
+      "name_cn": "艾伯维",
+      "sector": "医药 · 生物",
+      "cik": "0001551152"
+    },
+    {
+      "code": "TMO",
+      "secid": "105.TMO",
+      "name_cn": "赛默飞",
+      "sector": "医药 · 生物",
+      "cik": "0000097745"
+    },
+    {
+      "code": "MRK",
+      "secid": "105.MRK",
+      "name_cn": "默克",
+      "sector": "医药 · 生物",
+      "cik": "0000310158"
+    },
+    {
+      "code": "ABT",
+      "secid": "105.ABT",
+      "name_cn": "雅培",
+      "sector": "医药 · 生物",
+      "cik": "0000001800"
+    },
+    {
+      "code": "AMGN",
+      "secid": "105.AMGN",
+      "name_cn": "安进",
+      "sector": "医药 · 生物",
+      "cik": "0000318154"
+    },
+    {
+      "code": "GILD",
+      "secid": "105.GILD",
+      "name_cn": "吉利德",
+      "sector": "医药 · 生物",
+      "cik": "0000882095"
+    },
+    {
+      "code": "WMT",
+      "secid": "105.WMT",
+      "name_cn": "沃尔玛",
+      "sector": "消费 · 零售",
+      "cik": "0000104169"
+    },
+    {
+      "code": "COST",
+      "secid": "105.COST",
+      "name_cn": "好市多",
+      "sector": "消费 · 零售",
+      "cik": "0000909832"
+    },
+    {
+      "code": "NKE",
+      "secid": "105.NKE",
+      "name_cn": "耐克",
+      "sector": "消费 · 零售",
+      "cik": "0000320187"
+    },
+    {
+      "code": "KO",
+      "secid": "105.KO",
+      "name_cn": "可口可乐",
+      "sector": "消费 · 零售",
+      "cik": "0000021344"
+    },
+    {
+      "code": "PEP",
+      "secid": "105.PEP",
+      "name_cn": "百事",
+      "sector": "消费 · 零售",
+      "cik": "0000077476"
+    },
+    {
+      "code": "MCD",
+      "secid": "105.MCD",
+      "name_cn": "麦当劳",
+      "sector": "消费 · 零售",
+      "cik": "0000063908"
+    },
+    {
+      "code": "SBUX",
+      "secid": "105.SBUX",
+      "name_cn": "星巴克",
+      "sector": "消费 · 零售",
+      "cik": "0000829224"
+    },
+    {
+      "code": "DIS",
+      "secid": "105.DIS",
+      "name_cn": "迪士尼",
+      "sector": "消费 · 零售",
+      "cik": "0001744489"
+    },
+    {
+      "code": "XOM",
+      "secid": "105.XOM",
+      "name_cn": "埃克森美孚",
+      "sector": "能源",
+      "cik": "0000034088"
+    },
+    {
+      "code": "CVX",
+      "secid": "105.CVX",
+      "name_cn": "雪佛龙",
+      "sector": "能源",
+      "cik": "0000093410"
+    },
+    {
+      "code": "COP",
+      "secid": "105.COP",
+      "name_cn": "康菲石油",
+      "sector": "能源",
+      "cik": "0001163165"
+    },
+    {
+      "code": "SLB",
+      "secid": "105.SLB",
+      "name_cn": "斯伦贝谢",
+      "sector": "能源",
+      "cik": "0000087347"
+    },
+    {
+      "code": "MPC",
+      "secid": "105.MPC",
+      "name_cn": "马拉松石油",
+      "sector": "能源",
+      "cik": "0001510295"
+    },
+    {
+      "code": "OXY",
+      "secid": "105.OXY",
+      "name_cn": "西方石油",
+      "sector": "能源",
+      "cik": "0000797468"
+    },
+    {
+      "code": "BA",
+      "secid": "105.BA",
+      "name_cn": "波音",
+      "sector": "工业 · 制造",
+      "cik": "0000012927"
+    },
+    {
+      "code": "CAT",
+      "secid": "105.CAT",
+      "name_cn": "卡特彼勒",
+      "sector": "工业 · 制造",
+      "cik": "0000018230"
+    },
+    {
+      "code": "GE",
+      "secid": "105.GE",
+      "name_cn": "通用电气",
+      "sector": "工业 · 制造",
+      "cik": "0000040545"
+    },
+    {
+      "code": "HON",
+      "secid": "105.HON",
+      "name_cn": "霍尼韦尔",
+      "sector": "工业 · 制造",
+      "cik": "0000773840"
+    },
+    {
+      "code": "LMT",
+      "secid": "105.LMT",
+      "name_cn": "洛克希德马丁",
+      "sector": "工业 · 制造",
+      "cik": "0000936468"
+    },
+    {
+      "code": "NOC",
+      "secid": "105.NOC",
+      "name_cn": "诺斯洛普",
+      "sector": "工业 · 制造",
+      "cik": "0001133421"
+    },
+    {
+      "code": "RTX",
+      "secid": "105.RTX",
+      "name_cn": "雷神技术",
+      "sector": "工业 · 制造",
+      "cik": "0000101829"
+    },
+    {
+      "code": "UPS",
+      "secid": "105.UPS",
+      "name_cn": "联合包裹",
+      "sector": "工业 · 制造",
+      "cik": "0001090727"
+    },
+    {
+      "code": "F",
+      "secid": "105.F",
+      "name_cn": "福特",
+      "sector": "电动车",
+      "cik": "0000037996"
+    },
+    {
+      "code": "GM",
+      "secid": "105.GM",
+      "name_cn": "通用汽车",
+      "sector": "电动车",
+      "cik": "0001467858"
+    },
+    {
+      "code": "RIVN",
+      "secid": "105.RIVN",
+      "name_cn": "Rivian",
+      "sector": "电动车",
+      "cik": "0001874178"
+    },
+    {
+      "code": "LCID",
+      "secid": "105.LCID",
+      "name_cn": "Lucid",
+      "sector": "电动车",
+      "cik": "0001811210"
+    },
+    {
+      "code": "NIO",
+      "secid": "105.NIO",
+      "name_cn": "蔚来",
+      "sector": "电动车",
+      "cik": "0001736541"
+    },
+    {
+      "code": "LI",
+      "secid": "105.LI",
+      "name_cn": "理想汽车",
+      "sector": "电动车",
+      "cik": "0001791706"
+    },
+    {
+      "code": "PANW",
+      "secid": "105.PANW",
+      "name_cn": "Palo Alto Networks",
+      "sector": "网络安全",
+      "cik": "0001327567"
+    },
+    {
+      "code": "FTNT",
+      "secid": "105.FTNT",
+      "name_cn": "Fortinet",
+      "sector": "网络安全",
+      "cik": "0001262039"
+    },
+    {
+      "code": "OKTA",
+      "secid": "105.OKTA",
+      "name_cn": "Okta",
+      "sector": "网络安全",
+      "cik": "0001660134"
+    },
+    {
+      "code": "S",
+      "secid": "105.S",
+      "name_cn": "SentinelOne",
+      "sector": "网络安全",
+      "cik": "0001583708"
+    },
+    {
+      "code": "RBRK",
+      "secid": "105.RBRK",
+      "name_cn": "Rubrik",
+      "sector": "网络安全",
+      "cik": "0001943896"
+    },
+    {
+      "code": "CHKP",
+      "secid": "105.CHKP",
+      "name_cn": "Check Point",
+      "sector": "网络安全",
+      "cik": "0001015922"
+    },
+    {
+      "code": "NFLX",
+      "secid": "105.NFLX",
+      "name_cn": "奈飞",
+      "sector": "通讯 · 传媒",
+      "cik": "0001065280"
+    },
+    {
+      "code": "SPOT",
+      "secid": "105.SPOT",
+      "name_cn": "Spotify",
+      "sector": "通讯 · 传媒",
+      "cik": "0001639920"
+    },
+    {
+      "code": "TMUS",
+      "secid": "105.TMUS",
+      "name_cn": "T-Mobile",
+      "sector": "通讯 · 传媒",
+      "cik": "0001283699"
+    },
+    {
+      "code": "VZ",
+      "secid": "105.VZ",
+      "name_cn": "Verizon",
+      "sector": "通讯 · 传媒",
+      "cik": "0000732712"
+    },
+    {
+      "code": "T",
+      "secid": "105.T",
+      "name_cn": "AT&T",
+      "sector": "通讯 · 传媒",
+      "cik": "0000732717"
+    },
+    {
+      "code": "CMCSA",
+      "secid": "105.CMCSA",
+      "name_cn": "康卡斯特",
+      "sector": "通讯 · 传媒",
+      "cik": "0001166691"
+    },
+    {
+      "code": "WBD",
+      "secid": "105.WBD",
+      "name_cn": "华纳兄弟探索",
+      "sector": "通讯 · 传媒",
+      "cik": "0001437107"
+    },
+    {
+      "code": "PSKY",
+      "secid": "105.PSKY",
+      "name_cn": "Paramount Skydance",
+      "sector": "通讯 · 传媒",
+      "cik": "0002041610"
+    },
+    {
+      "code": "RBLX",
+      "secid": "105.RBLX",
+      "name_cn": "Roblox",
+      "sector": "通讯 · 传媒",
+      "cik": "0001315098"
     }
   ],
   "cn": [
