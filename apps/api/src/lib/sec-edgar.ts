@@ -152,10 +152,16 @@ export async function fetchSecFinancials(cik: string): Promise<{ reports: SecRep
   if (!response.ok) throw new Error(`SEC EDGAR HTTP ${response.status}`);
   const facts = (await response.json()) as CompanyFacts;
 
-  const revRaw = pickUsdSeries(
-    getConcept(facts, "RevenueFromContractWithCustomerExcludingAssessedTax") ??
-    getConcept(facts, "Revenues")
-  );
+  // Revenue: companies report under different XBRL concepts depending on filing
+  // era + ASC 606 adoption. NVDA uses "Revenues", AAPL uses
+  // "RevenueFromContractWithCustomerExcludingAssessedTax". Concatenate both and
+  // dedupe by end-date (latest filing wins).
+  const revRaw = [
+    ...pickUsdSeries(getConcept(facts, "RevenueFromContractWithCustomerExcludingAssessedTax")),
+    ...pickUsdSeries(getConcept(facts, "Revenues")),
+    ...pickUsdSeries(getConcept(facts, "RevenueFromContractWithCustomerIncludingAssessedTax")),
+    ...pickUsdSeries(getConcept(facts, "SalesRevenueNet"))
+  ];
   const niRaw = pickUsdSeries(getConcept(facts, "NetIncomeLoss"));
   const gpRaw = pickUsdSeries(getConcept(facts, "GrossProfit"));
   const opRaw = pickUsdSeries(getConcept(facts, "OperatingIncomeLoss"));
@@ -202,11 +208,11 @@ export async function fetchSecFinancials(cik: string): Promise<{ reports: SecRep
     return {
       REPORT_DATE: `${p.end} 00:00:00`,
       REPORT_TYPE: type,
-      // Disambiguate quarterly labels by including the end-month, since SEC may
-      // emit two records with the same fy/fp but different end-dates (filing
-      // restatements). "2026-03 Q2" vs "2025-09 FY" reads cleanly.
+      // Use end-date year for both annual and quarterly. SEC's `p.fy` can label
+      // multiple records as the same fy when they include restatements; the
+      // end-date is the unambiguous identifier of the reporting period.
       REPORT_DATE_NAME: type === "年报"
-        ? `${p.fy ?? p.end.slice(0, 4)} 年报`
+        ? `${p.end.slice(0, 4)} 年报`
         : `${p.end.slice(0, 7)} ${p.fp ?? "Q?"}`,
       TOTALOPERATEREVE: rev,
       MLR: gp,
