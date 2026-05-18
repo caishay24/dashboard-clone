@@ -16,12 +16,12 @@
     { "code": "ASML",  "secid": "105.ASML",  "name_cn": "阿斯麦",     "sector": "半导体 · 算力" },
     { "code": "MU",    "secid": "105.MU",    "name_cn": "美光",       "sector": "半导体 · 算力" },
 
-    { "code": "PLTR",  "secid": "105.PLTR",  "name_cn": "Palantir",  "sector": "AI 纯纯股 · 软件" },
-    { "code": "AI",    "secid": "105.AI",    "name_cn": "C3.ai",     "sector": "AI 纯纯股 · 软件" },
-    { "code": "SMCI",  "secid": "105.SMCI",  "name_cn": "超微电脑",   "sector": "AI 纯纯股 · 软件" },
-    { "code": "CRWD",  "secid": "105.CRWD",  "name_cn": "CrowdStrike","sector": "AI 纯纯股 · 软件" },
-    { "code": "SNOW",  "secid": "105.SNOW",  "name_cn": "Snowflake", "sector": "AI 纯纯股 · 软件" },
-    { "code": "PATH",  "secid": "105.PATH",  "name_cn": "UiPath",    "sector": "AI 纯纯股 · 软件" },
+    { "code": "PLTR",  "secid": "105.PLTR",  "name_cn": "Palantir",  "sector": "AI 纯血股 · 软件" },
+    { "code": "AI",    "secid": "105.AI",    "name_cn": "C3.ai",     "sector": "AI 纯血股 · 软件" },
+    { "code": "SMCI",  "secid": "105.SMCI",  "name_cn": "超微电脑",   "sector": "AI 纯血股 · 软件" },
+    { "code": "CRWD",  "secid": "105.CRWD",  "name_cn": "CrowdStrike","sector": "AI 纯血股 · 软件" },
+    { "code": "SNOW",  "secid": "105.SNOW",  "name_cn": "Snowflake", "sector": "AI 纯血股 · 软件" },
+    { "code": "PATH",  "secid": "105.PATH",  "name_cn": "UiPath",    "sector": "AI 纯血股 · 软件" },
 
     { "code": "ORCL",  "secid": "105.ORCL",  "name_cn": "甲骨文",     "sector": "云 / 数据 / 网络" },
     { "code": "CRM",   "secid": "105.CRM",   "name_cn": "Salesforce","sector": "云 / 数据 / 网络" },

@@ -1,13 +1,13 @@
 // /api/stocks/detail?secid=<secid>
 // Returns:
 //   - quote: full live quote (price + ratios + volume etc) via push2 → Sina fallback
-//   - reports: last N quarterly + annual reports (A股 only; null for US/HK)
-//   - cashflow: last N cashflow rows (A股 only; null for US/HK)
+//   - reports: last N quarterly + annual reports (all markets supported)
+//   - cashflow: last N cashflow rows (all markets supported)
 //
 // Data sources:
 //   quote     → push2 (东方财富) → Sina fallback
-//   reports   → datacenter.eastmoney.com RPT_F10_FINANCE_MAINFINADATA (A股 only)
-//   cashflow  → datacenter.eastmoney.com RPT_F10_FINANCE_GCASHFLOW    (A股 only)
+//   A股 财报   → datacenter.eastmoney.com RPT_F10_FINANCE_MAINFINADATA + GCASHFLOW
+//   美/港股 财报 → Yahoo Finance v10 quoteSummary (cookie + crumb flow)
 import { fetchEastmoneyQuote } from "../lib/eastmoney";
 import {
   fetchAStockMainReport,
@@ -17,43 +17,78 @@ import {
   type AStockCashflow
 } from "../lib/eastmoney-finance";
 import { fetchSinaIndicesBatch } from "../lib/sina";
+import {
+  fetchYahooFinancials,
+  secidToYahooSymbol,
+  type USHKReport,
+  type USHKCashflow
+} from "../lib/yahoo-finance";
 import { enrichRatios, secidToSinaSymbol, type StockItem } from "./stocks";
 
+// Unified types: A股 + 美/港 share schemas with the same field names (Yahoo
+// rows fill same shape as A股, missing fields = null).
 export interface StockDetail {
   secid: string;
   quote: StockItem | null;
-  reports: AStockReport[] | null;       // null = market not supported (US/HK)
-  cashflow: AStockCashflow[] | null;    // null = market not supported
-  notes: string[];                       // human-readable degradation notes
+  reports: (AStockReport | USHKReport)[] | null;     // null only if all sources failed
+  cashflow: (AStockCashflow | USHKCashflow)[] | null;
+  notes: string[];                                     // human-readable degradation notes
 }
 
 export async function getStocksDetail(params: { secid: string }): Promise<StockDetail> {
   const { secid } = params;
   const notes: string[] = [];
 
-  // Run quote + finance in parallel; finance is A股-only so skipped gracefully
-  // for US/HK secids (secidToSecuCode returns null).
+  // Run quote + finance in parallel. Finance source depends on market:
+  //   A股   → datacenter.eastmoney.com (RPT_F10_FINANCE_*)
+  //   美/港股 → Yahoo Finance quoteSummary
   const secucode = secidToSecuCode(secid);
-  const [quote, reports, cashflow] = await Promise.all([
+  const yahooSymbol = secucode ? null : secidToYahooSymbol(secid);
+
+  type FinanceTuple = {
+    reports: (AStockReport | USHKReport)[] | null;
+    cashflow: (AStockCashflow | USHKCashflow)[] | null;
+  };
+  const financePromise: Promise<FinanceTuple> = (async () => {
+    if (secucode) {
+      // A股
+      const [reports, cashflow] = await Promise.all([
+        fetchAStockMainReport(secucode, 6).catch((e) => {
+          notes.push(`reports_failed:${(e as Error).message ?? "unknown"}`);
+          return null;
+        }),
+        fetchAStockCashflow(secucode, 6).catch((e) => {
+          notes.push(`cashflow_failed:${(e as Error).message ?? "unknown"}`);
+          return null;
+        })
+      ]);
+      return { reports, cashflow };
+    }
+    if (yahooSymbol) {
+      // 美股 / 港股 — single Yahoo call covers both reports + cashflow
+      try {
+        const yf = await fetchYahooFinancials(yahooSymbol);
+        return {
+          reports: yf.reports.length > 0 ? yf.reports : null,
+          cashflow: yf.cashflow.length > 0 ? yf.cashflow : null
+        };
+      } catch (e) {
+        notes.push(`yahoo_finance_failed:${(e as Error).message ?? "unknown"}`);
+        return { reports: null, cashflow: null };
+      }
+    }
+    notes.push("finance_unavailable_for_market");
+    return { reports: null, cashflow: null };
+  })();
+
+  const [quote, finance] = await Promise.all([
     fetchQuote(secid).catch((e) => {
       notes.push(`quote_failed:${(e as Error).message ?? "unknown"}`);
       return null;
     }),
-    secucode
-      ? fetchAStockMainReport(secucode, 6).catch((e) => {
-          notes.push(`reports_failed:${(e as Error).message ?? "unknown"}`);
-          return null;
-        })
-      : Promise.resolve(null),
-    secucode
-      ? fetchAStockCashflow(secucode, 6).catch((e) => {
-          notes.push(`cashflow_failed:${(e as Error).message ?? "unknown"}`);
-          return null;
-        })
-      : Promise.resolve(null)
+    financePromise
   ]);
-
-  if (!secucode) notes.push("finance_unavailable_for_market");
+  const { reports, cashflow } = finance;
 
   // Enrich PE/PB/market_cap on the single quote (single batched call per source).
   if (quote) {
