@@ -24,6 +24,15 @@ import {
   type USHKCashflow,
   type YahooStats
 } from "../lib/yahoo-finance";
+import { fetchSecFinancials, type SecReport, type SecCashflow } from "../lib/sec-edgar";
+import stockAllowlistRaw from "../stocks-allowlist.json";
+
+// Build secid → CIK lookup for US allowlist (one-time, module load).
+type AllowlistShape = { us: Array<{ code: string; secid: string; cik?: string }> };
+const cikBySecid = new Map<string, string>();
+for (const item of (stockAllowlistRaw as AllowlistShape).us) {
+  if (item.cik) cikBySecid.set(item.secid, item.cik);
+}
 import { enrichRatios, secidToSinaSymbol, type StockItem } from "./stocks";
 
 // Unified types: A股 + 美/港 share schemas with the same field names (Yahoo
@@ -31,8 +40,8 @@ import { enrichRatios, secidToSinaSymbol, type StockItem } from "./stocks";
 export interface StockDetail {
   secid: string;
   quote: StockItem | null;
-  reports: (AStockReport | USHKReport)[] | null;     // null only if all sources failed
-  cashflow: (AStockCashflow | USHKCashflow)[] | null;
+  reports: (AStockReport | USHKReport | SecReport)[] | null;     // null only if all sources failed
+  cashflow: (AStockCashflow | USHKCashflow | SecCashflow)[] | null;
   yahooStats: YahooStats | null;                      // US/HK TTM-level ratios + cashflow + margins
   notes: string[];                                     // human-readable degradation notes
 }
@@ -48,13 +57,14 @@ export async function getStocksDetail(params: { secid: string }): Promise<StockD
   const yahooSymbol = secucode ? null : secidToYahooSymbol(secid);
 
   type FinanceTuple = {
-    reports: (AStockReport | USHKReport)[] | null;
-    cashflow: (AStockCashflow | USHKCashflow)[] | null;
+    reports: (AStockReport | USHKReport | SecReport)[] | null;
+    cashflow: (AStockCashflow | USHKCashflow | SecCashflow)[] | null;
     yahooStats: YahooStats | null;
   };
+  const cik = cikBySecid.get(secid);
   const financePromise: Promise<FinanceTuple> = (async () => {
     if (secucode) {
-      // A股
+      // A股 — datacenter for both reports + cashflow
       const [reports, cashflow] = await Promise.all([
         fetchAStockMainReport(secucode, 6).catch((e) => {
           notes.push(`reports_failed:${(e as Error).message ?? "unknown"}`);
@@ -68,18 +78,37 @@ export async function getStocksDetail(params: { secid: string }): Promise<StockD
       return { reports, cashflow, yahooStats: null };
     }
     if (yahooSymbol) {
-      // 美股 / 港股 — single Yahoo call covers reports + cashflow + TTM stats
-      try {
-        const yf = await fetchYahooFinancials(yahooSymbol);
-        return {
-          reports: yf.reports.length > 0 ? yf.reports : null,
-          cashflow: yf.cashflow.length > 0 ? yf.cashflow : null,
-          yahooStats: yf.stats
-        };
-      } catch (e) {
-        notes.push(`yahoo_finance_failed:${(e as Error).message ?? "unknown"}`);
-        return { reports: null, cashflow: null, yahooStats: null };
-      }
+      // 美股 / 港股
+      //  - reports + cashflow: SEC EDGAR if 美股 (deep history + quarterly YoY); fallback Yahoo
+      //  - yahooStats (TTM ratios): always Yahoo (SEC doesn't expose ratios)
+      // Both calls fire in parallel; one's failure doesn't kill the other.
+      const [yahooResult, secResult] = await Promise.all([
+        fetchYahooFinancials(yahooSymbol).catch((e) => {
+          notes.push(`yahoo_finance_failed:${(e as Error).message ?? "unknown"}`);
+          return null;
+        }),
+        cik
+          ? fetchSecFinancials(cik).catch((e) => {
+              notes.push(`sec_edgar_failed:${(e as Error).message ?? "unknown"}`);
+              return null;
+            })
+          : Promise.resolve(null)
+      ]);
+
+      // Prefer SEC for US reports + cashflow (deeper history, quarterly YoY).
+      // For HK (no CIK) or when SEC missing, fall back to Yahoo.
+      const reports = secResult?.reports.length
+        ? secResult.reports
+        : yahooResult && yahooResult.reports.length > 0
+          ? yahooResult.reports
+          : null;
+      const cashflow = secResult?.cashflow.length
+        ? secResult.cashflow
+        : yahooResult && yahooResult.cashflow.length > 0
+          ? yahooResult.cashflow
+          : null;
+
+      return { reports, cashflow, yahooStats: yahooResult?.stats ?? null };
     }
     notes.push("finance_unavailable_for_market");
     return { reports: null, cashflow: null, yahooStats: null };

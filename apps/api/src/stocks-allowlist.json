@@ -1,79 +1,420 @@
 {
   "us": [
-    { "code": "AAPL",  "secid": "105.AAPL",  "name_cn": "苹果",       "sector": "科技巨头" },
-    { "code": "MSFT",  "secid": "105.MSFT",  "name_cn": "微软",       "sector": "科技巨头" },
-    { "code": "GOOGL", "secid": "105.GOOGL", "name_cn": "谷歌",       "sector": "科技巨头" },
-    { "code": "AMZN",  "secid": "105.AMZN",  "name_cn": "亚马逊",     "sector": "科技巨头" },
-    { "code": "META",  "secid": "105.META",  "name_cn": "Meta",      "sector": "科技巨头" },
-    { "code": "TSLA",  "secid": "105.TSLA",  "name_cn": "特斯拉",     "sector": "科技巨头" },
-    { "code": "NVDA",  "secid": "105.NVDA",  "name_cn": "英伟达",     "sector": "科技巨头" },
-
-    { "code": "AMD",   "secid": "105.AMD",   "name_cn": "AMD",       "sector": "半导体 · 算力" },
-    { "code": "INTC",  "secid": "105.INTC",  "name_cn": "英特尔",     "sector": "半导体 · 算力" },
-    { "code": "AVGO",  "secid": "105.AVGO",  "name_cn": "博通",       "sector": "半导体 · 算力" },
-    { "code": "QCOM",  "secid": "105.QCOM",  "name_cn": "高通",       "sector": "半导体 · 算力" },
-    { "code": "TSM",   "secid": "105.TSM",   "name_cn": "台积电",     "sector": "半导体 · 算力" },
-    { "code": "ASML",  "secid": "105.ASML",  "name_cn": "阿斯麦",     "sector": "半导体 · 算力" },
-    { "code": "MU",    "secid": "105.MU",    "name_cn": "美光",       "sector": "半导体 · 算力" },
-
-    { "code": "PLTR",  "secid": "105.PLTR",  "name_cn": "Palantir",  "sector": "AI 纯血股 · 软件" },
-    { "code": "AI",    "secid": "105.AI",    "name_cn": "C3.ai",     "sector": "AI 纯血股 · 软件" },
-    { "code": "SMCI",  "secid": "105.SMCI",  "name_cn": "超微电脑",   "sector": "AI 纯血股 · 软件" },
-    { "code": "CRWD",  "secid": "105.CRWD",  "name_cn": "CrowdStrike","sector": "AI 纯血股 · 软件" },
-    { "code": "SNOW",  "secid": "105.SNOW",  "name_cn": "Snowflake", "sector": "AI 纯血股 · 软件" },
-    { "code": "PATH",  "secid": "105.PATH",  "name_cn": "UiPath",    "sector": "AI 纯血股 · 软件" },
-
-    { "code": "ORCL",  "secid": "105.ORCL",  "name_cn": "甲骨文",     "sector": "云 / 数据 / 网络" },
-    { "code": "CRM",   "secid": "105.CRM",   "name_cn": "Salesforce","sector": "云 / 数据 / 网络" },
-    { "code": "ADBE",  "secid": "105.ADBE",  "name_cn": "Adobe",     "sector": "云 / 数据 / 网络" },
-    { "code": "NOW",   "secid": "105.NOW",   "name_cn": "ServiceNow","sector": "云 / 数据 / 网络" },
-    { "code": "NET",   "secid": "105.NET",   "name_cn": "Cloudflare","sector": "云 / 数据 / 网络" },
-    { "code": "DDOG",  "secid": "105.DDOG",  "name_cn": "Datadog",   "sector": "云 / 数据 / 网络" },
-    { "code": "MDB",   "secid": "105.MDB",   "name_cn": "MongoDB",   "sector": "云 / 数据 / 网络" },
-    { "code": "ZS",    "secid": "105.ZS",    "name_cn": "Zscaler",   "sector": "云 / 数据 / 网络" }
+    {
+      "code": "AAPL",
+      "secid": "105.AAPL",
+      "name_cn": "苹果",
+      "sector": "科技巨头",
+      "cik": "0000320193"
+    },
+    {
+      "code": "MSFT",
+      "secid": "105.MSFT",
+      "name_cn": "微软",
+      "sector": "科技巨头",
+      "cik": "0000789019"
+    },
+    {
+      "code": "GOOGL",
+      "secid": "105.GOOGL",
+      "name_cn": "谷歌",
+      "sector": "科技巨头",
+      "cik": "0001652044"
+    },
+    {
+      "code": "AMZN",
+      "secid": "105.AMZN",
+      "name_cn": "亚马逊",
+      "sector": "科技巨头",
+      "cik": "0001018724"
+    },
+    {
+      "code": "META",
+      "secid": "105.META",
+      "name_cn": "Meta",
+      "sector": "科技巨头",
+      "cik": "0001326801"
+    },
+    {
+      "code": "TSLA",
+      "secid": "105.TSLA",
+      "name_cn": "特斯拉",
+      "sector": "科技巨头",
+      "cik": "0001318605"
+    },
+    {
+      "code": "NVDA",
+      "secid": "105.NVDA",
+      "name_cn": "英伟达",
+      "sector": "科技巨头",
+      "cik": "0001045810"
+    },
+    {
+      "code": "AMD",
+      "secid": "105.AMD",
+      "name_cn": "AMD",
+      "sector": "半导体 · 算力",
+      "cik": "0000002488"
+    },
+    {
+      "code": "INTC",
+      "secid": "105.INTC",
+      "name_cn": "英特尔",
+      "sector": "半导体 · 算力",
+      "cik": "0000050863"
+    },
+    {
+      "code": "AVGO",
+      "secid": "105.AVGO",
+      "name_cn": "博通",
+      "sector": "半导体 · 算力",
+      "cik": "0001730168"
+    },
+    {
+      "code": "QCOM",
+      "secid": "105.QCOM",
+      "name_cn": "高通",
+      "sector": "半导体 · 算力",
+      "cik": "0000804328"
+    },
+    {
+      "code": "TSM",
+      "secid": "105.TSM",
+      "name_cn": "台积电",
+      "sector": "半导体 · 算力",
+      "cik": "0001046179"
+    },
+    {
+      "code": "ASML",
+      "secid": "105.ASML",
+      "name_cn": "阿斯麦",
+      "sector": "半导体 · 算力",
+      "cik": "0000937966"
+    },
+    {
+      "code": "MU",
+      "secid": "105.MU",
+      "name_cn": "美光",
+      "sector": "半导体 · 算力",
+      "cik": "0000723125"
+    },
+    {
+      "code": "PLTR",
+      "secid": "105.PLTR",
+      "name_cn": "Palantir",
+      "sector": "AI 纯血股 · 软件",
+      "cik": "0001321655"
+    },
+    {
+      "code": "AI",
+      "secid": "105.AI",
+      "name_cn": "C3.ai",
+      "sector": "AI 纯血股 · 软件",
+      "cik": "0001577526"
+    },
+    {
+      "code": "SMCI",
+      "secid": "105.SMCI",
+      "name_cn": "超微电脑",
+      "sector": "AI 纯血股 · 软件",
+      "cik": "0001375365"
+    },
+    {
+      "code": "CRWD",
+      "secid": "105.CRWD",
+      "name_cn": "CrowdStrike",
+      "sector": "AI 纯血股 · 软件",
+      "cik": "0001535527"
+    },
+    {
+      "code": "SNOW",
+      "secid": "105.SNOW",
+      "name_cn": "Snowflake",
+      "sector": "AI 纯血股 · 软件",
+      "cik": "0001640147"
+    },
+    {
+      "code": "PATH",
+      "secid": "105.PATH",
+      "name_cn": "UiPath",
+      "sector": "AI 纯血股 · 软件",
+      "cik": "0001734722"
+    },
+    {
+      "code": "ORCL",
+      "secid": "105.ORCL",
+      "name_cn": "甲骨文",
+      "sector": "云 / 数据 / 网络",
+      "cik": "0001341439"
+    },
+    {
+      "code": "CRM",
+      "secid": "105.CRM",
+      "name_cn": "Salesforce",
+      "sector": "云 / 数据 / 网络",
+      "cik": "0001108524"
+    },
+    {
+      "code": "ADBE",
+      "secid": "105.ADBE",
+      "name_cn": "Adobe",
+      "sector": "云 / 数据 / 网络",
+      "cik": "0000796343"
+    },
+    {
+      "code": "NOW",
+      "secid": "105.NOW",
+      "name_cn": "ServiceNow",
+      "sector": "云 / 数据 / 网络",
+      "cik": "0001373715"
+    },
+    {
+      "code": "NET",
+      "secid": "105.NET",
+      "name_cn": "Cloudflare",
+      "sector": "云 / 数据 / 网络",
+      "cik": "0001477333"
+    },
+    {
+      "code": "DDOG",
+      "secid": "105.DDOG",
+      "name_cn": "Datadog",
+      "sector": "云 / 数据 / 网络",
+      "cik": "0001561550"
+    },
+    {
+      "code": "MDB",
+      "secid": "105.MDB",
+      "name_cn": "MongoDB",
+      "sector": "云 / 数据 / 网络",
+      "cik": "0001441816"
+    },
+    {
+      "code": "ZS",
+      "secid": "105.ZS",
+      "name_cn": "Zscaler",
+      "sector": "云 / 数据 / 网络",
+      "cik": "0001713683"
+    }
   ],
   "cn": [
-    { "code": "600519", "secid": "1.600519", "name_cn": "贵州茅台",   "sector": "蓝筹" },
-    { "code": "601318", "secid": "1.601318", "name_cn": "中国平安",   "sector": "蓝筹" },
-    { "code": "600036", "secid": "1.600036", "name_cn": "招商银行",   "sector": "蓝筹" },
-    { "code": "601398", "secid": "1.601398", "name_cn": "工商银行",   "sector": "蓝筹" },
-    { "code": "601857", "secid": "1.601857", "name_cn": "中国石油",   "sector": "蓝筹" },
-    { "code": "601988", "secid": "1.601988", "name_cn": "中国银行",   "sector": "蓝筹" },
-
-    { "code": "000858", "secid": "0.000858", "name_cn": "五粮液",     "sector": "消费" },
-    { "code": "000333", "secid": "0.000333", "name_cn": "美的集团",   "sector": "消费" },
-    { "code": "300750", "secid": "0.300750", "name_cn": "宁德时代",   "sector": "新能源" },
-    { "code": "002594", "secid": "0.002594", "name_cn": "比亚迪",     "sector": "新能源" },
-    { "code": "601012", "secid": "1.601012", "name_cn": "隆基绿能",   "sector": "新能源" },
-    { "code": "002460", "secid": "0.002460", "name_cn": "赣锋锂业",   "sector": "新能源" },
-
-    { "code": "300059", "secid": "0.300059", "name_cn": "东方财富",   "sector": "AI / 软件" },
-    { "code": "002230", "secid": "0.002230", "name_cn": "科大讯飞",   "sector": "AI / 软件" },
-    { "code": "300033", "secid": "0.300033", "name_cn": "同花顺",     "sector": "AI / 软件" },
-    { "code": "000063", "secid": "0.000063", "name_cn": "中兴通讯",   "sector": "AI / 软件" },
-    { "code": "688041", "secid": "1.688041", "name_cn": "海光信息",   "sector": "AI / 软件" },
-    { "code": "688256", "secid": "1.688256", "name_cn": "寒武纪",     "sector": "AI / 软件" },
-
-    { "code": "688981", "secid": "1.688981", "name_cn": "中芯国际",   "sector": "半导体" },
-    { "code": "603501", "secid": "1.603501", "name_cn": "韦尔股份",   "sector": "半导体" },
-    { "code": "688008", "secid": "1.688008", "name_cn": "澜起科技",   "sector": "半导体" },
-    { "code": "300782", "secid": "0.300782", "name_cn": "卓胜微",     "sector": "半导体" },
-    { "code": "002371", "secid": "0.002371", "name_cn": "北方华创",   "sector": "半导体" },
-    { "code": "688200", "secid": "1.688200", "name_cn": "华峰测控",   "sector": "半导体" },
-
-    { "code": "600276", "secid": "1.600276", "name_cn": "恒瑞医药",   "sector": "医药" },
-    { "code": "300760", "secid": "0.300760", "name_cn": "迈瑞医疗",   "sector": "医药" },
-    { "code": "600030", "secid": "1.600030", "name_cn": "中信证券",   "sector": "金融" },
-    { "code": "601166", "secid": "1.601166", "name_cn": "兴业银行",   "sector": "金融" }
+    {
+      "code": "600519",
+      "secid": "1.600519",
+      "name_cn": "贵州茅台",
+      "sector": "蓝筹"
+    },
+    {
+      "code": "601318",
+      "secid": "1.601318",
+      "name_cn": "中国平安",
+      "sector": "蓝筹"
+    },
+    {
+      "code": "600036",
+      "secid": "1.600036",
+      "name_cn": "招商银行",
+      "sector": "蓝筹"
+    },
+    {
+      "code": "601398",
+      "secid": "1.601398",
+      "name_cn": "工商银行",
+      "sector": "蓝筹"
+    },
+    {
+      "code": "601857",
+      "secid": "1.601857",
+      "name_cn": "中国石油",
+      "sector": "蓝筹"
+    },
+    {
+      "code": "601988",
+      "secid": "1.601988",
+      "name_cn": "中国银行",
+      "sector": "蓝筹"
+    },
+    {
+      "code": "000858",
+      "secid": "0.000858",
+      "name_cn": "五粮液",
+      "sector": "消费"
+    },
+    {
+      "code": "000333",
+      "secid": "0.000333",
+      "name_cn": "美的集团",
+      "sector": "消费"
+    },
+    {
+      "code": "300750",
+      "secid": "0.300750",
+      "name_cn": "宁德时代",
+      "sector": "新能源"
+    },
+    {
+      "code": "002594",
+      "secid": "0.002594",
+      "name_cn": "比亚迪",
+      "sector": "新能源"
+    },
+    {
+      "code": "601012",
+      "secid": "1.601012",
+      "name_cn": "隆基绿能",
+      "sector": "新能源"
+    },
+    {
+      "code": "002460",
+      "secid": "0.002460",
+      "name_cn": "赣锋锂业",
+      "sector": "新能源"
+    },
+    {
+      "code": "300059",
+      "secid": "0.300059",
+      "name_cn": "东方财富",
+      "sector": "AI / 软件"
+    },
+    {
+      "code": "002230",
+      "secid": "0.002230",
+      "name_cn": "科大讯飞",
+      "sector": "AI / 软件"
+    },
+    {
+      "code": "300033",
+      "secid": "0.300033",
+      "name_cn": "同花顺",
+      "sector": "AI / 软件"
+    },
+    {
+      "code": "000063",
+      "secid": "0.000063",
+      "name_cn": "中兴通讯",
+      "sector": "AI / 软件"
+    },
+    {
+      "code": "688041",
+      "secid": "1.688041",
+      "name_cn": "海光信息",
+      "sector": "AI / 软件"
+    },
+    {
+      "code": "688256",
+      "secid": "1.688256",
+      "name_cn": "寒武纪",
+      "sector": "AI / 软件"
+    },
+    {
+      "code": "688981",
+      "secid": "1.688981",
+      "name_cn": "中芯国际",
+      "sector": "半导体"
+    },
+    {
+      "code": "603501",
+      "secid": "1.603501",
+      "name_cn": "韦尔股份",
+      "sector": "半导体"
+    },
+    {
+      "code": "688008",
+      "secid": "1.688008",
+      "name_cn": "澜起科技",
+      "sector": "半导体"
+    },
+    {
+      "code": "300782",
+      "secid": "0.300782",
+      "name_cn": "卓胜微",
+      "sector": "半导体"
+    },
+    {
+      "code": "002371",
+      "secid": "0.002371",
+      "name_cn": "北方华创",
+      "sector": "半导体"
+    },
+    {
+      "code": "688200",
+      "secid": "1.688200",
+      "name_cn": "华峰测控",
+      "sector": "半导体"
+    },
+    {
+      "code": "600276",
+      "secid": "1.600276",
+      "name_cn": "恒瑞医药",
+      "sector": "医药"
+    },
+    {
+      "code": "300760",
+      "secid": "0.300760",
+      "name_cn": "迈瑞医疗",
+      "sector": "医药"
+    },
+    {
+      "code": "600030",
+      "secid": "1.600030",
+      "name_cn": "中信证券",
+      "sector": "金融"
+    },
+    {
+      "code": "601166",
+      "secid": "1.601166",
+      "name_cn": "兴业银行",
+      "sector": "金融"
+    }
   ],
   "hk": [
-    { "code": "00700", "secid": "116.00700", "name_cn": "腾讯控股",   "sector": "互联网" },
-    { "code": "09988", "secid": "116.09988", "name_cn": "阿里巴巴-W", "sector": "互联网" },
-    { "code": "03690", "secid": "116.03690", "name_cn": "美团-W",     "sector": "互联网" },
-    { "code": "09618", "secid": "116.09618", "name_cn": "京东集团-SW","sector": "互联网" },
-    { "code": "01211", "secid": "116.01211", "name_cn": "比亚迪股份", "sector": "新能源" },
-    { "code": "00388", "secid": "116.00388", "name_cn": "香港交易所", "sector": "金融" },
-    { "code": "00939", "secid": "116.00939", "name_cn": "建设银行",   "sector": "金融" },
-    { "code": "00883", "secid": "116.00883", "name_cn": "中国海洋石油","sector": "能源" }
+    {
+      "code": "00700",
+      "secid": "116.00700",
+      "name_cn": "腾讯控股",
+      "sector": "互联网"
+    },
+    {
+      "code": "09988",
+      "secid": "116.09988",
+      "name_cn": "阿里巴巴-W",
+      "sector": "互联网"
+    },
+    {
+      "code": "03690",
+      "secid": "116.03690",
+      "name_cn": "美团-W",
+      "sector": "互联网"
+    },
+    {
+      "code": "09618",
+      "secid": "116.09618",
+      "name_cn": "京东集团-SW",
+      "sector": "互联网"
+    },
+    {
+      "code": "01211",
+      "secid": "116.01211",
+      "name_cn": "比亚迪股份",
+      "sector": "新能源"
+    },
+    {
+      "code": "00388",
+      "secid": "116.00388",
+      "name_cn": "香港交易所",
+      "sector": "金融"
+    },
+    {
+      "code": "00939",
+      "secid": "116.00939",
+      "name_cn": "建设银行",
+      "sector": "金融"
+    },
+    {
+      "code": "00883",
+      "secid": "116.00883",
+      "name_cn": "中国海洋石油",
+      "sector": "能源"
+    }
   ]
 }
