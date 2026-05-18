@@ -71,6 +71,9 @@ const yQuoteSummarySchema = {
         incomeStatementHistory?: { incomeStatementHistory?: YIncomeRow[] };
         cashflowStatementHistoryQuarterly?: { cashflowStatements?: YCashRow[] };
         cashflowStatementHistory?: { cashflowStatements?: YCashRow[] };
+        defaultKeyStatistics?: Record<string, YRawNum>;
+        financialData?: Record<string, YRawNum>;
+        summaryDetail?: Record<string, YRawNum>;
       }>;
       error?: { code: string; description: string } | null;
     };
@@ -123,8 +126,33 @@ const MODULES = [
   "incomeStatementHistoryQuarterly",
   "incomeStatementHistory",
   "cashflowStatementHistoryQuarterly",
-  "cashflowStatementHistory"
+  "cashflowStatementHistory",
+  "defaultKeyStatistics",  // PB / BPS / EPS / 52wk / shares / beta
+  "financialData",         // gross/op/profit margins, ROE, ROA, op/free cashflow TTM, debt
+  "summaryDetail"          // forwardPE / dividendYield / marketCap confirm
 ].join(",");
+
+export interface YahooStats {
+  pb: number | null;                // priceToBook
+  bps: number | null;               // bookValue (per share)
+  eps_ttm: number | null;           // trailingEps
+  eps_forward: number | null;       // forwardEps
+  pe_forward: number | null;        // forwardPE (TTM PE is already on quote.pe via Sina)
+  dividend_yield: number | null;    // summaryDetail.dividendYield (as ratio, e.g. 0.0036)
+  beta: number | null;
+  fifty_two_week_change: number | null; // 52WeekChange (ratio)
+  enterprise_value: number | null;
+  shares_outstanding: number | null;
+  gross_margin: number | null;      // financialData.grossMargins (ratio)
+  operating_margin: number | null;
+  profit_margin: number | null;
+  roa: number | null;               // returnOnAssets
+  roe: number | null;               // returnOnEquity
+  operating_cashflow_ttm: number | null;
+  free_cashflow_ttm: number | null;
+  total_debt: number | null;
+  debt_to_equity: number | null;    // already percent in Yahoo (79.55 = 79.55%)
+}
 
 /**
  * Map our secid to a Yahoo symbol.
@@ -146,6 +174,7 @@ export function secidToYahooSymbol(secid: string): string | null {
 export async function fetchYahooFinancials(yahooSymbol: string): Promise<{
   reports: USHKReport[];
   cashflow: USHKCashflow[];
+  stats: YahooStats;
 }> {
   const sess = await getSession();
   const url = `${Y_HOST}/v10/finance/quoteSummary/${encodeURIComponent(yahooSymbol)}?modules=${MODULES}&crumb=${encodeURIComponent(sess.crumb)}`;
@@ -158,7 +187,7 @@ export async function fetchYahooFinancials(yahooSymbol: string): Promise<{
   if (!resp.ok) throw new Error(`Yahoo quoteSummary HTTP ${resp.status}`);
   const parsed = yQuoteSummarySchema.parse(await resp.json());
   const result = parsed.quoteSummary?.result?.[0];
-  if (!result) return { reports: [], cashflow: [] };
+  if (!result) return { reports: [], cashflow: [], stats: emptyStats() };
 
   const qIncome = result.incomeStatementHistoryQuarterly?.incomeStatementHistory ?? [];
   const aIncome = result.incomeStatementHistory?.incomeStatementHistory ?? [];
@@ -242,5 +271,47 @@ export async function fetchYahooFinancials(yahooSymbol: string): Promise<{
     (r.PARENTNETPROFIT && r.PARENTNETPROFIT !== 0)
   );
 
-  return { reports: filteredReports.slice(0, 6), cashflow: cashflow.slice(0, 6) };
+  // Extract TTM-level stats from defaultKeyStatistics + financialData + summaryDetail
+  const ks = result.defaultKeyStatistics ?? {};
+  const fd = result.financialData ?? {};
+  const sd = result.summaryDetail ?? {};
+  const stats: YahooStats = {
+    pb: rawNum(ks.priceToBook),
+    bps: rawNum(ks.bookValue),
+    eps_ttm: rawNum(ks.trailingEps),
+    eps_forward: rawNum(ks.forwardEps),
+    pe_forward: rawNum(sd.forwardPE),
+    dividend_yield: rawNum(sd.dividendYield),
+    beta: rawNum(ks.beta),
+    fifty_two_week_change: rawNum(ks["52WeekChange"] as YRawNum | undefined),
+    enterprise_value: rawNum(ks.enterpriseValue),
+    shares_outstanding: rawNum(ks.sharesOutstanding),
+    gross_margin: rawNum(fd.grossMargins),
+    operating_margin: rawNum(fd.operatingMargins),
+    profit_margin: rawNum(fd.profitMargins),
+    roa: rawNum(fd.returnOnAssets),
+    roe: rawNum(fd.returnOnEquity),
+    operating_cashflow_ttm: rawNum(fd.operatingCashflow),
+    free_cashflow_ttm: rawNum(fd.freeCashflow),
+    total_debt: rawNum(fd.totalDebt),
+    debt_to_equity: rawNum(fd.debtToEquity)
+  };
+
+  return { reports: filteredReports.slice(0, 6), cashflow: cashflow.slice(0, 6), stats };
+}
+
+function rawNum(v: YRawNum | undefined): number | null {
+  if (!v || typeof v.raw !== "number" || !Number.isFinite(v.raw)) return null;
+  return v.raw;
+}
+
+function emptyStats(): YahooStats {
+  return {
+    pb: null, bps: null, eps_ttm: null, eps_forward: null, pe_forward: null,
+    dividend_yield: null, beta: null, fifty_two_week_change: null,
+    enterprise_value: null, shares_outstanding: null,
+    gross_margin: null, operating_margin: null, profit_margin: null,
+    roa: null, roe: null, operating_cashflow_ttm: null, free_cashflow_ttm: null,
+    total_debt: null, debt_to_equity: null
+  };
 }

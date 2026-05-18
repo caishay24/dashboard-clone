@@ -21,7 +21,8 @@ import {
   fetchYahooFinancials,
   secidToYahooSymbol,
   type USHKReport,
-  type USHKCashflow
+  type USHKCashflow,
+  type YahooStats
 } from "../lib/yahoo-finance";
 import { enrichRatios, secidToSinaSymbol, type StockItem } from "./stocks";
 
@@ -32,6 +33,7 @@ export interface StockDetail {
   quote: StockItem | null;
   reports: (AStockReport | USHKReport)[] | null;     // null only if all sources failed
   cashflow: (AStockCashflow | USHKCashflow)[] | null;
+  yahooStats: YahooStats | null;                      // US/HK TTM-level ratios + cashflow + margins
   notes: string[];                                     // human-readable degradation notes
 }
 
@@ -48,6 +50,7 @@ export async function getStocksDetail(params: { secid: string }): Promise<StockD
   type FinanceTuple = {
     reports: (AStockReport | USHKReport)[] | null;
     cashflow: (AStockCashflow | USHKCashflow)[] | null;
+    yahooStats: YahooStats | null;
   };
   const financePromise: Promise<FinanceTuple> = (async () => {
     if (secucode) {
@@ -62,23 +65,24 @@ export async function getStocksDetail(params: { secid: string }): Promise<StockD
           return null;
         })
       ]);
-      return { reports, cashflow };
+      return { reports, cashflow, yahooStats: null };
     }
     if (yahooSymbol) {
-      // 美股 / 港股 — single Yahoo call covers both reports + cashflow
+      // 美股 / 港股 — single Yahoo call covers reports + cashflow + TTM stats
       try {
         const yf = await fetchYahooFinancials(yahooSymbol);
         return {
           reports: yf.reports.length > 0 ? yf.reports : null,
-          cashflow: yf.cashflow.length > 0 ? yf.cashflow : null
+          cashflow: yf.cashflow.length > 0 ? yf.cashflow : null,
+          yahooStats: yf.stats
         };
       } catch (e) {
         notes.push(`yahoo_finance_failed:${(e as Error).message ?? "unknown"}`);
-        return { reports: null, cashflow: null };
+        return { reports: null, cashflow: null, yahooStats: null };
       }
     }
     notes.push("finance_unavailable_for_market");
-    return { reports: null, cashflow: null };
+    return { reports: null, cashflow: null, yahooStats: null };
   })();
 
   const [quote, finance] = await Promise.all([
@@ -88,14 +92,14 @@ export async function getStocksDetail(params: { secid: string }): Promise<StockD
     }),
     financePromise
   ]);
-  const { reports, cashflow } = finance;
+  const { reports, cashflow, yahooStats } = finance;
 
   // Enrich PE/PB/market_cap on the single quote (single batched call per source).
   if (quote) {
     await enrichRatios([quote]);
   }
 
-  return { secid, quote, reports, cashflow, notes };
+  return { secid, quote, reports, cashflow, yahooStats, notes };
 }
 
 async function fetchQuote(secid: string): Promise<StockItem | null> {
